@@ -165,6 +165,33 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#0d9488' }]
   ],
   locales: {
+    vi: {
+      label: 'Tiếng Việt',
+      lang: 'vi',
+      title: 'Tài liệu XiaoZhi',
+      description: 'Từ cuộc trò chuyện đầu tiên đến tự chế tạo thiết bị AI của riêng bạn.',
+      themeConfig: {
+        nav: [
+          { text: 'Bắt đầu', link: '/vi/getting-started/' },
+          { text: 'Phát triển', link: '/vi/development/' },
+          { text: 'Khắc phục sự cố', link: '/vi/faq/' },
+          { text: 'Bảng điều khiển', link: 'https://xiaozhi.me' }
+        ],
+        sidebar: sidebar('vi'),
+        outline: { label: 'Trên trang này', level: [2, 3] },
+        editLink: { pattern: `${repositoryUrl}/edit/${branch}/docs/:path`, text: 'Chỉnh sửa trang này trên GitHub' },
+        lastUpdated: { text: 'Cập nhật lần cuối', formatOptions: { dateStyle: 'medium' } },
+        docFooter: { prev: 'Trang trước', next: 'Trang tiếp' },
+        darkModeSwitchLabel: 'Giao diện',
+        lightModeSwitchTitle: 'Chuyển sang chế độ sáng',
+        darkModeSwitchTitle: 'Chuyển sang chế độ tối',
+        sidebarMenuLabel: 'Danh mục',
+        returnToTopLabel: 'Lên đầu trang',
+        langMenuLabel: 'Đổi ngôn ngữ',
+        skipToContentLabel: 'Chuyển đến nội dung chính',
+        footer: { message: 'Được duy trì bởi cộng đồng XiaoZhi', copyright: `Nội dung gốc: <a href="${licenseNotice}">CC BY 4.0</a> · Tài nguyên bên thứ ba giữ nguyên bản quyền riêng` }
+      }
+    },
     zh: {
       label: '简体中文',
       lang: 'zh-Hans',
@@ -211,7 +238,7 @@ export default defineConfig({
       }
     }
   },
-  themeConfig: {
+    themeConfig: {
     logo: { src: '/logo.svg', alt: 'XiaoZhi' },
     socialLinks: [{ icon: 'github', link: repositoryUrl }],
     search: {
@@ -232,6 +259,18 @@ export default defineConfig({
           }
         },
         locales: {
+          vi: {
+            translations: {
+              button: { buttonText: 'Tìm kiếm tài liệu', buttonAriaLabel: 'Tìm kiếm tài liệu' },
+              modal: {
+                noResultsText: 'Không tìm thấy kết quả phù hợp',
+                resetButtonTitle: 'Xóa tìm kiếm',
+                backButtonTitle: 'Đóng tìm kiếm',
+                displayDetails: 'Hiển thị chi tiết',
+                footer: { selectText: 'Chọn', navigateText: 'Di chuyển', closeText: 'Đóng' }
+              }
+            }
+          },
           zh: {
             translations: {
               button: { buttonText: '搜索文档', buttonAriaLabel: '搜索文档' },
@@ -248,6 +287,7 @@ export default defineConfig({
       }
     }
   },
+
   transformPageData(page) {
     if (page.relativePath.startsWith('en/')) {
       const sourcePath = fileURLToPath(new URL(`../zh/${page.relativePath.slice(3)}`, import.meta.url))
