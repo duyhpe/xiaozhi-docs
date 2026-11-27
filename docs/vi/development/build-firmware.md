@@ -1,48 +1,47 @@
 ---
 id: build-firmware
-title: Set up a local firmware build
-description: 'Match ESP-IDF and firmware, select a board, build, flash, and inspect logs.'
+title: Thiết lập môi trường biên dịch firmware cục bộ
+description: 'Đối chiếu phiên bản ESP-IDF và firmware, chọn bo mạch, biên dịch, nạp code và kiểm tra nhật ký (logs).'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  Commands and board arguments were compared with v2.6.0. ESP-IDF was not installed and a complete cross-compilation was
-  not run on this machine; platform test results are welcome.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các câu lệnh và tham số bo mạch đã được đối chiếu với phiên bản v2.6.0; công cụ ESP-IDF chưa được cài đặt và quá trình biên dịch chéo hoàn chỉnh chưa được chạy trên máy thử nghiệm này, rất hoan nghênh các kết quả kiểm thử trên từng nền tảng từ cộng đồng.
 translation:
   status: review
   sourceHash: b70a50c29d9166e5c8b27eda4fd85a2d8d50f163c375b4353dfe8166026febb2
   reviewedAt: '2026-11-15'
 ---
-# Set up a local firmware build
+# Thiết lập môi trường biên dịch firmware cục bộ
 
-Set up locally when changing source code, pins, or hardware support. For an existing board, start with the [online builder](../firmware/online-builder.md).
+Hãy thiết lập môi trường biên dịch cục bộ khi bạn cần chỉnh sửa mã nguồn, sơ đồ chân GPIO hoặc bổ sung hỗ trợ phần cứng mới. Đối với các bo mạch đã có sẵn danh mục hỗ trợ, hãy bắt đầu với [trình biên dịch trực tuyến](../firmware/online-builder.md).
 
 <a name="scope"></a>
 
-## Versions and preparation {#scope}
+## Phiên bản và chuẩn bị {#scope}
 
-This guide uses **XiaoZhi firmware v2.6.0**. Its [versioned README](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/README.md) requires ESP-IDF 6.0.1 or later and recommends the **`release/v6.1` branch**. Use that branch rather than the `v6.1` release tag because of a known C3 issue.
+Hướng dẫn này sử dụng **firmware XiaoZhi v2.6.0**. Theo [tệp README của phiên bản này](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/README.md), hệ thống yêu cầu ESP-IDF 6.0.1 trở lên và khuyến nghị sử dụng **nhánh `release/v6.1`**. Hãy dùng nhánh này thay vì thẻ phát hành (tag) `v6.1` do có một lỗi đã biết trên dòng chip C3.
 
-Prepare Git, a Python version supported by ESP-IDF, and system build dependencies. Windows, Linux, and macOS prerequisites differ; follow [Espressif's installation guide](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/index.html) for your platform first. The examples below target ESP32-S3.
+Chuẩn bị sẵn Git, phiên bản Python được ESP-IDF hỗ trợ và các gói thư viện phụ thuộc của hệ điều hành. Các yêu cầu tiên quyết trên Windows, Linux và macOS sẽ khác nhau; trước tiên hãy làm theo [hướng dẫn cài đặt của Espressif](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/index.html) dành cho nền tảng của bạn. Các ví dụ bên dưới nhắm đến dòng chip ESP32-S3.
 
 <figure class="source-figure">
 
-[![Local build directories and workflow.](../../public/images/en/firmware-build-flow.svg)](../../public/images/en/firmware-build-flow.svg)
+[![Các thư mục và quy trình biên dịch cục bộ.](../../public/images/en/firmware-build-flow.svg)](../../public/images/en/firmware-build-flow.svg)
 
-<figcaption>Local build directories and workflow. Click to view full size.</figcaption>
+<figcaption>Các thư mục và quy trình biên dịch cục bộ. Nhấp vào ảnh để xem kích thước đầy đủ.</figcaption>
 </figure>
 
 <a name="install"></a>
 
-## 1. Install and activate ESP-IDF {#install}
+## 1. Cài đặt và kích hoạt ESP-IDF {#install}
 
-Clone the SDK in a workspace of your choice. If a directory already exists with that name, check it before proceeding rather than overwriting it.
+Sao chép (clone) mã nguồn SDK vào thư mục làm việc tùy chọn của bạn. Nếu đã tồn tại một thư mục trùng tên, hãy kiểm tra kỹ trước khi thực hiện để tránh ghi đè ngoài ý muốn.
 
 ```sh
 git clone --branch release/v6.1 --recursive https://github.com/espressif/esp-idf.git
 cd esp-idf
 ```
 
-Install tools for the target and activate the environment:
+Cài đặt bộ công cụ biên dịch cho chip mục tiêu và kích hoạt môi trường:
 
 ::: code-group
 
@@ -58,16 +57,17 @@ Install tools for the target and activate the environment:
 
 :::
 
-Activate the appropriate SDK in every new terminal. With an installation manager or IDE, open that installation's ESP-IDF terminal and confirm the selected branch rather than an older SDK.
+Bạn cần kích hoạt đúng SDK trong mỗi cửa sổ dòng lệnh (terminal) mới mở. Nếu sử dụng trình quản lý cài đặt (EIM) hoặc IDE, hãy mở cửa sổ terminal ESP-IDF của đúng bản cài đặt đó và xác nhận nhánh đang chọn khớp với yêu cầu thay vì dùng một bản SDK đời cũ.
 
 ```sh
 idf.py --version
 git rev-parse HEAD
 ```
 
-Run the second command in the SDK directory to record its exact commit. Branches advance; the commit makes a problem reproducible. Install the relevant toolchain when changing to C3 or another target.
+Chạy câu lệnh thứ hai ngay trong thư mục SDK để ghi lại chính xác mã commit. Các nhánh mã nguồn liên tục được cập nhật; mã commit chính xác sẽ giúp việc tái hiện sự cố trở nên khả thi. Nhớ cài đặt thêm bộ công cụ biên dịch (toolchain) tương ứng khi chuyển sang dòng chip C3 hoặc các dòng chip mục tiêu khác.
 
 <a name="source"></a>
+
 
 ## 2. Get firmware source {#source}
 
