@@ -1,14 +1,12 @@
-
 ---
 id: home
-title: XiaoZhi documentation
-description: Guides for using and developing XiaoZhi AI
+title: Tài liệu XiaoZhi
+description: Hướng dẫn sử dụng và phát triển XiaoZhi AI
 status: review
 layout: home
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn kỹ thuật và kiểm tra phần cứng được nêu rõ trong từng hướng dẫn.
 translation:
   status: review
   sourceHash: f684a5686e4f707760befec56ba6a2af995a8b16ff6ce9709f88cf3bd0a15b5b
@@ -18,17 +16,17 @@ pageClass: docs-home
 <div class="home-intro">
 <div class="home-intro-content">
 
-# Guides & Help
+# Hướng dẫn & Trợ giúp
 
-Open the guide you need, or search for your hardware or problem.
+Mở hướng dẫn bạn cần, hoặc tìm kiếm theo phần cứng hay sự cố đang gặp phải.
 
 <div class="home-quick-links">
 
-- [Connect & bind](./getting-started/wifi-and-binding.md)
-- [Build & flash online](./firmware/online-builder.md)
-- [Download firmware](./firmware/releases/v2.6.0.md#download)
-- [Build an S3 breadboard](./hardware/breadboard-esp32-s3.md)
-- [Troubleshooting](./faq/index.md)
+- [Kết nối & liên kết](./getting-started/wifi-and-binding.md)
+- [Biên dịch & nạp trực tuyến](./firmware/online-builder.md)
+- [Tải xuống firmware](./firmware/releases/v2.6.0.md#download)
+- [Lắp mạch breadboard S3](./hardware/breadboard-esp32-s3.md)
+- [Khắc phục sự cố](./faq/index.md)
 
 </div>
 
@@ -46,10 +44,10 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="getting-started"></a>
 
-## ![](../public/images/shared/sections/getting-started.svg) [Getting started](./getting-started/index.md) {#getting-started}
+## ![](../public/images/shared/sections/getting-started.svg) [Bắt đầu](./getting-started/index.md) {#getting-started}
 
-- [First time? Start here](./getting-started/index.md)
-- [Wi-Fi & device binding](./getting-started/wifi-and-binding.md)
+- [Lần đầu sử dụng? Bắt đầu tại đây](./getting-started/index.md)
+- [Cài đặt Wi-Fi & liên kết thiết bị](./getting-started/wifi-and-binding.md)
 
 </div>
 
@@ -57,13 +55,13 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="firmware"></a>
 
-## ![](../public/images/shared/sections/firmware.svg) [Firmware & downloads](./firmware/index.md) {#firmware}
+## ![](../public/images/shared/sections/firmware.svg) [Firmware & tải xuống](./firmware/index.md) {#firmware}
 
-- [Online builder](./firmware/online-builder.md)
-- [Choose firmware](./firmware/downloads.md)
-- [Flash & update](./firmware/flashing.md)
-- [v2.6.0 release](./firmware/releases/v2.6.0.md)
-- [v1.9.4 archive](./firmware/releases/v1.9.4.md)
+- [Trình biên dịch trực tuyến](./firmware/online-builder.md)
+- [Chọn phiên bản firmware](./firmware/downloads.md)
+- [Nạp & cập nhật firmware](./firmware/flashing.md)
+- [Bản phát hành v2.6.0](./firmware/releases/v2.6.0.md)
+- [Lưu trữ bản v1.9.4](./firmware/releases/v1.9.4.md)
 
 </div>
 
@@ -71,21 +69,21 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="hardware"></a>
 
-## ![](../public/images/shared/sections/hardware.svg) [Hardware & wiring](./hardware/index.md) {#hardware}
+## ![](../public/images/shared/sections/hardware.svg) [Phần cứng & đấu nối](./hardware/index.md) {#hardware}
 
-- [Choose hardware](./hardware/choosing-hardware.md)
-- [Supported boards](./hardware/supported-boards.md)
-- [ESP32-S3 breadboard](./hardware/breadboard-esp32-s3.md)
-- [ESP32-C3 breadboard](./hardware/breadboard-esp32-c3.md)
-- [Classic ESP32](./hardware/breadboard-esp32.md)
-- [ST7789 display](./hardware/displays/st7789.md)
-- [4G breadboard](./hardware/breadboard-4g.md)
-- [Camera breadboard](./hardware/breadboard-camera.md)
-- [Xmini-C3 & V3](./hardware/boards/xmini-c3.md)
-- [External ASR module](./hardware/external-wake-module.md)
-- [Battery power](./hardware/battery-power.md)
-- [Audio outputs](./hardware/audio-output.md)
-- [Hardware design](./hardware/design-guidelines.md)
+- [Chọn phần cứng](./hardware/choosing-hardware.md)
+- [Các bo mạch được hỗ trợ](./hardware/supported-boards.md)
+- [Mạch breadboard ESP32-S3](./hardware/breadboard-esp32-s3.md)
+- [Mạch breadboard ESP32-C3](./hardware/breadboard-esp32-c3.md)
+- [Mạch ESP32 cổ điển](./hardware/breadboard-esp32.md)
+- [Màn hình màu ST7789](./hardware/displays/st7789.md)
+- [Mạch breadboard 4G](./hardware/breadboard-4g.md)
+- [Mạch breadboard Camera](./hardware/breadboard-camera.md)
+- [Bo mạch Xmini-C3 & V3](./hardware/boards/xmini-c3.md)
+- [Module nhận diện giọng nói ngoài](./hardware/external-wake-module.md)
+- [Nguồn cấp bằng pin](./hardware/battery-power.md)
+- [Ngõ ra âm thanh](./hardware/audio-output.md)
+- [Hướng dẫn thiết kế phần cứng](./hardware/design-guidelines.md)
 
 </div>
 
@@ -93,13 +91,13 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="console"></a>
 
-## ![](../public/images/shared/sections/console.svg) [Console settings](./console/index.md) {#console}
+## ![](../public/images/shared/sections/console.svg) [Cài đặt Console](./console/index.md) {#console}
 
-- [Configure persona, model & voice](./console/index.md#role-and-voice)
-- [Speaker recognition](./console/index.md#speaker-recognition)
-- [GitHub verification](./console/github-verification.md)
-- [Voice cloning](./console/voice-cloning.md)
-- [Knowledge base](./console/knowledge-base.md)
+- [Cấu hình nhân vật, mô hình & giọng nói](./console/index.md#role-and-voice)
+- [Nhận diện giọng nói người dùng](./console/index.md#speaker-recognition)
+- [Xác minh tài khoản GitHub](./console/github-verification.md)
+- [Nhân bản giọng nói](./console/voice-cloning.md)
+- [Cơ sở tri thức](./console/knowledge-base.md)
 
 </div>
 
@@ -107,11 +105,11 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="mcp"></a>
 
-## ![](../public/images/shared/sections/mcp.svg) [MCP & tools](./mcp/index.md) {#mcp}
+## ![](../public/images/shared/sections/mcp.svg) [MCP & công cụ](./mcp/index.md) {#mcp}
 
-- [MCP quickstart](./mcp/quickstart.md)
-- [Connect MCP servers](./mcp/connect-existing-servers.md)
-- [Web search example](./mcp/examples/web-search.md)
+- [Bắt đầu nhanh với MCP](./mcp/quickstart.md)
+- [Kết nối máy chủ MCP](./mcp/connect-existing-servers.md)
+- [Ví dụ tìm kiếm Web](./mcp/examples/web-search.md)
 
 </div>
 
@@ -119,15 +117,15 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="development"></a>
 
-## ![](../public/images/shared/sections/development.svg) [Firmware development](./development/index.md) {#development}
+## ![](../public/images/shared/sections/development.svg) [Phát triển Firmware](./development/index.md) {#development}
 
-- [Build firmware](./development/build-firmware.md)
-- [Custom boards](./development/custom-board.md)
-- [Audio & AEC](./development/audio-and-aec.md)
-- [Wake words](./development/wake-words.md)
-- [MCP GPIO tools](./development/mcp-gpio.md)
-- [Prompt audio](./development/custom-prompts.md)
-- [P3 archive](./development/archive/p3-prompts.md)
+- [Tự biên dịch firmware](./development/build-firmware.md)
+- [Tùy chỉnh bo mạch](./development/custom-board.md)
+- [Âm thanh & khử tiếng vọng AEC](./development/audio-and-aec.md)
+- [Từ khóa đánh thức](./development/wake-words.md)
+- [Điều khiển GPIO qua MCP](./development/mcp-gpio.md)
+- [Âm thanh thông báo](./development/custom-prompts.md)
+- [Lưu trữ âm thanh P3](./development/archive/p3-prompts.md)
 
 </div>
 
@@ -135,11 +133,11 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="reference"></a>
 
-## ![](../public/images/shared/sections/reference.svg) [Protocols & reference](./reference/index.md) {#reference}
+## ![](../public/images/shared/sections/reference.svg) [Giao thức & tham chiếu](./reference/index.md) {#reference}
 
-- [WebSocket reference](./reference/websocket.md)
-- [OTA reference](./reference/ota.md)
-- [Emotion display](./reference/display-emotions.md)
+- [Tham chiếu WebSocket](./reference/websocket.md)
+- [Tham chiếu OTA](./reference/ota.md)
+- [Hiển thị biểu cảm](./reference/display-emotions.md)
 
 </div>
 
@@ -147,18 +145,18 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="faq"></a>
 
-## ![](../public/images/shared/sections/faq.svg) [Troubleshooting](./faq/index.md) {#faq}
+## ![](../public/images/shared/sections/faq.svg) [Khắc phục sự cố](./faq/index.md) {#faq}
 
-- [Port missing / flashing failed](./faq/index.md#serial)
-- [Boot failures / restarts](./faq/index.md#boot)
-- [Wi-Fi and network problems](./faq/index.md#network)
-- [Device codes / ownership](./faq/index.md#account)
-- [Audio, microphone & wake words](./faq/index.md#audio)
-- [Blank or incorrect display](./faq/index.md#display)
-- [Local build errors](./faq/index.md#build)
-- [MCP discovery / call failures](./faq/index.md#mcp)
-- [Accounts & binding](./faq/account-and-binding.md)
-- [Serial logs](./faq/serial-logs.md)
+- [Thiếu cổng COM / nạp code thất bại](./faq/index.md#serial)
+- [Lỗi khởi động / tự khởi động lại](./faq/index.md#boot)
+- [Sự cố Wi-Fi và kết nối mạng](./faq/index.md#network)
+- [Mã thiết bị / quyền sở hữu](./faq/index.md#account)
+- [Âm thanh, micro & từ khóa đánh thức](./faq/index.md#audio)
+- [Màn hình trắng hoặc hiển thị sai](./faq/index.md#display)
+- [Lỗi biên dịch cục bộ](./faq/index.md#build)
+- [Lỗi nhận diện / gọi công cụ MCP](./faq/index.md#mcp)
+- [Tài khoản & liên kết thiết bị](./faq/account-and-binding.md)
+- [Nhật ký cổng Serial](./faq/serial-logs.md)
 
 </div>
 
@@ -166,18 +164,18 @@ Open the guide you need, or search for your hardware or problem.
 
 <a name="community"></a>
 
-## ![](../public/images/shared/sections/community.svg) [Community & contributions](./community/index.md) {#community}
+## ![](../public/images/shared/sections/community.svg) [Cộng đồng & đóng góp](./community/index.md) {#community}
 
-- [Open hardware](./community/open-hardware.md)
-- [SF32LB52 project](./community/projects/sf32lb52-plugin.md)
-- [Storyteller project](./community/projects/astronaut-storyteller.md)
-- [Wake-on-LAN](./community/projects/wake-on-lan.md)
-- [Community MCP tools](./community/mcp-tools.md)
-- [Music & resources](./community/resources.md)
-- [Contribute](./community/contributing.md)
-
-</div>
+- [Phần cứng mã nguồn mở](./community/open-hardware.md)
+- [Dự án SF32LB52](./community/projects/sf32lb52-plugin.md)
+- [Dự án máy kể chuyện](./community/projects/astronaut-storyteller.md)
+- [Bật máy tính từ xa (Wake-on-LAN)](./community/projects/wake-on-lan.md)
+- [Công cụ MCP cộng đồng](./community/mcp-tools.md)
+- [Âm nhạc & tài nguyên](./community/resources.md)
+- [Đóng góp cho tài liệu](./community/contributing.md)
 
 </div>
 
-Found an unclear step, wiring issue, or translation error? Use the feedback link on the guide, or [help maintain the docs](./community/contributing.md).
+</div>
+
+Phát hiện bước hướng dẫn chưa rõ, lỗi đấu nối hoặc sai sót dịch thuật? Hãy sử dụng liên kết phản hồi trên trang, hoặc [tham gia duy trì tài liệu](./community/contributing.md).
