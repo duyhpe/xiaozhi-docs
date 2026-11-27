@@ -1,12 +1,11 @@
 ---
 id: connect-existing-mcp
-title: Connect existing MCP services
-description: 'Bridge stdio, SSE, or Streamable HTTP services to your agent.'
+title: Kết nối các dịch vụ MCP có sẵn
+description: 'Kết nối cầu nối các dịch vụ stdio, SSE hoặc Streamable HTTP vào trợ lý của bạn.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 sourceArticles:
   - DOC-28
 translation:
@@ -14,44 +13,45 @@ translation:
   sourceHash: 1efe1831a2af07eb33356ad4b9b5febc315f08b458b414aed8acb95501de775e
   reviewedAt: '2026-11-15'
 ---
-# Connect existing MCP services
+# Kết nối các dịch vụ MCP có sẵn
 
-An existing MCP service does not need to be rewritten as another tool program. Identify its transport and verify it independently before connecting the XiaoZhi endpoint.
+Một dịch vụ MCP có sẵn không cần phải viết lại thành một chương trình công cụ khác. Hãy xác định giao thức truyền tải (transport) của dịch vụ đó và kiểm chứng nó hoạt động độc lập trước khi kết nối với điểm cuối XiaoZhi.
 
 <a name="scope"></a>
 
-## Before starting {#scope}
+## Trước khi bắt đầu {#scope}
 
-Complete the [MCP quickstart](./quickstart.md) and verify a minimal tool on your own endpoint. This guide reuses its pinned `mcp_pipe.py` commit and Python environment, but reads configuration for multiple services.
+Hoàn tất hướng dẫn [Bắt đầu nhanh với MCP](./quickstart.md) và kiểm chứng một công cụ tối giản trên điểm cuối của riêng bạn. Hướng dẫn này tái sử dụng mã commit `mcp_pipe.py` cố định cùng môi trường Python từ bài trước, nhưng sẽ đọc cấu hình cho nhiều dịch vụ cùng lúc.
 
-| Service type | Connection information |
+| Loại dịch vụ | Thông tin kết nối |
 | --- | --- |
-| stdio | Local command, arguments, working files, and environment variables |
-| SSE | The service's documented SSE URL and authentication |
-| Streamable HTTP | The service's documented HTTP MCP URL and authentication |
+| stdio | Lệnh chạy cục bộ, tham số, tệp làm việc và các biến môi trường |
+| SSE | Đường dẫn URL SSE theo tài liệu của dịch vụ và thông tin xác thực |
+| Streamable HTTP | Đường dẫn URL HTTP MCP theo tài liệu của dịch vụ và thông tin xác thực |
 
-Changing `type` does not turn an ordinary REST API or WebSocket address into an MCP service.
+Việc chỉ thay đổi giá trị `type` sẽ không biến một REST API thông thường hay một địa chỉ WebSocket bất kỳ thành dịch vụ MCP.
 
 <figure class="source-figure">
 
-[![Choose the correct transport for an existing MCP service.](../../public/images/en/mcp-transport-choice.svg)](../../public/images/en/mcp-transport-choice.svg)
+[![Chọn đúng giao thức truyền tải cho một dịch vụ MCP có sẵn.](../../public/images/en/mcp-transport-choice.svg)](../../public/images/en/mcp-transport-choice.svg)
 
-<figcaption>Choose the correct transport for an existing MCP service. Click to view full size.</figcaption>
+<figcaption>Chọn đúng giao thức truyền tải cho một dịch vụ MCP có sẵn. Nhấp vào ảnh để xem kích thước đầy đủ.</figcaption>
 </figure>
 
 <a name="standalone"></a>
 
-## 1. Verify the service independently {#standalone}
+## 1. Kiểm chứng dịch vụ hoạt động độc lập {#standalone}
 
-Use the maintainer's supported MCP client or test method to verify `initialize`, tool discovery, and one successful call. Pin the software version and understand which files, devices, or remote accounts it can access.
+Sử dụng trình khách MCP (MCP client) hoặc phương pháp kiểm thử được người duy trì dịch vụ hỗ trợ để xác minh bước khởi tạo (`initialize`), khả năng khám phá công cụ và một lượt gọi hàm thành công. Cố định phiên bản phần mềm và nắm rõ những tệp tin, thiết bị hoặc tài khoản từ xa nào mà dịch vụ đó có quyền truy cập.
 
-For local file tools, expose only required directories. Give Home Assistant and similar tokens only the required scope. Do not copy someone else's full configuration with real paths, tokens, and administrative permissions.
+Đối với các công cụ thao tác tệp cục bộ, chỉ cấp quyền truy cập cho các thư mục thực sự cần thiết. Đối với Home Assistant và các mã thông báo (token) tương tự, chỉ cấp phạm vi quyền hạn tối thiểu cần dùng. Tuyệt đối không sao chép nguyên văn tệp cấu hình của người khác vốn có chứa đường dẫn thực tế, token và quyền quản trị.
 
 <a name="config"></a>
 
-## 2. Create configuration {#config}
+## 2. Tạo tệp cấu hình {#config}
 
-Create `mcp_config.json` in the bridge directory. This is a structural example; replace every placeholder command, path, and URL with an actual service:
+Tạo tệp `mcp_config.json` ngay trong thư mục chứa cầu nối. Đây là một ví dụ về cấu trúc; hãy thay thế toàn bộ lệnh, đường dẫn và URL giữ chỗ bằng dịch vụ thực tế của bạn:
+
 
 ```json
 {
@@ -70,44 +70,43 @@ Create `mcp_config.json` in the bridge directory. This is a structural example; 
 }
 ```
 
-For SSE, use `type: "sse"` and the actual service URL. Do not guess `/sse` or `/mcp` paths. Set `disabled: true` to temporarily skip a service. Replace credentials locally and do not commit real secrets.
+Đối với giao thức SSE, hãy sử dụng `type: "sse"` và địa chỉ URL thực tế của dịch vụ. Tuyệt đối không tự đoán các đường dẫn như `/sse` hay `/mcp`. Đặt `disabled: true` để tạm thời bỏ qua một dịch vụ. Hãy thay thế thông tin xác thực ngay trên máy cục bộ và không đưa dữ liệu bí mật thực tế lên kho lưu trữ mã nguồn (Git).
 
 <a name="run"></a>
 
-## 3. Start and check each stage {#run}
+## 3. Khởi chạy và kiểm tra từng giai đoạn {#run}
 
-Set `MCP_ENDPOINT` in the same terminal, then run without a script argument:
+Thiết lập biến `MCP_ENDPOINT` trong cùng cửa sổ dòng lệnh (terminal), sau đó chạy lệnh mà không truyền tham số tên tệp kịch bản:
 
 ```sh
 python mcp_pipe.py
 ```
 
-This upstream commit reads the configuration and creates bridges for enabled entries. HTTP/SSE connections use `mcp-proxy` installed in the environment. Enable one service at a time to isolate problems.
+Mã commit gốc này sẽ đọc tệp cấu hình và tạo các cầu nối cho những dịch vụ đang được bật. Các kết nối HTTP/SSE sẽ sử dụng gói `mcp-proxy` đã cài đặt trong môi trường. Hãy bật từng dịch vụ một để dễ dàng khoanh vùng sự cố.
 
-Passing a local Python script instead runs a single script as in the quickstart. A configuration entry's name is not a script path.
+Nếu bạn truyền kèm tên một tệp kịch bản Python cục bộ, chương trình sẽ chỉ chạy duy nhất kịch bản đó giống như trong phần bắt đầu nhanh. Tên của một mục khai báo trong tệp cấu hình không phải là đường dẫn tới tệp kịch bản.
 
 <a name="verify"></a>
 
-## Verify the result {#verify}
+## Kiểm tra kết quả hoạt động {#verify}
 
-The target agent should discover the expected tools and actually invoke them successfully in conversation records. Test service restart and network recovery. Discovery in a desktop client alone does not verify invocation from XiaoZhi.
+Trợ lý mục tiêu phải khám phá được đúng các công cụ mong đợi và thực sự gọi thành công chúng trong lịch sử trò chuyện. Hãy kiểm thử cả tình huống khởi động lại dịch vụ và khôi phục kết nối mạng. Việc công cụ hiển thị trong một ứng dụng khách trên máy tính chưa đủ chứng minh trợ lý XiaoZhi có thể gọi được nó.
 
 <a name="materials"></a>
 
-## Third-party graphical tools {#materials}
+## Các công cụ giao diện đồ họa của bên thứ ba {#materials}
 
-HyperChat, McpPipe, and other tools can manage gateways and connections. Their authors maintain installation and version details. See [Community MCP tools](../community/mcp-tools.md).
+HyperChat, McpPipe và các công cụ khác có thể hỗ trợ quản lý cổng kết nối (gateway) và phiên làm việc. Tác giả của các công cụ này tự duy trì thông tin cài đặt và phiên bản chi tiết. Xem thêm tại mục [Công cụ MCP từ cộng đồng](../community/mcp-tools.md).
 
-### Starting points for file access and Home Assistant
+### Điểm khởi đầu cho quyền truy cập tệp và Home Assistant
+- **Truy cập tệp (File access):** làm theo [hướng dẫn máy chủ hệ thống tệp MCP chính thức](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem), cài đặt phiên bản Node.js được yêu cầu và chỉ định rõ các thư mục được phép truy cập trong tham số `stdio`. Hãy thử nghiệm việc liệt kê và đọc một thư mục chuyên biệt trước khi cấp quyền cho nhiều thư mục hơn mức cần thiết.
+- **Home Assistant:** xem [hướng dẫn máy chủ MCP của Home Assistant](https://www.home-assistant.io/integrations/mcp_server/) để lấy địa chỉ URL MCP thực tế, cấu hình quyền truy cập và chọn các thực thể/công cụ được phép chia sẻ. Chọn một cầu nối hỗ trợ giao thức truyền tải và phương thức xác thực đó. Tính năng “MCP Client” của Home Assistant hoạt động theo chiều ngược lại và không thay thế cho cấu hình máy chủ (server).
+- **Cổng kết nối đồ họa (Graphical gateway):** làm theo [các bước dành cho HyperChat / McpPipe](../community/mcp-tools.md#bridge-tools), lưu ý giữ tách biệt địa chỉ URL của cổng từ xa với địa chỉ điểm cuối XiaoZhi.
 
-- **File access:** follow the [official MCP filesystem server guide](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem), install the required Node.js version, and specify allowed directories in its stdio arguments. Test listing/reading a dedicated folder before exposing more than needed.
-- **Home Assistant:** use its [MCP server guide](https://www.home-assistant.io/integrations/mcp_server/) to obtain the actual MCP URL, configure authorization, and choose exposed entities/tools. Select a bridge supporting that transport and authentication. Home Assistant's “MCP Client” works in the opposite direction and does not replace server configuration.
-- **Graphical gateway:** use the [HyperChat / McpPipe steps](../community/mcp-tools.md#bridge-tools), keeping the remote gateway URL distinct from the XiaoZhi endpoint.
-
-Test the service itself before returning to this guide's configuration file. Installing a tool does not automatically expose it to the target agent.
+Hãy kiểm thử bản thân dịch vụ đó hoạt động ổn định trước khi quay lại tệp cấu hình của hướng dẫn này. Việc cài đặt một công cụ trên máy tính không tự động hiển thị công cụ đó cho trợ lý mục tiêu.
 
 <a name="next"></a>
 
-## Next steps {#next}
+## Các bước tiếp theo {#next}
 
-See [Web search](./examples/web-search.md) for search, or [Device GPIO tools](../development/mcp-gpio.md) for control inside firmware. Bridge behavior is defined by the [upstream version used here](https://github.com/78/mcp-calculator/tree/c537f71d61fd73b47d6c8955b5df6d3721acf4e4).
+Xem mục [Tìm kiếm web](./examples/web-search.md) để tích hợp tính năng tra cứu thông tin, hoặc xem mục [Công cụ GPIO trên thiết bị](../development/mcp-gpio.md) để điều khiển phần cứng ngay bên trong firmware. Cơ chế hoạt động của cầu nối được định nghĩa theo [phiên bản gốc được sử dụng tại đây](https://github.com/78/mcp-calculator/tree/c537f71d61fd73b47d6c8955b5df6d3721acf4e4).
