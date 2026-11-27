@@ -1,12 +1,11 @@
 ---
 id: sf32lb52-plugin
-title: SF32LB52 tutorials and firmware
-description: Use JLC's maintained through-hole tutorial and firmware for the matching SF32 hardware.
+title: Hướng dẫn thực hành và firmware SF32LB52
+description: Sử dụng tài liệu hướng dẫn bản hàn cắm chân và firmware được JLC duy trì cho phần cứng SF32 tương ứng.
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  JLC tutorial, firmware, and downloads links were checked. This site maintains entry points rather than a separate copy
-  of the design and operating instructions.
+  Các liên kết hướng dẫn, firmware và tài nguyên tải xuống của JLC đã được kiểm tra. Trang web này duy trì các điểm truy cập gốc thay vì lưu trữ bản sao tách biệt của tài liệu thiết kế và hướng dẫn vận hành.
 sourceArticles:
   - DOC-30
 prev: false
@@ -16,50 +15,50 @@ translation:
   sourceHash: d3aab5491926e10cf6345b29bf172806a494fa84cf666df6ae057ec304ef495a
   reviewedAt: '2026-11-15'
 ---
-# SF32LB52 tutorials and firmware
+# Hướng dẫn thực hành và firmware SF32LB52
 
-SF32LB52 XiaoZhi uses separate SF32 firmware. For the through-hole build's circuit, PCB, soldering, enclosure, and panels, use JLC's complete maintained tutorial directly. The linked tutorial is in Chinese.
+XiaoZhi chạy trên chip SF32LB52 sử dụng nhánh firmware SF32 riêng biệt. Đối với sơ đồ mạch, bo mạch PCB, kỹ thuật hàn, vỏ máy và mặt nạ của phiên bản hàn linh kiện cắm chân (through-hole), vui lòng truy cập trực tiếp tài liệu hướng dẫn đầy đủ do JLC duy trì. Tài liệu được liên kết có ngôn ngữ gốc là tiếng Trung.
 
 <a name="scope"></a>
 
-## Tutorials and design files {#scope}
+## Hướng dẫn thực hành và tệp thiết kế {#scope}
 
 <span id="materials"></span>
 <span id="circuit"></span>
 <span id="enclosure"></span>
 
-| Goal | Maintained resource |
+| Mục tiêu | Tài nguyên được duy trì |
 | --- | --- |
-| Build the through-hole version from scratch | [JLC's complete XiaoZhi tutorial](https://openkits-wiki.easyeda.com/zh-hans/hspi-sf32lb52/training/xiaozhi-ai/) |
-| Circuit, PCB, soldering, and enclosure | Choose the relevant chapter and check your hardware revision |
-| Schematics, PCB, and enclosure files | [JLC downloads](https://openkits-wiki.easyeda.com/zh-hans/hspi-sf32lb52/training/xiaozhi-ai/download.html) |
+| Tự lắp ráp phiên bản hàn cắm chân từ đầu | [Hướng dẫn hoàn chỉnh XiaoZhi của JLC](https://openkits-wiki.easyeda.com/zh-hans/hspi-sf32lb52/training/xiaozhi-ai/) |
+| Mạch điện, PCB, hàn linh kiện và vỏ máy | Chọn chương tương ứng và kiểm tra đúng phiên bản phần cứng (revision) của bạn |
+| Tệp sơ đồ nguyên lý, PCB và vỏ máy | [Trang tải xuống của JLC](https://openkits-wiki.easyeda.com/zh-hans/hspi-sf32lb52/training/xiaozhi-ai/download.html) |
 
 <a name="flash"></a>
 
-## Firmware and use {#flash}
+## Firmware và cách sử dụng {#flash}
 
 <span id="network"></span>
 <span id="verify"></span>
 
-- [Firmware download and flashing tutorial](https://openkits-wiki.easyeda.com/zh-hans/hspi-sf32lb52/training/xiaozhi-ai/firmware-download.html): use the tools, files, and addresses specified for this hardware.
-- [xiaozhi-sf32 source and usage](https://github.com/78/xiaozhi-sf32): check supported hardware and version-specific instructions.
-- [SF32 releases](https://github.com/78/xiaozhi-sf32/releases): select a matching board build.
+- [Hướng dẫn tải và nạp firmware](https://openkits-wiki.easyeda.com/zh-hans/hspi-sf32lb52/training/xiaozhi-ai/firmware-download.html): sử dụng đúng công cụ, tệp tin và địa chỉ bộ nhớ được chỉ định cho phần cứng này.
+- [Mã nguồn và hướng dẫn sử dụng xiaozhi-sf32](https://github.com/78/xiaozhi-sf32): kiểm tra danh sách phần cứng được hỗ trợ và hướng dẫn theo từng phiên bản.
+- [Các bản phát hành SF32 (Releases)](https://github.com/78/xiaozhi-sf32/releases): chọn bản dựng (build) khớp với bo mạch của bạn.
 
-SF32 and ESP32 differ in chip, programming tools, and firmware format. Do not flash ESP32 online-build output or a complete ESP32 image onto this device. Follow the SF32 tutorial and check phone support for network provisioning.
+Dòng chip SF32 và ESP32 khác nhau về kiến trúc vi xử lý, công cụ lập trình cũng như định dạng firmware. Tuyệt đối không nạp bản dựng trực tuyến của ESP32 hoặc tệp ảnh firmware ESP32 hoàn chỉnh vào thiết bị này. Hãy làm theo hướng dẫn dành cho SF32 và kiểm tra khả năng hỗ trợ cấp mạng (qua Bluetooth PAN) trên điện thoại của bạn.
 
 <a name="hardware"></a>
 
-## Identify the hardware {#hardware}
+## Nhận diện phần cứng {#hardware}
 
 <figure class="source-figure">
 
-[![Through-hole prototype and finished appearance.](../../../public/images/zh/doc-30-image-001.webp)](../../../public/images/zh/doc-30-image-001.webp)
+[![Nguyên mẫu hàn cắm chân và ngoại quan hoàn thiện.](../../../public/images/zh/doc-30-image-001.webp)](../../../public/images/zh/doc-30-image-001.webp)
 
-<figcaption>Through-hole prototype and finished appearance.</figcaption>
+<figcaption>Nguyên mẫu hàn cắm chân và ngoại quan hoàn thiện.</figcaption>
 </figure>
 
 <a name="sources"></a>
 
-## Next steps {#sources}
+## Các bước tiếp theo {#sources}
 
-For an ESP32 breadboard, continue with the [basic S3 guide](../../hardware/breadboard-esp32-s3.md). See [Open hardware](../open-hardware.md) for other community designs.
+Nếu bạn muốn làm phiên bản trên bảng cắm thử (breadboard) dùng ESP32, hãy tiếp tục với [hướng dẫn cơ bản cho S3](../../hardware/breadboard-esp32-s3.md). Xem mục [Phần cứng mã nguồn mở](../open-hardware.md) để tham khảo các thiết kế khác từ cộng đồng.
