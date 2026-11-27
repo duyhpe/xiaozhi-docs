@@ -64,7 +64,7 @@ main/boards/my-s3-prototype/
 
 Đây chỉ là ví dụ minh họa cấu trúc thư mục. Hãy làm theo hướng dẫn bo mạch của phiên bản tương ứng để đăng ký trong Kconfig/CMake.
 
-</a>
+<a name="identity"></a>
 
 ## 3. Định nghĩa một định danh có thể truy xuất {#identity}
 
