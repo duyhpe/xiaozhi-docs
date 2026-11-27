@@ -1,59 +1,58 @@
 ---
 id: console
-title: Console guides
-description: 'Configure agents, voices, knowledge bases, and devices in the XiaoZhi Console.'
+title: Hướng dẫn sử dụng Console
+description: 'Cấu hình trợ lý (agent), giọng nói, cơ sở tri thức và thiết bị trên XiaoZhi Console.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 translation:
   status: review
   sourceHash: 8e8c95f01888497de7a5da8614cd4d0723d2bfa6f7cfb96f482eaa67ba6a6ed7
   reviewedAt: '2026-11-15'
 ---
-# Console guides
+# Hướng dẫn sử dụng Console
 
-Use the Console to manage your account, voices, knowledge bases, and devices. Follow the guides below; available features, quotas, and prices are those shown for your account.
+Sử dụng trang Console để quản lý tài khoản, giọng nói, cơ sở tri thức và các thiết bị của bạn. Làm theo các hướng dẫn bên dưới; các tính năng khả dụng, hạn mức (quota) và chi phí tuân theo thông tin hiển thị trên tài khoản của bạn.
 
 <a name="guides"></a>
 
-## Choose a guide {#guides}
+## Chọn hướng dẫn {#guides}
 
-| Guide | What it covers |
+| Hướng dẫn | Nội dung |
 | --- | --- |
-| [Configure persona, model, and voice](#role-and-voice) | Change the nickname, persona, language model, and voice; save and verify. |
-| [Speaker recognition](#speaker-recognition) | Select a voice record and add a speaker name and relationship description. |
-| [GitHub verification and benefits](./github-verification.md) | Link GitHub to a signed-in XiaoZhi account and distinguish verification from the developer platform. |
-| [Voice cloning](./voice-cloning.md) | Prepare suitable audio, train a voice, and test it with an agent. |
-| [Knowledge bases](./knowledge-base.md) | Parse documents into searchable content, test retrieval, and connect the knowledge base to an agent. |
+| [Cấu hình nhân vật, mô hình và giọng nói](#role-and-voice) | Thay đổi tên gọi, tính cách nhân vật, mô hình ngôn ngữ và giọng nói; lưu và kiểm tra hoạt động. |
+| [Nhận diện giọng nói người dùng](#speaker-recognition) | Chọn bản ghi giọng nói, thêm tên người nói và mô tả mối quan hệ. |
+| [Xác minh GitHub và quyền lợi](./github-verification.md) | Liên kết GitHub với tài khoản XiaoZhi đã đăng nhập và phân biệt quy trình xác minh này với nền tảng dành cho nhà phát triển. |
+| [Nhân bản giọng nói](./voice-cloning.md) | Chuẩn bị bản thu âm đạt chuẩn, huấn luyện giọng nói và thử nghiệm với trợ lý. |
+| [Cơ sở tri thức](./knowledge-base.md) | Phân tích tài liệu thành dữ liệu có thể tìm kiếm, kiểm tra truy xuất và kết nối cơ sở tri thức vào trợ lý. |
 
 <a name="role-and-voice"></a>
 
-## Change the name, voice, and language model {#role-and-voice}
+## Thay đổi tên gọi, giọng nói và mô hình ngôn ngữ {#role-and-voice}
 
-1. Sign in to the [Console](https://xiaozhi.me/console/), find the agent that actually owns the device, and open **Configure**.
-2. In the role and voice settings, change the assistant nickname and select the conversation language and voice. Preview the voice first; follow [Voice cloning](./voice-cloning.md) to use your own.
-3. For a custom persona, enable a custom character description and specify its identity, tone, and task. The assistant nickname does not change the device's offline [wake word](../development/wake-words.md).
-4. In the model and memory settings, select a language model available to your account. Read the eligibility or restriction notice for disabled options. Capabilities and charges depend on the current page.
-5. **Save**, close, and reopen the configuration to check that the selections remain. Start a new conversation on the device to verify the persona and voice; a successful preview alone does not confirm the device is using it.
+1. Đăng nhập vào [Console](https://xiaozhi.me/console/), tìm đúng trợ lý (agent) đang quản lý thiết bị của bạn và mở mục **Cấu hình (Configure)**.
+2. Trong phần thiết lập vai trò và giọng nói, thay đổi biệt danh của trợ lý, chọn ngôn ngữ giao tiếp và giọng nói. Hãy nghe thử giọng nói trước; làm theo hướng dẫn [Nhân bản giọng nói](./voice-cloning.md) nếu muốn dùng giọng của chính bạn.
+3. Để tùy chỉnh nhân vật, hãy bật phần mô tả nhân vật tùy chỉnh và điền thông tin về danh tính, giọng điệu cùng nhiệm vụ của trợ lý. Biệt danh của trợ lý không làm thay đổi [từ khóa đánh thức](../development/wake-words.md) ngoại tuyến trên thiết bị.
+4. Trong phần thiết lập mô hình và bộ nhớ, chọn một mô hình ngôn ngữ khả dụng cho tài khoản của bạn. Đọc kỹ thông báo điều kiện hoặc giới hạn đối với các tùy chọn bị làm mờ (vô hiệu hóa). Năng lực xử lý và chi phí phụ thuộc vào trang cấu hình hiện tại.
+5. Nhấn **Lưu (Save)**, đóng lại rồi mở lại phần cấu hình để kiểm tra xem các lựa chọn đã được lưu giữ chưa. Bắt đầu một cuộc trò chuyện mới trên thiết bị để kiểm tra nhân vật và giọng nói thực tế; việc nghe thử thành công trên web chưa đủ khẳng định thiết bị đã áp dụng cấu hình đó.
 
 <a name="speaker-recognition"></a>
 
-## Help an agent recognize speakers {#speaker-recognition}
+## Giúp trợ lý nhận diện người nói {#speaker-recognition}
 
-Speaker recognition distinguishes who is speaking. Voice cloning changes the voice used for the device's answers; it is a different feature.
+Nhận diện giọng nói người dùng (speaker recognition) giúp phân biệt ai đang nói chuyện. Trong khi đó, nhân bản giọng nói (voice cloning) thay đổi giọng đọc dùng cho câu trả lời của thiết bị; đây là hai tính năng hoàn toàn khác nhau.
 
-1. Speak clearly to the target device using the same agent, with only one person speaking, to create a selectable voice record.
-2. Open the agent's **Configure → Speaker recognition** settings and add a speaker.
-3. Select that person's recent voice record from the embedding/record dropdown. Preview it to avoid selecting another person or overlapping voices.
-4. Enter the speaker's name and description, such as “I am Alex, a family member of the device owner.” Save and check that the speaker appears in the list.
-5. Start a new conversation and test both registered and unregistered people. If recognition is unreliable, try a clearer recording and test again.
+1. Nói rõ ràng với thiết bị mục tiêu đang gắn với trợ lý đó (chỉ có một người nói) để tạo ra một bản ghi giọng nói có thể lựa chọn.
+2. Mở mục **Cấu hình → Nhận diện giọng nói (Configure → Speaker recognition)** của trợ lý và thêm người nói mới.
+3. Chọn bản ghi giọng nói gần đây của người đó từ danh sách thả xuống. Hãy nghe lại bản ghi để tránh chọn nhầm giọng người khác hoặc đoạn thu có tiếng nói chồng chéo.
+4. Nhập tên người nói và phần mô tả, ví dụ: “Tôi là Minh, người nhà của chủ thiết bị.” Lưu lại và kiểm tra xem tên người nói đã xuất hiện trong danh sách chưa.
+5. Bắt đầu một cuộc trò chuyện mới và thử nghiệm với cả người đã đăng ký lẫn người chưa đăng ký. Nếu khả năng nhận diện chưa ổn định, hãy thử thu âm lại ở môi trường yên tĩnh hơn và kiểm tra lại.
 
-For an empty list, check the selected agent, whether user voice records exist, and whether audio plays correctly. Follow the page's speaker-count and description-length limits. Noise and recording quality affect recognition; do not use it as identity authentication or payment authorization.
+Nếu danh sách bản ghi bị trống, hãy kiểm tra xem đã chọn đúng trợ lý chưa, đã có bản ghi giọng nói người dùng nào được tạo chưa và âm thanh có phát bình thường không. Tuân thủ giới hạn về số lượng người nói và độ dài mô tả trên trang. Tiếng ồn và chất lượng thu âm ảnh hưởng trực tiếp đến độ chính xác; không sử dụng tính năng này để xác thực danh tính bảo mật hay phê duyệt thanh toán.
 
 <a name="next"></a>
 
-## Reading and feedback {#next}
+## Đọc tài liệu và phản hồi {#next}
 
-These guides are open for community review. Use the feedback link at the end of a page to report problems, including the firmware version, board, and steps to reproduce them.
+Các hướng dẫn này luôn mở để cộng đồng cùng rà soát. Hãy sử dụng liên kết phản hồi ở cuối trang để báo cáo sự cố, đính kèm thông tin về phiên bản firmware, bo mạch và các bước tái hiện vấn đề.

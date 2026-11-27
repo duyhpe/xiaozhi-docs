@@ -1,12 +1,11 @@
 ---
 id: github-verification
-title: GitHub verification and benefits
-description: Link GitHub to your XiaoZhi account and understand what verification provides.
+title: Xác minh GitHub và quyền lợi
+description: Liên kết tài khoản GitHub với tài khoản XiaoZhi của bạn và tìm hiểu các quyền lợi nhận được sau khi xác minh.
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 sourceArticles:
   - DOC-01
 translation:
@@ -14,59 +13,59 @@ translation:
   sourceHash: d6da98922fdc1815d5a84a214eafb46c1d4cc502b5f15b70821f48923090f75c
   reviewedAt: '2026-11-15'
 ---
-# GitHub verification and benefits
+# Xác minh GitHub và quyền lợi
 
-GitHub verification links GitHub to an already signed-in XiaoZhi account. It provides applicable model and quota benefits. It is not a separate sign-in method or registration for the commercial developer platform.
+Tính năng xác minh GitHub giúp liên kết tài khoản GitHub với một tài khoản XiaoZhi đã đăng nhập sẵn, qua đó mở khóa các quyền lợi về mô hình và hạn mức sử dụng tương ứng. Đây không phải là phương thức đăng nhập độc lập hay bước đăng ký cho nền tảng nhà phát triển thương mại.
 
 <a name="scope"></a>
 
-## Preparation {#scope}
+## Chuẩn bị {#scope}
 
-Have your own XiaoZhi and GitHub accounts ready, and confirm you can sign in to both. Available models and benefits depend on the current Console account page.
+Chuẩn bị sẵn tài khoản XiaoZhi và tài khoản GitHub của riêng bạn, đồng thời đảm bảo bạn có thể đăng nhập vào cả hai. Các mô hình khả dụng và quyền lợi cụ thể phụ thuộc vào thông tin hiển thị trên trang tài khoản Console hiện hành.
 
 <a name="open"></a>
 
-## 1. Open verification {#open}
+## 1. Mở trang xác minh {#open}
 
-Sign in to the [XiaoZhi Console](https://xiaozhi.me/console/) and select GitHub verification in the account menu, or open the [GitHub verification page](https://xiaozhi.me/console/github-auth) directly.
+Đăng nhập vào [XiaoZhi Console](https://xiaozhi.me/console/) và chọn mục xác minh GitHub trong trình đơn tài khoản, hoặc truy cập trực tiếp [trang xác minh GitHub](https://xiaozhi.me/console/github-auth).
 
 <a name="bind"></a>
 
-## 2. Link and check the result {#bind}
+## 2. Liên kết và kiểm tra kết quả {#bind}
 
-1. Select the option to link GitHub and continue to GitHub's authorization page.
-2. Check the signed-in GitHub account and authorization target, then complete the requested steps.
-3. On returning to XiaoZhi, check the linked username and verification state. If it fails, read the error rather than reusing an expired callback URL.
-4. Reopen model and knowledge-base settings to check the actual options and quotas available to your account.
+1. Chọn tùy chọn liên kết GitHub và chuyển tiếp sang trang cấp quyền (authorization) của GitHub.
+2. Kiểm tra kỹ tài khoản GitHub đang đăng nhập cùng ứng dụng được cấp quyền, sau đó hoàn tất các bước xác nhận theo yêu cầu.
+3. Khi được chuyển hướng quay lại XiaoZhi, hãy kiểm tra tên người dùng đã liên kết và trạng thái xác minh. Nếu thao tác thất bại, hãy đọc kỹ thông báo lỗi thay vì tải lại một đường dẫn phản hồi (callback URL) đã hết hạn.
+4. Mở lại phần cài đặt mô hình và cơ sở tri thức để kiểm tra các tùy chọn cùng hạn mức thực tế được cấp cho tài khoản của bạn.
 
 <figure class="source-figure">
 
-[![GitHub verification workflow.](../../public/images/en/github-auth-flow.svg)](../../public/images/en/github-auth-flow.svg)
+[![Quy trình xác minh GitHub.](../../public/images/en/github-auth-flow.svg)](../../public/images/en/github-auth-flow.svg)
 
-<figcaption>GitHub verification workflow. Click to view full size.</figcaption>
+<figcaption>Quy trình xác minh GitHub. Nhấp vào ảnh để xem kích thước đầy đủ.</figcaption>
 </figure>
 
 <a name="benefits"></a>
 
-## 3. Understand the benefits {#benefits}
+## 3. Tìm hiểu các quyền lợi {#benefits}
 
-| Item | Where to check |
+| Hạng mục | Nơi kiểm tra |
 | --- | --- |
-| Models and voices | Current agent configuration lists; the service may change |
-| Knowledge bases and document counts | Notices on the [knowledge-base](./knowledge-base.md) page; account types differ |
-| Device count | The limit shown when adding a device |
-| Commercial developer capabilities | Separate from GitHub linking; follow the commercial platform's requirements |
+| Mô hình và giọng nói | Danh sách trong phần cấu hình trợ lý hiện tại; chính sách dịch vụ có thể thay đổi |
+| Cơ sở tri thức và số lượng tài liệu | Các thông báo trên trang [cơ sở tri thức](./knowledge-base.md); hạn mức khác nhau tùy loại tài khoản |
+| Số lượng thiết bị | Giới hạn hiển thị khi thực hiện thao tác thêm thiết bị mới |
+| Năng lực nền tảng nhà phát triển thương mại | Tách biệt hoàn toàn với việc liên kết GitHub; cần tuân thủ yêu cầu riêng của nền tảng thương mại |
 
-Service benefits can change. Recheck the account page before purchasing or configuring a feature.
+Các quyền lợi dịch vụ có thể thay đổi theo thời gian. Hãy kiểm tra lại trang thông tin tài khoản trước khi mua gói hoặc cấu hình tính năng.
 
 <a name="verify"></a>
 
-## Unlinking and verification {#verify}
+## Hủy liên kết và kiểm tra lại {#verify}
 
-Read the page notices before unlinking. Currently, removing GitHub verification signs out the session and requires signing in again. Do not judge benefits from an old page left open after sign-out. After signing in again, check linking status, available models, and existing services.
+Đọc kỹ các lưu ý hiển thị trên trang trước khi hủy liên kết. Hiện tại, việc gỡ bỏ xác minh GitHub sẽ tự động đăng xuất phiên làm việc và yêu cầu bạn đăng nhập lại. Không đánh giá quyền lợi dựa trên một trang cũ còn mở sau khi đã đăng xuất. Sau khi đăng nhập lại, hãy kiểm tra trạng thái liên kết, các mô hình khả dụng và các dịch vụ hiện có.
 
 <a name="next"></a>
 
-## Next steps {#next}
+## Các bước tiếp theo {#next}
 
-Continue with [Knowledge bases](./knowledge-base.md) or [Voice cloning](./voice-cloning.md). For sign-in issues, see [Account troubleshooting](../faq/account-and-binding.md).
+Tiếp tục với hướng dẫn [Cơ sở tri thức](./knowledge-base.md) hoặc [Nhân bản giọng nói](./voice-cloning.md). Nếu gặp sự cố đăng nhập, hãy xem mục [Khắc phục sự cố tài khoản](../faq/account-and-binding.md).
