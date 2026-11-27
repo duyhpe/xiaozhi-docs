@@ -1,12 +1,11 @@
 ---
 id: community-mcp-tools
-title: Community MCP tools and services
-description: Find authors and maintenance links while separating general integration from third-party setup.
+title: Công cụ và dịch vụ MCP từ cộng đồng
+description: Tìm thông tin tác giả và liên kết bảo trì, đồng thời phân biệt quy trình tích hợp chung với cách thiết lập của bên thứ ba.
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  Third-party projects and prototypes have not all been tested. Check exact versions and hardware requirements before
-  use.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các dự án và nguyên mẫu của bên thứ ba chưa được kiểm thử toàn bộ; vui lòng kiểm tra kỹ phiên bản chính xác và yêu cầu phần cứng trước khi sử dụng.
 sourceArticles:
   - DOC-43
   - DOC-26
@@ -17,85 +16,85 @@ translation:
   sourceHash: 806768fa303e7a3617a1f5919109a6b8875df41408c8e26a1f902103dafbffad
   reviewedAt: '2026-11-15'
 ---
-# Community MCP tools and services
+# Công cụ và dịch vụ MCP từ cộng đồng
 
-These community tools offer different maintenance options. They are not official services, and inclusion does not mean this site has run, audited, or guaranteed every external feature.
+Các công cụ từ cộng đồng này cung cấp nhiều phương thức vận hành và bảo trì khác nhau. Chúng không phải là dịch vụ chính thức của XiaoZhi, và việc được liệt kê tại đây không đồng nghĩa với việc trang tài liệu này đã chạy thử, kiểm toán bảo mật hay đảm bảo mọi tính năng bên ngoài.
 
 <a name="scope"></a>
 
-## Choose a maintenance approach {#scope}
+## Chọn phương thức vận hành {#scope}
 
-| Type | Suitable use | Check |
+| Loại hình | Mục đích sử dụng phù hợp | Nội dung cần kiểm tra |
 | --- | --- | --- |
-| Local desktop launcher | Keep tools online on your Windows computer | Release source, dependencies, sleep, and process state |
-| Self-hosted management platform | Manage multiple endpoints and services | Version, database, authentication, updates, and backups |
-| Third-party hosted service | A provider keeps the service running | Credential use, cost, operator, and how to stop using it |
+| Trình khởi chạy cục bộ trên máy tính | Duy trì các công cụ hoạt động trực tuyến trên máy tính Windows của bạn | Nguồn phát hành, thư viện phụ thuộc, chế độ ngủ (sleep) và trạng thái tiến trình |
+| Nền tảng quản lý tự lưu trữ (Self-hosted) | Quản lý tập trung nhiều điểm cuối và nhiều dịch vụ | Phiên bản, cơ sở dữ liệu, xác thực, cập nhật và sao lưu dữ liệu |
+| Dịch vụ lưu trữ sẵn của bên thứ ba | Nhà cung cấp dịch vụ duy trì hệ thống chạy liên tục | Quyền sử dụng thông tin xác thực, chi phí, đơn vị vận hành và cách ngừng sử dụng |
 
 <a name="mcptools"></a>
 
 ## XiaoZhi MCPTools {#mcptools}
 
-Author: **ZongZiTongXue (粽子同学)**. Project: [xiaozhi-MCPTools](https://github.com/ZongZiTongXue/xiaozhi-MCPTools). Read the author's release notes for the current version and distribution before installing.
+Tác giả: **ZongZiTongXue (粽子同学)**. Dự án: [xiaozhi-MCPTools](https://github.com/ZongZiTongXue/xiaozhi-MCPTools). Hãy đọc kỹ ghi chú phát hành của tác giả về phiên bản hiện hành và gói cài đặt trước khi sử dụng.
 
-The author maintains installation details. For permission or 401 errors, check release notes and authentication configuration. Verify the endpoint with the [official minimal example](../mcp/quickstart.md) first, and retain actual startup errors.
+Tác giả tự duy trì hướng dẫn cài đặt chi tiết. Đối với các lỗi phân quyền hoặc lỗi `401`, hãy kiểm tra ghi chú phát hành và cấu hình xác thực. Hãy kiểm chứng điểm cuối của bạn bằng [ví dụ tối giản chính thức](../mcp/quickstart.md) trước tiên và lưu giữ lại thông báo lỗi khởi chạy thực tế.
 
-### Install and make the first connection
+### Cài đặt và thiết lập kết nối đầu tiên
 
-The [author-maintained installation guide (Chinese)](https://kcn80f4hacgs.feishu.cn/docx/HErcd1F8LoKjDnx3O0Pcktd3nPI) contains releases, dependency setup, and UI steps; an [installation video (Chinese)](https://v.douyin.com/PK-NmFdDIsE/) is also available. Follow the downloaded version's requirements instead of reusing an installer password or permission settings from another version.
+[Hướng dẫn cài đặt do tác giả duy trì (tiếng Trung)](https://kcn80f4hacgs.feishu.cn/docx/HErcd1F8LoKjDnx3O0Pcktd3nPI) cung cấp các bản phát hành, thiết lập thư viện phụ thuộc và các bước thao tác giao diện; ngoài ra còn có [video hướng dẫn cài đặt (tiếng Trung)](https://v.douyin.com/PK-NmFdDIsE/). Hãy tuân thủ yêu cầu của đúng phiên bản bạn tải về thay vì dùng lại mật khẩu trình cài đặt hoặc thiết lập quyền từ phiên bản khác.
 
-1. Complete that version's initialization and Python/dependency checks without installation errors.
-2. [Copy the target agent's MCP endpoint](../mcp/quickstart.md#endpoint), add it in the application, give the entry a recognizable agent name, and save.
-3. Keep the terminal visible on the first run, start MCP, and inspect connection and child-process errors.
-4. Refresh tools in the same agent, request one explicit tool call, and verify its real result. Local tools go offline when the computer sleeps or the application closes.
+1. Hoàn tất quá trình khởi tạo của phiên bản đó và kiểm tra Python/thư viện phụ thuộc mà không phát sinh lỗi cài đặt.
+2. [Sao chép địa chỉ điểm cuối MCP của trợ lý mục tiêu](../mcp/quickstart.md#endpoint), thêm vào ứng dụng, đặt cho mục này một tên trợ lý dễ nhận biết và lưu lại.
+3. Giữ cửa sổ dòng lệnh (terminal) hiển thị trong lần chạy đầu tiên, khởi chạy MCP và kiểm tra lỗi kết nối cũng như lỗi của tiến trình con.
+4. Làm mới danh sách công cụ trong cùng trợ lý đó, yêu cầu gọi rõ ràng một công cụ và kiểm chứng kết quả thực tế. Các công cụ chạy cục bộ sẽ ngoại tuyến khi máy tính chuyển sang chế độ ngủ hoặc khi bạn đóng ứng dụng.
 
-For installation or authentication failures, keep the actual error and software version and use the author's current troubleshooting instructions. A historical version's ignorable 401 notice does not make all authentication failures safe to ignore.
+Khi gặp lỗi cài đặt hoặc xác thực, hãy lưu giữ thông báo lỗi thực tế cùng phiên bản phần mềm và làm theo hướng dẫn xử lý sự cố hiện hành của tác giả. Một lưu ý cũ về việc có thể bỏ qua lỗi `401` ở phiên bản trước không có nghĩa là mọi lỗi xác thực đều an toàn để bỏ qua.
 
 <a name="mcphub"></a>
 
 ## xiaozhi-mcphub {#mcphub}
 
-Maintainer: **huangjunsen0406**. Project: [xiaozhi-mcphub](https://github.com/huangjunsen0406/xiaozhi-mcphub), covering multiple endpoints, groups, and service management.
+Người duy trì: **huangjunsen0406**. Dự án: [xiaozhi-mcphub](https://github.com/huangjunsen0406/xiaozhi-mcphub), hỗ trợ quản lý nhiều điểm cuối, phân nhóm và điều phối dịch vụ tập trung.
 
 <figure class="source-figure">
 
-[![xiaozhi-mcphub tool marketplace. This is a service-selection interface, not a connection architecture diagram.](../../public/images/zh/doc-27-image-006.webp)](../../public/images/zh/doc-27-image-006.webp)
+[![Chợ công cụ của xiaozhi-mcphub. Đây là giao diện lựa chọn dịch vụ, không phải sơ đồ kiến trúc kết nối.](../../public/images/zh/doc-27-image-006.webp)](../../public/images/zh/doc-27-image-006.webp)
 
-<figcaption>xiaozhi-mcphub tool marketplace. This is a service-selection interface, not a connection architecture diagram.</figcaption>
+<figcaption>Chợ công cụ của xiaozhi-mcphub. Đây là giao diện lựa chọn dịch vụ, không phải sơ đồ kiến trúc kết nối.</figcaption>
 </figure>
 
-Before self-hosting, read that version's README, pin the image/source version, change default credentials, and check database and backup arrangements.
+Trước khi tự triển khai lên máy chủ (self-hosting), hãy đọc kỹ tệp `README` của phiên bản đó, cố định phiên bản image/mã nguồn, đổi thông tin đăng nhập mặc định, đồng thời kiểm tra phương án cơ sở dữ liệu và sao lưu dự phòng.
 
 <a name="bridge-tools"></a>
 
-## HyperChat / McpPipe bridges {#bridge-tools}
+## Cầu nối HyperChat / McpPipe {#bridge-tools}
 
-Install from the [HyperChat project and releases](https://github.com/BigSweetPotatoStudio/HyperChat) and [McpPipe project and integration guide](https://github.com/onepy/Mcp_Pipe-Xiaozhi-All#readme). Choose compatible versions and follow each README for installation and launch commands.
+Cài đặt từ [dự án và bản phát hành HyperChat](https://github.com/BigSweetPotatoStudio/HyperChat) cùng [dự án và hướng dẫn tích hợp McpPipe](https://github.com/onepy/Mcp_Pipe-Xiaozhi-All#readme). Chọn các phiên bản tương thích và làm theo tệp `README` của từng dự án để cài đặt và khởi chạy.
 
-1. Create an MCP gateway in HyperChat, select the tools to share under its allowed-MCP list, save, and copy the generated gateway URL.
-2. In McpPipe, choose the transport matching that URL. For a Streamable HTTP gateway, select that mode and put the gateway URL in the remote-service address field.
-3. Paste the [XiaoZhi agent's MCP endpoint](../mcp/quickstart.md#endpoint) into the XiaoZhi endpoint field. The gateway URL and XiaoZhi endpoint serve different purposes; do not swap them.
-4. Connect and keep both applications running. Refresh tools in the XiaoZhi Console, then make one explicit call. After adding another tool, also enable it in the gateway's allowed list and reconnect.
+1. Tạo một cổng kết nối MCP (MCP gateway) trong HyperChat, chọn các công cụ muốn chia sẻ trong danh sách MCP được phép (allowed-MCP), lưu lại và sao chép địa chỉ URL cổng kết nối vừa tạo.
+2. Trong McpPipe, chọn giao thức truyền tải khớp với địa chỉ URL đó. Đối với cổng Streamable HTTP, hãy chọn chế độ tương ứng và dán URL cổng kết nối vào ô địa chỉ dịch vụ từ xa.
+3. Dán [địa chỉ điểm cuối MCP của trợ lý XiaoZhi](../mcp/quickstart.md#endpoint) vào ô điểm cuối XiaoZhi. URL cổng kết nối và điểm cuối XiaoZhi đảm nhiệm hai vai trò khác nhau; tuyệt đối không dán tráo đổi vị trí của chúng.
+4. Kết nối và duy trì chạy cả hai ứng dụng. Làm mới danh sách công cụ trên XiaoZhi Console, sau đó thực hiện một lượt gọi công cụ rõ ràng. Sau khi thêm công cụ mới, hãy nhớ bật công cụ đó trong danh sách được phép của cổng kết nối và kết nối lại.
 
-See [Connect existing services](../mcp/connect-existing-servers.md) for general stdio, SSE, HTTP configuration and troubleshooting.
+Xem mục [Kết nối các dịch vụ MCP có sẵn](../mcp/connect-existing-servers.md) để nắm rõ cấu hình chung và cách xử lý sự cố cho stdio, SSE và HTTP.
 
 <a name="search"></a>
 
-## Shanmao web search {#search}
+## Tìm kiếm web Shanmao {#search}
 
-Shanmao Technology provides hosted search. Before use, check its current HTTPS entry point, pricing, and operator, then decide whether to entrust your MCP credentials to it.
+Shanmao Technology cung cấp dịch vụ tìm kiếm lưu trữ sẵn. Trước khi sử dụng, hãy kiểm tra điểm truy cập HTTPS hiện hành, biểu phí và đơn vị vận hành, sau đó cân nhắc kỹ xem có nên giao thông tin xác thực MCP của bạn cho dịch vụ này hay không.
 
-Use the [service maintenance instructions](https://my.feishu.cn/docx/DN0ndX1JaoP4EWx1FBWcdCmcnoc) to verify the current HTTPS address and operator. For a general search integration you can run yourself, see the [search example](../mcp/examples/web-search.md).
+Sử dụng [hướng dẫn bảo trì dịch vụ](https://my.feishu.cn/docx/DN0ndX1JaoP4EWx1FBWcdCmcnoc) để xác minh địa chỉ HTTPS hiện hành và đơn vị vận hành. Nếu muốn tự triển khai tích hợp tìm kiếm trên máy của mình, hãy xem [ví dụ tìm kiếm web](../mcp/examples/web-search.md).
 
 <SourceMaterials article="DOC-43" />
 
 <a name="materials"></a>
 
-## Before connecting {#materials}
+## Trước khi kết nối {#materials}
 
-Use the maintainer's current release and check permissions, dependencies, and how to exit. Remove MCP endpoints, API keys, and personal data before sharing configuration or screenshots.
+Hãy sử dụng bản phát hành hiện hành của người duy trì dự án, đồng thời kiểm tra quyền hạn truy cập, thư viện phụ thuộc và cách thoát chương trình an toàn. Xóa bỏ địa chỉ điểm cuối MCP, khóa API và dữ liệu cá nhân trước khi chia sẻ tệp cấu hình hoặc ảnh chụp màn hình.
 
 <a name="verify"></a>
 
-## Verify availability {#verify}
+## Kiểm tra tính khả dụng {#verify}
 
-With your own account, verify endpoint connection → tool discovery → explicit invocation → correct result, then restart, network recovery, and shutdown. Share only redacted logs. Direct third-party issues to the corresponding maintainer.
+Bằng tài khoản của chính bạn, hãy kiểm chứng lần lượt: kết nối điểm cuối → khám phá công cụ → gọi công cụ rõ ràng → kết quả trả về chính xác, sau đó kiểm tra quá trình khởi động lại, khôi phục mạng và tắt ứng dụng. Chỉ chia sẻ nhật ký đã che thông tin nhạy cảm. Mọi sự cố phát sinh từ công cụ bên thứ ba vui lòng gửi trực tiếp tới người duy trì dự án tương ứng.

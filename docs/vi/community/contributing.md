@@ -1,12 +1,11 @@
 ---
 id: contributing
-title: Contribute to the documentation
-description: 'Correct instructions, improve tutorials, and help readers in more languages.'
+title: Đóng góp cho bộ tài liệu
+description: 'Sửa lỗi hướng dẫn, cải thiện các bài thực hành và hỗ trợ độc giả bằng nhiều ngôn ngữ hơn.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 translation:
   status: review
   sourceHash: b6f5d3a09a547466d8835cf3e6979aedd82056d40b6b740c896ec2a5503af1be
@@ -14,32 +13,32 @@ translation:
 ---
 <a name="contributing"></a>
 
-# Contribute to the documentation {#contributing}
+# Đóng góp cho bộ tài liệu {#contributing}
 
-You can correct steps, add missing explanations, verify hardware wiring, or help translate. Small corrections are welcome too.
+Bạn có thể chỉnh sửa các bước thực hiện, bổ sung giải thích còn thiếu, xác minh sơ đồ đấu nối phần cứng hoặc hỗ trợ dịch thuật. Những chỉnh sửa nhỏ cũng luôn được hoan nghênh.
 
 <a name="report-an-issue"></a>
 
-## Report a problem {#report-an-issue}
+## Báo cáo sự cố {#report-an-issue}
 
-Use the feedback link below the article. Include the page URL, affected section, device model, and firmware version. Describe what happened and what you expected.
+Sử dụng liên kết phản hồi (feedback) ở cuối bài viết. Vui lòng cung cấp đường dẫn URL của trang, phần nội dung bị ảnh hưởng, mẫu thiết bị (model) và phiên bản firmware. Mô tả rõ hiện tượng thực tế đã xảy ra và kết quả bạn kỳ vọng.
 
 <a name="submit-a-correction"></a>
 
-## Submit a correction {#submit-a-correction}
+## Gửi đề xuất chỉnh sửa {#submit-a-correction}
 
-1. Select “Edit this page on GitHub” below the article.
-2. Edit the Markdown and open a pull request. GitHub guides first-time contributors through creating a fork.
-3. Explain the reason and how you checked the change. Once maintainers review and merge it, the website updates automatically.
+1. Chọn “Edit this page on GitHub” ở cuối bài viết.
+2. Chỉnh sửa tệp Markdown và mở một Pull Request. GitHub sẽ tự động hướng dẫn người đóng góp lần đầu cách tạo bản sao lưu nhánh (fork).
+3. Giải thích lý do chỉnh sửa và cách bạn đã kiểm chứng thay đổi đó. Sau khi đội ngũ duy trì xem xét và hợp nhất (merge), trang web sẽ tự động cập nhật.
 
-See the [repository contribution guide](https://github.com/78/xiaozhi-docs/blob/main/CONTRIBUTING.md) for writing and submission conventions.
+Xem thêm [hướng dẫn đóng góp của kho lưu trữ](https://github.com/78/xiaozhi-docs/blob/main/CONTRIBUTING.md) để nắm rõ các quy ước trình bày và gửi bài.
 
 <a name="help-translate"></a>
 
-## Help translate {#help-translate}
+## Hỗ trợ dịch thuật {#help-translate}
 
-The English guides are open for community review. Check wording, real operating steps, hardware differences, and missing explanations. A translated page is not a claim that every hardware configuration has been tested.
+Các hướng dẫn bản tiếng Anh luôn mở rộng cho cộng đồng cùng rà soát. Hãy kiểm tra cách dùng từ, các bước thao tác thực tế, sự khác biệt giữa các phiên bản phần cứng và những phần giải thích còn thiếu. Một trang đã được dịch không đồng nghĩa với việc mọi cấu hình phần cứng trong đó đều đã được kiểm thử.
 
-Chinese and English articles use identical paths. Use consistent terms and preserve code, pins, board IDs, and filenames. Review image captions, diagrams, and interface labels as well as prose. Authentic screenshots in another language should have clear explanatory captions.
+Các bài viết tiếng Trung và tiếng Anh sử dụng cấu trúc đường dẫn giống hệt nhau. Hãy sử dụng thuật ngữ nhất quán và giữ nguyên mã nguồn, tên chân cắm (pins), mã định danh bo mạch (board IDs) và tên tệp. Đừng quên rà soát cả chú thích ảnh, sơ đồ và nhãn giao diện bên cạnh phần văn bản chính. Các ảnh chụp màn hình thực tế bằng ngôn ngữ khác cần có chú thích giải thích rõ ràng.
 
-Start by reviewing one article. If you find a technical error, also identify the issue in the Chinese source.
+Hãy bắt đầu bằng việc rà soát một bài viết. Nếu phát hiện lỗi kỹ thuật, bạn cũng nên chỉ ra vấn đề tương ứng trong tài liệu nguồn tiếng Trung.
