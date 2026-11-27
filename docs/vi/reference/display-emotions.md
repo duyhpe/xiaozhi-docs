@@ -1,10 +1,10 @@
 ---
 id: display-emotions
-title: Emotion fields and display resources
-description: 'Check semantics, resource mappings, and fallback against the firmware version.'
+title: Trường biểu cảm và tài nguyên hiển thị
+description: 'Kiểm tra ngữ nghĩa, ánh xạ tài nguyên và cơ chế hiển thị dự phòng (fallback) đối chiếu với phiên bản firmware.'
 status: review
 reviewedAt: '2026-11-15'
-reviewNote: Applies to firmware v2.6.0. The firmware repository owns the full specification and implementation.
+reviewNote: 'Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Áp dụng cho firmware v2.6.0; kho mã nguồn firmware quản lý toàn bộ đặc tả kỹ thuật và mã triển khai chi tiết.'
 sourceArticles:
   - DOC-39
 translation:
@@ -12,47 +12,47 @@ translation:
   sourceHash: cf931d7d2b13c6a44c2f86a819af6cb3804eff828563a9a181faad1395f12050
   reviewedAt: '2026-11-15'
 ---
-# Emotion fields and display resources
+# Trường biểu cảm và tài nguyên hiển thị
 
-Server emotion semantics, Unicode emoji, and screen graphics are different objects. The matching firmware repository defines message protocols and resource mappings.
+Ngữ nghĩa biểu cảm từ máy chủ, biểu tượng cảm xúc Unicode (emoji) và đồ họa hiển thị trên màn hình là những đối tượng hoàn toàn khác nhau. Kho mã nguồn firmware tương ứng sẽ quy định các giao thức bản tin và bảng ánh xạ tài nguyên.
 
 <a name="scope"></a>
 
-## Identify the layer {#scope}
+## Xác định tầng xử lý {#scope}
 
-| Layer | Check |
+| Tầng xử lý | Nội dung kiểm tra |
 | --- | --- |
-| Protocol | Message types and emotion fields in the [versioned WebSocket documentation](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/docs/websocket.md) |
-| Display implementation | Actual SetEmotion paths in [main/display](https://github.com/78/xiaozhi-esp32/tree/4de00aed740595a8713b01f8332b9b2cf30685bc/main/display) |
-| Fonts, animations, images | This build's resource package and name mappings |
+| Giao thức (Protocol) | Các loại bản tin và trường biểu cảm trong [tài liệu WebSocket theo phiên bản](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/docs/websocket.md) |
+| Triển khai hiển thị | Các luồng xử lý `SetEmotion` thực tế trong thư mục [main/display](https://github.com/78/xiaozhi-esp32/tree/4de00aed740595a8713b01f8332b9b2cf30685bc/main/display) |
+| Phông chữ, hoạt ảnh, hình ảnh | Gói tài nguyên của bản dựng hiện tại và bảng ánh xạ tên gọi |
 
 <a name="message-and-names"></a>
 
-## Message example and name lookup {#message-and-names}
+## Ví dụ bản tin và tra cứu tên biểu cảm {#message-and-names}
 
-The WebSocket document for this version gives this emotion message example:
+Tài liệu WebSocket của phiên bản này đưa ra ví dụ bản tin biểu cảm như sau:
 
 ```json
 {"session_id":"example-session","type":"llm","emotion":"happy","text":"😀"}
 ```
 
-`emotion` names a display resource; the Unicode glyph in `text` is not automatically its filename. For default names such as `neutral`, `happy`, and `thinking`, open the [font resource 2.0.0 mapping table with 21 entries](https://github.com/78/xiaozhi-fonts/blob/d45dbc64052d57048f20ab1770074172ce9eb53b/mappings/emoji.json). Firmware v2.6.0's [dependency declaration](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/main/idf_component.yml) uses this font-version line. Custom resource packs and specialized displays may define their own names and mappings; check the actual build.
+Trường `emotion` định danh một tài nguyên hiển thị; ký tự Unicode trong trường `text` không tự động trở thành tên tệp của tài nguyên đó. Đối với các tên mặc định như `neutral`, `happy` và `thinking`, hãy mở [bảng ánh xạ tài nguyên phông chữ 2.0.0 gồm 21 mục](https://github.com/78/xiaozhi-fonts/blob/d45dbc64052d57048f20ab1770074172ce9eb53b/mappings/emoji.json). Phần [khai báo gói phụ thuộc của firmware v2.6.0](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/main/idf_component.yml) sử dụng dòng phiên bản phông chữ này. Các gói tài nguyên tùy chỉnh và màn hình chuyên biệt có thể định nghĩa tên gọi cùng bảng ánh xạ riêng; hãy kiểm tra trực tiếp trên bản dựng thực tế.
 
-Unknown values do not have one universal fallback. The v2.6.0 [OLED implementation](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/main/display/oled_display.cc) checks Emoji and then the icon font; if neither has a glyph, it displays a neutral placeholder and reports failure. The [LCD implementation](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/main/display/lcd_display.cc) also checks image resources; if neither font has a matching glyph either, it reports failure rather than guaranteeing that the requested emotion was displayed.
+Các giá trị biểu cảm không xác định sẽ không có chung một cơ chế dự phòng (fallback) duy nhất. Trên bản v2.6.0, [mã triển khai OLED](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/main/display/oled_display.cc) kiểm tra phông Emoji trước rồi mới đến phông biểu tượng (icon font); nếu cả hai đều không có ký tự tương ứng, màn hình sẽ hiển thị biểu tượng mặc định trung tính và báo lỗi. Trong khi đó, [mã triển khai LCD](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/main/display/lcd_display.cc) còn kiểm tra thêm tài nguyên hình ảnh; nếu cả hai loại phông chữ cũng không có ký tự khớp, hệ thống sẽ báo lỗi thay vì đảm bảo biểu cảm được yêu cầu đã hiển thị lên màn hình.
 
 <a name="verify"></a>
 
-## Troubleshooting order {#verify}
+## Trình tự khắc phục sự cố {#verify}
 
-1. Confirm firmware and theme/resource-package versions.
-2. Observe the actual received emotion value, then check whether the display implementation can find its resource.
-3. Test common and unknown values. Record whether it falls back, retains the previous image, or errors.
-4. Check on the target screen. A screenshot from another OLED or LCD is not a substitute.
+1. Xác nhận phiên bản firmware và phiên bản gói giao diện/tài nguyên đang dùng.
+2. Quan sát giá trị `emotion` thực tế nhận được, sau đó kiểm tra xem mã hiển thị trên thiết bị có tìm thấy tài nguyên tương ứng hay không.
+3. Thử nghiệm cả các giá trị thông dụng lẫn giá trị không xác định. Ghi nhận xem thiết bị chuyển về biểu tượng dự phòng, giữ nguyên hình ảnh cũ hay báo lỗi.
+4. Kiểm tra trực tiếp trên màn hình mục tiêu. Ảnh chụp màn hình từ một thiết bị OLED hay LCD khác không thể dùng để thay thế.
 
-Tokenizers differ, so an emoji is not guaranteed to be one token in every model. Similar-looking graphics do not make resource names interchangeable.
+Các bộ tách từ (tokenizers) của mô hình ngôn ngữ hoạt động khác nhau, vì vậy một biểu tượng emoji không đảm bảo luôn tương ứng với đúng một token trên mọi mô hình. Các hình ảnh trông na ná nhau cũng không làm cho tên tài nguyên của chúng có thể dùng thay thế cho nhau.
 
 <a name="next"></a>
 
-## Updating resources {#next}
+## Cập nhật tài nguyên {#next}
 
-Add emotion values or mappings together with implementation, resources, and tests in the firmware/resource repository, then update this site's versioned links. For sound resources, see [Custom prompt sounds](../development/custom-prompts.md).
+Hãy bổ sung các giá trị biểu cảm hoặc bảng ánh xạ mới đồng bộ cùng mã triển khai, gói tài nguyên và bài kiểm thử trong kho mã nguồn firmware/tài nguyên, sau đó cập nhật lại các liên kết theo phiên bản trên trang tài liệu này. Đối với tài nguyên âm thanh, hãy xem mục [Tùy chỉnh âm thanh thông báo](../development/custom-prompts.md).

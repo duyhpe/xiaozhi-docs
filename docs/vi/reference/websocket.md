@@ -1,10 +1,10 @@
 ---
 id: websocket-reference
-title: WebSocket protocol versions
-description: 'Find matching firmware documentation for transport, sessions, and audio.'
+title: Các phiên bản giao thức WebSocket
+description: 'Tra cứu tài liệu firmware tương ứng cho tầng truyền tải, phiên làm việc và luồng âm thanh.'
 status: review
 reviewedAt: '2026-11-15'
-reviewNote: Applies to firmware v2.6.0. The firmware repository owns the full specification and implementation.
+reviewNote: 'Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Áp dụng cho firmware v2.6.0; kho mã nguồn firmware quản lý toàn bộ đặc tả kỹ thuật và mã triển khai chi tiết.'
 sourceArticles:
   - DOC-38
 translation:
@@ -12,44 +12,44 @@ translation:
   sourceHash: ed94cb41ea90d1dd1ead00ec6de909dc9ad7eb380f822efd87c5c67de6c51222
   reviewedAt: '2026-11-15'
 ---
-# WebSocket protocol versions
+# Các phiên bản giao thức WebSocket
 
-The **xiaozhi-esp32 repository** maintains full message formats, binary envelopes, and state transitions. This page links documentation and implementation from the same version.
+**Kho mã nguồn `xiaozhi-esp32`** duy trì đầy đủ định dạng bản tin, khung dữ liệu nhị phân (binary envelopes) và các bước chuyển đổi trạng thái. Trang này liên kết đến tài liệu kỹ thuật và mã nguồn triển khai của cùng một phiên bản.
 
 <a name="scope"></a>
 
-## Choose a baseline {#scope}
+## Chọn phiên bản tham chiếu chuẩn {#scope}
 
-This page applies to firmware **v2.6.0**, commit `4de00aed740595a8713b01f8332b9b2cf30685bc`. For another version, use its repository documentation rather than later fields.
+Trang này áp dụng cho firmware **v2.6.0**, mã commit `4de00aed740595a8713b01f8332b9b2cf30685bc`. Đối với phiên bản khác, hãy tra cứu tài liệu trong kho mã nguồn của đúng phiên bản đó thay vì áp dụng các trường dữ liệu của bản mới hơn.
 
-| Question | Authoritative reference |
+| Nội dung tra cứu | Tài liệu tham chiếu chính thức |
 | --- | --- |
-| Overall flow, headers, JSON, audio, and states | [Same-version WebSocket documentation](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/docs/websocket.md) |
-| Handshake, version headers, binary I/O, server hello parsing | [websocket_protocol.cc](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/main/protocols/websocket_protocol.cc) |
-| Where the address and token originate | [OTA configuration and activation](./ota.md) |
-| MCP carried over the connection | [Same-version MCP protocol](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/docs/mcp-protocol.md) |
+| Luồng hoạt động tổng thể, tiêu đề (headers), JSON, âm thanh và trạng thái | [Tài liệu WebSocket cùng phiên bản](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/docs/websocket.md) |
+| Bắt tay kết nối (handshake), tiêu đề phiên bản, xuất/nhập nhị phân, phân tích bản tin `hello` từ máy chủ | [websocket_protocol.cc](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/main/protocols/websocket_protocol.cc) |
+| Nguồn gốc của địa chỉ kết nối và mã token | [Cấu hình OTA và kích hoạt](./ota.md) |
+| Giao thức MCP truyền tải qua kết nối này | [Giao thức MCP cùng phiên bản](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/docs/mcp-protocol.md) |
 
 <a name="debug"></a>
 
-## Check in order {#debug}
+## Trình tự kiểm tra {#debug}
 
-1. Identify firmware, board, and actual connection method from logs. Check the OTA-provided connection configuration first.
-2. Compare headers and hello messages to establish envelope version, audio parameters, and capabilities.
-3. Distinguish JSON control messages, binary audio, and tool calls. Versions at different protocol layers are not one shared version number.
-4. Check session information, states, and errors, then use the actual send/receive sequence to locate failures.
+1. Xác định phiên bản firmware, model bo mạch và phương thức kết nối thực tế từ nhật ký (logs). Kiểm tra cấu hình kết nối do dịch vụ OTA trả về trước tiên.
+2. Đối chiếu các tiêu đề (headers) và bản tin `hello` để xác định phiên bản khung đóng gói (envelope version), thông số âm thanh và các năng lực được hỗ trợ.
+3. Phân biệt rõ bản tin điều khiển JSON, dữ liệu âm thanh nhị phân và các lượt gọi công cụ (tool calls). Số phiên bản ở các tầng giao thức khác nhau không phải là một con số dùng chung duy nhất.
+4. Kiểm tra thông tin phiên làm việc (session), trạng thái và thông báo lỗi, sau đó dựa vào chuỗi gửi/nhận thực tế để khoanh vùng sự cố.
 
-The current implementation parses server `session_id` and supports multiple binary envelopes. Check both session details and the selected envelope version.
+Mã triển khai hiện tại có phân tích trường `session_id` của máy chủ và hỗ trợ nhiều định dạng khung đóng gói nhị phân. Hãy kiểm tra đồng thời cả chi tiết phiên làm việc lẫn phiên bản khung đóng gói đang được chọn.
 
 <a name="verify"></a>
 
-## Maintenance and verification {#verify}
+## Bảo trì và kiểm chứng {#verify}
 
-Correct protocol differences, fields, and parsing examples in the firmware repository first, then update this site's versioned links. State diagrams should match the firmware being debugged.
+Hãy hiệu chỉnh các khác biệt về giao thức, trường dữ liệu và ví dụ phân tích cú pháp ngay trong kho mã nguồn firmware trước, sau đó mới cập nhật các liên kết theo phiên bản trên trang tài liệu này. Sơ đồ trạng thái phải khớp với đúng phiên bản firmware đang được gỡ lỗi.
 
-Interoperability verification needs both sides' versions and real messages, beyond a successful WebSocket connection. Remove authentication and device identifiers before sharing traces.
+Việc kiểm chứng khả năng tương tác giữa hai đầu kết nối đòi hỏi đối chiếu phiên bản và bản tin thực tế của cả hai phía, chứ không chỉ dừng lại ở việc thiết lập kết nối WebSocket thành công. Nhớ xóa bỏ thông tin xác thực và định danh thiết bị trước khi chia sẻ các bản ghi dữ liệu truyền (traces).
 
 <a name="next"></a>
 
-## Next steps {#next}
+## Các bước tiếp theo {#next}
 
-For display semantics, see [Emotions and resources](./display-emotions.md). Start a self-hosted implementation from the versioned references and tests above rather than an independent protocol copy.
+Để tìm hiểu về ngữ nghĩa hiển thị trên màn hình, hãy xem mục [Biểu cảm và tài nguyên hiển thị](./display-emotions.md). Nếu bạn tự triển khai máy chủ riêng (self-hosted), hãy bắt đầu từ các tài liệu tham chiếu theo phiên bản và bộ kiểm thử ở trên thay vì tự sao chép lại giao thức một cách độc lập.
