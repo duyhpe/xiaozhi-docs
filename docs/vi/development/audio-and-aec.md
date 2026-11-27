@@ -1,12 +1,11 @@
 ---
 id: audio-and-aec
-title: Audio processing and echo cancellation
-description: 'Identify device/server processing and reference audio, then test actual conversation.'
+title: Xử lý âm thanh và khử tiếng vọng (AEC)
+description: 'Xác định cơ chế xử lý trên thiết bị/máy chủ và tín hiệu âm thanh tham chiếu, sau đó kiểm thử cuộc trò chuyện thực tế.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 sourceArticles:
   - DOC-21
 translation:
@@ -14,79 +13,79 @@ translation:
   sourceHash: 44cd49754f837d982b007ca0cc5e946e4a35f0cd485f5d77e716aa3db2ee6c07
   reviewedAt: '2026-11-15'
 ---
-# Audio processing and echo cancellation
+# Xử lý âm thanh và khử tiếng vọng (AEC)
 
-AEC reduces the effect of a device's playback being picked up again by its microphone. Results depend on the signal path, reference audio, acoustics, and firmware/service support, beyond enabling an option.
+Tính năng khử tiếng vọng (AEC) giúp giảm thiểu hiện tượng âm thanh phát ra từ loa của thiết bị bị chính micro của nó thu ngược trở lại. Hiệu quả thực tế phụ thuộc vào đường truyền tín hiệu, tín hiệu âm thanh tham chiếu (reference audio), thiết kế âm học vỏ máy và sự hỗ trợ của firmware/máy chủ, chứ không chỉ đơn thuần là bật một tùy chọn cấu hình.
 
 <a name="scope"></a>
 
-## Identify the path {#scope}
+## Xác định hướng triển khai {#scope}
 
-| Approach | Required checks |
+| Phương pháp | Các yêu cầu cần kiểm tra |
 | --- | --- |
-| Device-side AEC | Chip/PSRAM, AFE, board support, and a clean playback reference |
-| Server-side AEC | Firmware uplink processing and explicit server support; the current configuration is marked unstable |
-| No AEC | First establish basic audio using buttons or another interaction mode |
+| AEC trên thiết bị (Device-side AEC) | Dòng chip/PSRAM, bộ xử lý AFE, hỗ trợ từ bo mạch và đường tín hiệu âm thanh tham chiếu sạch |
+| AEC trên máy chủ (Server-side AEC) | Quá trình xử lý luồng thu âm (uplink) trên firmware và sự hỗ trợ rõ ràng từ máy chủ; cấu hình hiện tại đang được đánh dấu là chưa ổn định (unstable) |
+| Không dùng AEC | Trước tiên hãy thiết lập âm thanh cơ bản và giao tiếp bằng nút bấm vật lý hoặc phương thức tương tác khác |
 
-This guide follows the [versioned repository Kconfig](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/main/Kconfig.projbuild). Support changes by version; check that version's dependencies first.
+Hướng dẫn này đối chiếu theo [tệp Kconfig của kho mã nguồn theo phiên bản](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/main/Kconfig.projbuild). Phạm vi hỗ trợ có thể thay đổi theo từng phiên bản; hãy kiểm tra kỹ các điều kiện phụ thuộc của phiên bản đó trước tiên.
 
 <figure class="source-figure">
 
-[![The two audio paths compared by AEC.](../../public/images/en/aec-reference-path.svg)](../../public/images/en/aec-reference-path.svg)
+[![So sánh hai đường truyền âm thanh được xử lý bởi AEC.](../../public/images/en/aec-reference-path.svg)](../../public/images/en/aec-reference-path.svg)
 
-<figcaption>The two audio paths compared by AEC. Click to view full size.</figcaption>
+<figcaption>So sánh hai đường truyền âm thanh được xử lý bởi AEC. Nhấp vào ảnh để xem kích thước đầy đủ.</figcaption>
 </figure>
 
-This shows signal relationships, not a circuit for adding a microphone or wires. The board and Codec implementation determine the reference input's actual source.
+Sơ đồ này thể hiện mối quan hệ giữa các luồng tín hiệu, không phải sơ đồ mạch điện để tự đấu thêm micro hay dây dẫn. Thiết kế bo mạch và trình điều khiển chip Codec sẽ quyết định nguồn cấp thực tế của tín hiệu tham chiếu đầu vào.
 
 <a name="baseline"></a>
 
-## 1. Establish basic audio {#baseline}
+## 1. Thiết lập mức âm thanh cơ bản (Baseline) {#baseline}
 
-Disable unnecessary custom processing. Starting at low volume, test prompt audio, recording, and conversation. Check for blocked microphones, a speaker aimed directly at the microphone opening, and mechanical vibration coupling. Record a baseline without AEC.
+Tắt tất cả các bộ xử lý tùy chỉnh không cần thiết. Bắt đầu ở mức âm lượng thấp, kiểm tra âm thanh thông báo, khả năng thu âm và trò chuyện. Kiểm tra xem lỗ micro có bị che khuất không, loa có đang chĩa thẳng vào lỗ micro không và có hiện tượng truyền rung động cơ học qua vỏ máy không. Ghi lại kết quả hoạt động chuẩn khi chưa bật AEC.
 
-Two microphones do not automatically provide a playback reference. Another microphone alone cannot replace the reference circuit.
+Việc lắp hai micro không tự động tạo ra đường tín hiệu âm thanh tham chiếu. Một chiếc micro thứ hai đơn thuần không thể thay thế cho mạch lấy tín hiệu tham chiếu phần cứng.
 
 <a name="configure"></a>
 
-## 2. Configure for the board {#configure}
+## 2. Cấu hình cho bo mạch {#configure}
 
-In the [online builder](../firmware/online-builder.md), select only audio capabilities offered for that board. For local builds, choose the correct board before checking `Enable AFE Audio Processing` and device/server AEC dependencies.
+Trong [trình biên dịch trực tuyến](../firmware/online-builder.md), chỉ chọn các tính năng âm thanh được cung cấp sẵn cho đúng bo mạch đó. Đối với quá trình biên dịch cục bộ, hãy chọn đúng bo mạch trước khi kiểm tra tùy chọn `Enable AFE Audio Processing` cùng các điều kiện phụ thuộc của AEC trên thiết bị hoặc máy chủ.
 
-Current device-side AEC requires a supported chip, PSRAM, AFE, and board, with reference audio supplied by the corresponding hardware. Do not remove Kconfig dependencies to force it on a board without a reference path.
+Tính năng AEC trên thiết bị hiện tại yêu cầu dòng chip được hỗ trợ, có bộ nhớ PSRAM, bộ xử lý AFE và bo mạch tương thích kèm tín hiệu âm thanh tham chiếu được cấp từ phần cứng tương ứng. Tuyệt đối không xóa bỏ các ràng buộc phụ thuộc trong Kconfig để cố ép bật tính năng này trên một bo mạch không có mạch tín hiệu tham chiếu.
 
-See [Local builds](./build-firmware.md) for the environment and configuration process.
+Xem hướng dẫn [Biên dịch cục bộ](./build-firmware.md) để nắm rõ quy trình thiết lập môi trường và cấu hình.
 
-### Enable and install it locally
+### Bật tính năng và cài đặt cục bộ
 
-1. Complete a baseline build for the exact board using [Local builds](./build-firmware.md#build), then run `idf.py menuconfig` in that firmware directory.
-2. Under **Xiaozhi Assistant**, check **Enable AFE Audio Processing**, then select **Enable Device-Side AEC**. You can press `/` to search for `USE_AUDIO_PROCESSOR` and `USE_DEVICE_AEC`. If an option is unavailable, inspect its dependencies instead of selecting a different board to expose it.
-3. Press `S`, confirm the configuration filename, and exit. Build and flash with these commands, replacing `COM5` with your port:
+1. Hoàn tất một bản dựng chuẩn cho đúng bo mạch của bạn theo hướng dẫn [Biên dịch cục bộ](./build-firmware.md#build), sau đó chạy lệnh `idf.py menuconfig` ngay trong thư mục mã nguồn firmware đó.
+2. Trong mục **Xiaozhi Assistant**, đánh dấu chọn **Enable AFE Audio Processing**, sau đó chọn **Enable Device-Side AEC**. Bạn có thể nhấn phím `/` để tìm kiếm nhanh các biến `USE_AUDIO_PROCESSOR` và `USE_DEVICE_AEC`. Nếu một tùy chọn bị ẩn hoặc không khả dụng, hãy kiểm tra các điều kiện phụ thuộc của nó thay vì chọn sang một bo mạch khác chỉ để làm hiện tùy chọn đó.
+3. Nhấn phím `S`, xác nhận tên tệp cấu hình và thoát ra. Biên dịch và nạp lại firmware bằng các lệnh sau, thay thế `COM5` bằng cổng thực tế của bạn:
 
 ```sh
 idf.py build
 idf.py -p COM5 flash monitor
 ```
 
-4. After restart, check the running version and perform the comparison below. Selecting an option without rebuilding and flashing does not change the device firmware. For server-side AEC, first confirm server support and follow **Enable Server-Side AEC (Unstable)** verification requirements.
+4. Sau khi thiết bị khởi động lại, hãy kiểm tra phiên bản đang chạy và thực hiện bài so sánh bên dưới. Việc chỉ chọn tùy chọn trong menu mà không biên dịch lại và nạp lại sẽ không làm thay đổi firmware trên thiết bị. Đối với AEC trên máy chủ, trước tiên hãy xác nhận máy chủ có hỗ trợ và tuân thủ các yêu cầu kiểm thử của mục **Enable Server-Side AEC (Unstable)**.
 
 <a name="test"></a>
 
-## 3. Compare under the same conditions {#test}
+## 3. So sánh trong cùng điều kiện thử nghiệm {#test}
 
-1. Record firmware, volume, distance, enclosure, and power supply.
-2. In a quiet room, check whether playback causes false wakes or is recognized as user speech.
-3. On supported hardware, enable the chosen AEC path and repeat without changing other conditions.
-4. Add the intended background noise and volume, checking missed recognition, interruption, and sustained feedback.
+1. Ghi lại thông số phiên bản firmware, mức âm lượng, khoảng cách nói, thiết kế vỏ máy và nguồn cấp điện.
+2. Trong một căn phòng yên tĩnh, kiểm tra xem âm thanh phát ra từ loa có gây kích hoạt đánh thức giả (false wakes) hoặc bị nhận diện nhầm thành giọng nói của người dùng hay không.
+3. Trên phần cứng có hỗ trợ, bật đường dẫn AEC đã chọn và lặp lại bài kiểm thử mà không thay đổi bất kỳ điều kiện nào khác.
+4. Bổ sung thêm tạp âm nền và mức âm lượng dự kiến sử dụng thực tế, đồng thời kiểm tra tình trạng bỏ sót lệnh gọi, khả năng ngắt lời (interruption) và hiện tượng hú rít phản hồi kéo dài.
 
-Successful compilation or audible answers alone do not prove echo cancellation. AEC, VAD, and conversation interruption operate at different layers; observe them separately.
+Việc biên dịch thành công hoặc thiết bị phát ra câu trả lời đơn thuần chưa đủ chứng minh tính năng khử tiếng vọng hoạt động hiệu quả. Các cơ chế AEC, phát hiện giọng nói (VAD) và ngắt lời hội thoại hoạt động ở các tầng xử lý khác nhau; hãy quan sát và đánh giá tách biệt từng cơ chế.
 
-::: tip Completion check
-Identify the actual reference/processing path and show before/after results under the same conditions. UI appearance and microphone count do not establish performance.
+::: tip Tiêu chí hoàn thành
+Xác định đúng đường truyền tín hiệu tham chiếu/xử lý thực tế và đối chiếu kết quả trước/sau khi bật AEC trong cùng điều kiện môi trường. Giao diện hiển thị trên màn hình hay số lượng micro gắn trên mạch không tự khẳng định hiệu năng khử tiếng vọng.
 :::
 
 <a name="next"></a>
 
-## Next steps {#next}
+## Các bước tiếp theo {#next}
 
-For acoustics and hardware, see [Design considerations](../hardware/design-guidelines.md). For triggering behavior, see [Wake words](./wake-words.md). Check option locations and dependencies for your firmware and ESP-IDF versions.
+Để tìm hiểu về thiết kế âm học và phần cứng, hãy xem mục [Các lưu ý khi thiết kế phần cứng](../hardware/design-guidelines.md). Để tìm hiểu cơ chế kích hoạt thiết bị, xem mục [Từ khóa đánh thức](./wake-words.md). Luôn kiểm tra vị trí các tùy chọn và điều kiện phụ thuộc tương ứng với phiên bản firmware và ESP-IDF bạn đang dùng.

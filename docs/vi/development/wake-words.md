@@ -14,7 +14,6 @@ translation:
   sourceHash: 746701523768c32240eda2a3073c2a323ce90f3a86d496aed8ba121888f0417b
   reviewedAt: '2026-11-15'
 ---
-
 # Choose and change wake words
 
 Make button-initiated conversation work before configuring wake detection. Changing the agent's name, a device prompt sound, and an offline wake phrase are separate operations.
