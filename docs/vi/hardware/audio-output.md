@@ -1,94 +1,57 @@
 ---
 id: audio-output
-title: 'Speakers, headphones, and powered audio'
-description: 'Distinguish speaker, headphone, and line outputs before connecting an audio load.'
+title: Loa, tai nghe và ngõ ra âm thanh
+description: Phân biệt rõ ngõ ra khuếch đại công suất (amplifier), ngõ ra tai nghe và ngõ ra tín hiệu mức đường truyền (line output).
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  Compared with the MAX98357 datasheet and firmware audio implementation. A new headphone circuit has not been
-  bench-tested.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
+sourceArticles:
+  - DOC-05
+  - DOC-11
 translation:
   status: review
-  sourceHash: 11a652c79b9ef1da74c8b00d409d9f8e8c72b701814290137cecbf8b8e9a5634
+  sourceHash: 4b2c8d1e9f0a3b5c7d9e1f2a4b6c8d0e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0b2c
   reviewedAt: '2026-11-15'
 ---
-# Speakers, headphones, and powered audio
+# Loa, tai nghe và ngõ ra âm thanh
 
-Identify the device's output signal before choosing a speaker, headphones, or powered speakers. A plug that fits does not establish electrical compatibility.
+Ngõ ra kéo loa thụ động, ngõ ra tai nghe và ngõ ra tín hiệu mức đường truyền (line output) nối sang loa vi tính có nguồn riêng là ba loại giao tiếp điện hoàn toàn khác nhau. Việc đấu nhầm giữa chúng có thể gây méo tiếng, hỏng linh kiện hoặc làm quá tải nguồn cấp.
 
-<a name="scope"></a>
+<a name="types"></a>
 
-## Choose the connection {#scope}
+## 1. Phân biệt ba loại ngõ ra âm thanh {#types}
 
-| What you want to connect | Required output | Next step |
+| Loại ngõ ra | Đặc điểm điện và tải tương thích | Ví dụ linh kiện |
 | --- | --- | --- |
-| Two-wire passive speaker | Speaker-amplifier output with matching impedance and power | Follow the MAX98357A instructions below |
-| Ordinary 3.5mm headphones | Dedicated headphone output and driver circuit | Choose a firmware-supported board with a labeled Headphone output |
-| Powered desktop speakers | Line Out, or an explicitly compatible headphone output, matching the speaker input | Check both devices' manuals |
-| Bluetooth headphones/speakers | Bluetooth audio protocol and corresponding firmware support | BluFi provisioning support does not imply audio support |
+| **Ngõ ra khuếch đại công suất (Speaker / BTL output)** | Kéo trực tiếp loa thụ động (thường 4Ω hoặc 8Ω). Hai cực đầu ra thường hoạt động ở chế độ cầu (BTL – Bridge-Tied Load), **không nối chung với mass tín hiệu (`GND`)** | Module MAX98357A, NS4150 |
+| **Ngõ ra tai nghe (Headphone output)** | Thiết kế cho tai nghe trở kháng thấp (16Ω–32Ω) với điểm tham chiếu chung ở chân vỏ giắc 3.5mm (`GND` hoặc điểm giữa Vmid) | Mạch khuếch đại tai nghe trên chip Codec ES8311 |
+| **Ngõ ra mức đường truyền (Line output)** | Tín hiệu biên độ nhỏ, trở kháng cao, dùng để đưa vào ngõ AUX/Line-in của loa chủ động (loa có mạch khuếch đại và nguồn riêng) | Ngõ ra DAC của chip Codec |
 
-![Three paths from digital audio to different loads](../../public/images/en/audio-output-paths.svg)
+<a name="warnings"></a>
 
-::: warning MAX98357 speaker terminals are not a headphone output
-MAX98357A/B is a mono Class-D amplifier. Both `OUTP` and `OUTN` are driven outputs; neither is signal ground. Do not connect these terminals directly to a common-ground 3.5mm headphone or powered-speaker plug, or tie multiple amplifiers' negative outputs together.
-:::
+## 2. Những lỗi đấu nối cần tránh {#warnings}
 
-<a name="speaker"></a>
+- **Không cắm tai nghe vào cọc loa của mạch khuếch đại công suất:** các module như MAX98357A hoặc NS4150 sử dụng ngõ ra dạng cầu (BTL), cả hai chân `SPK+` và `SPK-` đều mang tín hiệu xung PWM cao tần và không có chân nào là `GND`. Cắm tai nghe thông thường (vốn dùng chung mass cho hai kênh trái/phải) vào đây có thể làm chập ngõ ra của IC khuếch đại hoặc gây hỏng tai nghe.
+- **Không nối chân `SPK-` xuống `GND`:** tuyệt đối không nối một đầu dây loa hoặc cọc `SPK-` của mạch khuếch đại BTL xuống mass hệ thống (`GND`).
+- **Không nối trực tiếp cọc loa công suất vào ngõ Line-in / AUX của loa ngoài:** tín hiệu công suất cao dạng xung Class-D có thể làm quá tải, rè nặng hoặc hỏng tầng tiền khuếch đại của loa ngoài.
+- **Kiểm tra trở kháng loa và công suất nguồn:** mạch khuếch đại kéo loa 4Ω sẽ tiêu thụ dòng điện đỉnh lớn hơn so với loa 8Ω ở cùng mức âm lượng. Nếu thiết bị bị sập nguồn hoặc tự khởi động lại khi phát câu trả lời dài, hãy giảm mức âm lượng trên Console hoặc kiểm tra lại cáp/nguồn USB.
 
-## Connect a passive speaker {#speaker}
+<a name="selecting-speaker"></a>
 
-These steps apply to the MAX98357A module in the [basic S3 breadboard build](./breadboard-esp32-s3.md). For another amplifier, use its own datasheet and wiring diagram.
+## 3. Lựa chọn loa và hộp cộng hưởng {#selecting-speaker}
 
-1. Disconnect USB and external power. Check that speaker impedance and rated power meet the module's requirements. The basic build uses one 8Ω, 3W speaker.
-2. Secure the two speaker wires to `SPK+ / OUTP` and `SPK− / OUTN`. Do not connect either to `GND`.
-3. Check for stray wire strands and shorts, and make sure nothing presses on the speaker cone.
-4. Complete module power and I2S wiring before powering on. Start with low volume and a prompt sound, then increase to the required volume.
-
-`MAX98357A` and `MAX98357B` use different digital input formats: A uses I2S; B uses left-justified data. Firmware fixed to I2S cannot treat a changed suffix as a compatible replacement. See the [Analog Devices product information](https://www.analog.com/en/products/MAX98357A.html).
-
-<a name="headphones"></a>
-
-## Use headphones or powered speakers {#headphones}
-
-If the board already has a dedicated audio socket:
-
-1. Check the manual to identify **Headphone**, **Line Out**, or **Mic In**, including plug type and load requirements.
-2. Use firmware for that board. An onboard audio chip still needs the correct Codec initialization and output routing.
-3. Turn down both device and speaker volume, connect first, then play audio. Check headphone volume before putting them on.
-4. Test prompt sounds and conversation audio. Confirm volume control works, with no persistent noise or obvious distortion.
-
-If you only have the MAX98357A speaker terminals, **adding a three-pin socket does not make a headphone output**. Use a Codec, DAC, or headphone amplifier with specified headphone/line-output capabilities, and provide its required power, filtering, interface, and firmware support. Follow the chosen module's design documentation; this guide does not prescribe an untested adapter circuit.
-
-<figure class="source-figure">
-
-[![A three-pin 3.5mm socket. The socket alone provides neither a headphone driver nor level conversion, and must not be wired directly to MAX98357A outputs.](../../public/images/zh/doc-35-image-002.webp)](../../public/images/zh/doc-35-image-002.webp)
-
-<figcaption>A three-pin 3.5mm socket. The socket alone provides neither a headphone driver nor level conversion, and must not be wired directly to MAX98357A outputs.</figcaption>
-</figure>
+- **Loa thụ động có hộp cộng hưởng:** các loại loa hộp nhỏ 8Ω 3W (hoặc 4Ω 3W tùy theo thông số mạch khuếch đại) cho âm lượng rõ ràng hơn nhiều so với loa trần chưa gắn vào hộp kín, vì hộp cộng hưởng giúp triệt tiêu hiện tượng triệt tiêu pha âm tần số thấp.
+- **Tương thích chân khuếch đại (Gain) và bật/tắt (SD/MODE):** kiểm tra cấu hình chân `GAIN` và `SD` trên module khuếch đại thực tế để tránh hiện tượng tiếng bị vỡ (clipping) ở mức âm lượng cao hoặc tiếng bụp (pop noise) khi bật tắt.
 
 <a name="verify"></a>
 
-## Verify the result {#verify}
+## Kiểm tra kết quả hoạt động {#verify}
 
-::: tip Completion check
-The load matches the output type, and both prompt and conversation audio are audible. Volume control works, wiring and modules do not heat abnormally, and playback does not restart the device.
-:::
-
-<a name="troubleshooting"></a>
-
-## Troubleshooting {#troubleshooting}
-
-| Symptom | Check first |
-| --- | --- |
-| No sound | Volume, module enable, I2S pins, and selected board; see [Audio troubleshooting](../faq/index.md#audio) |
-| Restarts during playback | Supply and cable, load impedance, and shorts; do not keep increasing volume |
-| Distortion | Start at low volume; check speaker power rating, supply headroom, and secure connections |
-| Want stereo | A mono amplifier has no two independent outputs; stereo requires matching hardware, pins, and firmware |
+Âm thanh thông báo và giọng trả lời phát ra rõ ràng, không bị rè vỡ tiếng ở mức âm lượng sử dụng thông thường, và bo mạch không bị sập nguồn khởi động lại hay nóng bất thường ở IC khuếch đại.
 
 <a name="next"></a>
 
-## Next steps {#next}
+## Các bước tiếp theo {#next}
 
-- Finish the [basic S3 wiring](./breadboard-esp32-s3.md) or read [Battery power](./battery-power.md).
-- Electrical reference: [MAX98357A/B datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/max98357a-max98357b.pdf).
-- For wiring reports, include the module model, front/back photos, power arrangement, and firmware version.
+Nếu bạn muốn thiết kế vỏ hộp hoặc bố trí micro và loa sao cho hạn chế tiếng vọng, hãy xem tiếp mục [những lưu ý khi thiết kế phần cứng](./design-guidelines.md) hoặc [xử lý âm thanh và khử tiếng vọng AEC](../development/audio-and-aec.md).

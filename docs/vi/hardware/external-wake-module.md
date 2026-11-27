@@ -1,142 +1,58 @@
 ---
 id: external-wake-module
-title: External ASR wake modules
-description: 'Choose onboard or external wake detection and verify module power, triggering, and configuration.'
+title: Module nhận diện từ khóa đánh thức ngoài (ASR)
+description: Lựa chọn nhận diện từ khóa đánh thức tích hợp sẵn hay dùng module ngoài, đồng thời kiểm tra nguồn cấp, chân kích hoạt và cấu hình.
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 sourceArticles:
-  - DOC-32
+  - DOC-13
+  - DOC-21
 translation:
   status: review
-  sourceHash: 9bde2d94b9aa57be43de11443fa1c6df568bdfc68d053533eb1cfb3d52d8a723
+  sourceHash: 9384a1665e2d8a34d7dd0f51332a2c44f5e534b63f9e732a4f500e0a9ec5c09b
   reviewedAt: '2026-11-15'
 ---
-# External ASR wake modules
+# Module nhận diện từ khóa đánh thức ngoài (ASR)
 
-An external speech-recognition module recognizes offline commands, then notifies XiaoZhi through GPIO or another signal. It can suit resource-constrained devices or independent recognition requirements. It is not required for everyone who wants a different wake phrase.
+Các chip ESP32-S3, C3 và một số dòng chip được hỗ trợ khác đều có thể nhận diện từ khóa đánh thức trực tiếp trên bo mạch mà không cần gắn thêm phần cứng nhận diện giọng nói ngoài. Chỉ nên sử dụng module ASR ngoài khi chip điều khiển bị hạn chế tài nguyên hoặc thiết kế phần cứng cụ thể yêu cầu tách riêng bộ nhận diện.
 
 <a name="scope"></a>
 
-## Decide whether you need a module {#scope}
+## 1. Xác định xem có cần dùng module ngoài hay không {#scope}
 
-First check [Onboard wake words](../development/wake-words.md), your chip, PSRAM, and model. If existing hardware meets the need, you can avoid an extra module, supply, and trigger line.
+- **Dùng mô hình tích hợp sẵn trên chip:** ưu tiên dùng cho ESP32-S3 hoặc bo mạch C3 tương thích, kiểm tra lựa chọn mô hình tại mục [từ khóa đánh thức](../development/wake-words.md).
+- **Dùng module ASR ngoài:** phù hợp với dòng ESP32 cổ điển (Classic) bị giới hạn tài nguyên hoặc các thiết kế cần giải phóng CPU/bộ nhớ khỏi tác vụ nhận diện từ khóa đánh thức.
 
-<a name="identify"></a>
+<a name="wiring"></a>
 
-## 1. Distinguish the module and programmer {#identify}
+## 2. Kiểm tra thông số điện và giao tiếp của module {#wiring}
 
-<figure class="source-figure">
+Kiểm tra riêng tài liệu kỹ thuật của module ASR thực tế (ví dụ: CI1302, VC-02, SU-03T hoặc các module giao tiếp UART/GPIO khác):
 
-[![ASR CORE module.](../../public/images/zh/doc-32-image-006.jpg)](../../public/images/zh/doc-32-image-006.jpg)
+- **Nguồn cấp và mức logic:** xác nhận dải điện áp cấp vào (3.3V hay 5V), dòng tải đỉnh và mức logic của chân tín hiệu ra phải tương thích với chân GPIO của ESP32 (mức 3.3V). Không nối trực tiếp chân tín hiệu 5V vào chân GPIO của ESP32.
+- **Loại tín hiệu kích hoạt:** xác nhận module xuất ra xung mức cao (high pulse), xung mức thấp (low pulse) hay bản tin dữ liệu qua cổng UART.
+- **Chân GPIO trên bo mạch:** đối chiếu chân nhận tín hiệu với cấu hình `ASR_BUTTON_GPIO` (ví dụ: `GPIO19` trên bo mạch `bread-compact-esp32`) hoặc cấu hình UART của bo mạch mục tiêu.
+- **Cách ly đường âm thanh:** nếu module ASR và ESP32 dùng chung một micro, phải kiểm tra sơ đồ chia tín hiệu hoặc mức điện áp phân cực (bias); không nối chập hai ngõ vào micro vào cùng một đầu ra analog.
 
-<figcaption>ASR CORE module.</figcaption>
-</figure>
+<a name="build"></a>
 
-<figure class="source-figure">
+## 3. Cấu hình firmware và kiểm thử {#build}
 
-[![ASR-LINK programmer and its interfaces.](../../public/images/zh/doc-32-image-007.jpg)](../../public/images/zh/doc-32-image-007.jpg)
-
-<figcaption>ASR-LINK programmer and its interfaces.</figcaption>
-</figure>
-
-<figure class="source-figure">
-
-[![Microphone supplied with the module.](../../public/images/zh/doc-32-image-008.webp)](../../public/images/zh/doc-32-image-008.webp)
-
-<figcaption>Microphone supplied with the module.</figcaption>
-</figure>
-
-An ASR PRO core board, a development board with peripherals, and an ASR-LINK programmer are different hardware. Power, startup, and pins differ. Record the full model and PCB revision, then obtain its manufacturer-provided tools and pin documentation.
-
-| Interface | What to establish |
-| --- | --- |
-| Power input | Whether this model requires 5V or 3.3V; do not mix pin tables from different boards |
-| Signal output | Active-high/low, pulse or sustained level, and whether the MCU tolerates the voltage |
-| Programming UART | RX/TX direction, programming mode, and logic voltage |
-| Microphone | Integrated or external, polarity, and acoustic placement |
-
-<figure class="source-figure">
-
-[![Example ASR PRO V2.0 development board with USB and peripherals. It differs from a core board with solder pads only.](../../public/images/zh/doc-32-image-051.webp)](../../public/images/zh/doc-32-image-051.webp)
-
-<figcaption>Example ASR PRO V2.0 development board with USB and peripherals. It differs from a core board with solder pads only.</figcaption>
-</figure>
-
-<figure class="source-figure">
-
-[![Example ASR PRO 4M core board. Check storage, programming, and pins for its revision.](../../public/images/zh/doc-32-image-052.webp)](../../public/images/zh/doc-32-image-052.webp)
-
-<figcaption>Example ASR PRO 4M core board. Check storage, programming, and pins for its revision.</figcaption>
-</figure>
-
-<a name="configure"></a>
-
-## 2. Configure commands on the module {#configure}
-
-1. Obtain Tianwen Block with ASRPRO support from the [official Tianwen page](https://www.twen51.com/new/art_show.php?id=230). Choose the matching board using the [official instructions](https://www.twen51.com/new/learning_show.php?id=559).
-2. Define offline recognition entries, wake phrases, commands, and actions. Specify the output GPIO, active level, and pulse duration. Do not combine a core-board PA4 example with a development-board PA2 example into one program.
-3. Compile and upload using the matching programmer. For tool errors, check the model and wiring first; bypassing operating-system protection is not a default step.
-4. Test recognition and output pulses independently before connecting XiaoZhi. A successful PC compile does not establish correct electrical signals.
-
-<figure class="source-figure">
-
-[![Tianwen Block recognition entries and GPIO actions. Match output pin, polarity, and pulse duration to the actual board input.](../../public/images/zh/doc-32-image-023.webp)](../../public/images/zh/doc-32-image-023.webp)
-
-<figcaption>Tianwen Block recognition entries and GPIO actions. Match output pin, polarity, and pulse duration to the actual board input.</figcaption>
-</figure>
-
-<figure class="source-figure">
-
-[![Example ASRPRO programming tool. Select the programmer port, chip, and newly generated module program; a XiaoZhi main-firmware package is not a substitute.](../../public/images/zh/doc-32-image-029.webp)](../../public/images/zh/doc-32-image-029.webp)
-
-<figcaption>Example ASRPRO programming tool. Select the programmer port, chip, and newly generated module program; a XiaoZhi main-firmware package is not a substitute.</figcaption>
-</figure>
-
-### Regenerate the model after changing a phrase
-
-After editing recognition phrases and GPIO actions in Tianwen Block, sign in if the tool requires it, select **Generate model**, wait for completion, then **Compile and download**. Repeat both actions after every wake-word change. Editing text or downloading an older program does not update the recognition model.
-
-Distinguish examples within the same family: the core-board example uses PA4, while some development boards with an indicator LED use PA2 instead. Change the programmed output pin and wiring together, after checking that board's schematic and logic levels. Verify the RX/TX connections using the matching ASR-LINK/module instructions rather than the XiaoZhi controller's download settings.
-
-<a name="connect"></a>
-
-## 3. Connect to XiaoZhi {#connect}
-
-With power disconnected, check module power, common GND, logic output, and the target board's input one by one. PA4/PA2, BOOT, and similar interfaces have module- and firmware-specific roles.
-
-If triggering a button input, first check whether it is active-low, can be externally driven, and affects boot strapping. Download mode and runtime conversation triggering are different. For firmware changes, use a [custom board](../development/custom-board.md) and define debounce and active edges explicitly in initialization code.
-
-<a name="prototype"></a>
-
-### Breadboard installation example {#prototype}
-
-This prototype places an ASR core beside the basic breadboard. Green lines illustrate recognition output reaching a controller button input. **The picture is not a universal ASR wiring table.** A module powered at 5V does not necessarily output 5V logic. Measure the output and check both sides' specifications before connecting ESP32; use appropriate level conversion if needed. BOOT/GPIO0 also affects startup mode.
-
-<figure class="source-figure">
-
-[![Core-board placement on the breadboard. Check header direction and adjacent contacts to avoid bridging power rails.](../../public/images/zh/doc-32-image-033.webp)](../../public/images/zh/doc-32-image-033.webp)
-
-<figcaption>Core-board placement on the breadboard. Check header direction and adjacent contacts to avoid bridging power rails.</figcaption>
-</figure>
-
-<figure class="source-figure">
-
-[![Prototype ASR output to an S3 button input. This illustrates the signal relationship; verify power, voltage levels, polarity, and boot behavior for the module.](../../public/images/zh/doc-32-image-034.webp)](../../public/images/zh/doc-32-image-034.webp)
-
-<figcaption>Prototype ASR output to an S3 button input. This illustrates the signal relationship; verify power, voltage levels, polarity, and boot behavior for the module.</figcaption>
-</figure>
+1. Bật hoặc ánh xạ đúng chân ngõ vào ASR ngoài trong cấu hình bo mạch tương ứng (xem hướng dẫn tại mục [tùy chỉnh bo mạch](../development/custom-board.md)).
+2. Khi đã ngắt nguồn điện, đấu nối nguồn cấp, đường mass chung (`GND`) và đường tín hiệu kích hoạt.
+3. Cấp nguồn và kiểm tra xem khi gọi từ khóa đánh thức thì module ASR có xuất ra đúng tín hiệu kích hoạt hay không trước khi kiểm tra luồng trò chuyện.
+4. Kiểm tra hiện tượng kích hoạt nhầm (false triggers) khi loa của thiết bị đang phát âm thanh ở mức âm lượng cao.
 
 <a name="verify"></a>
 
-## Verify the result {#verify}
+## Kiểm tra kết quả hoạt động {#verify}
 
-First observe recognition at the module, then the controller's received event, then a successful conversation. Also test false triggers, repeated triggers, sleep, and power cycling. One successful wake does not establish voltage or startup compatibility.
+Việc gọi từ khóa đánh thức kích hoạt được phiên trò chuyện ổn định mà không làm treo hay khởi động lại thiết bị, đồng thời loa phát âm thanh không tự kích hoạt nhầm lại module ASR.
 
-<a name="sources"></a>
+<a name="next"></a>
 
-## Next steps {#sources}
+## Các bước tiếp theo {#next}
 
-Select tools and configuration for the exact module. For constrained hardware, see [Classic ESP32](./breadboard-esp32.md). Where resources permit, start with [Onboard wake words](../development/wake-words.md).
+Nếu bo mạch của bạn có thể chạy trực tiếp mô hình nhận diện từ khóa đánh thức tích hợp sẵn, hãy xem mục [từ khóa đánh thức](../development/wake-words.md). Nếu cần thêm chân nhận tín hiệu kích hoạt trên một bo mạch mới, hãy xem tiếp mục [tùy chỉnh bo mạch](../development/custom-board.md).

@@ -1,12 +1,11 @@
 ---
 id: breadboard-esp32
-title: Classic ESP32 breadboard
-description: 'Check the wiring, firmware, and resource limits of a classic ESP32 build.'
+title: Mạch breadboard ESP32 cổ điển (Classic)
+description: 'Kiểm tra sơ đồ đấu nối, firmware và các giới hạn tài nguyên của bản dựng sử dụng dòng ESP32 cổ điển.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 sourceArticles:
   - DOC-13
 translation:
@@ -14,88 +13,88 @@ translation:
   sourceHash: 0a3e0e56b358f661201c122dfe0e6ccb01ac94be008fef2dfa043a935a719005
   reviewedAt: '2026-11-15'
 ---
-# Classic ESP32 breadboard
+# Mạch breadboard ESP32 cổ điển (Classic)
 
-This build uses the classic ESP32, rather than ESP32-S3 or C3. A 4MB device without PSRAM is still useful, but cannot be promised every feature that requires PSRAM or more resources.
+Bản dựng này sử dụng dòng chip ESP32 cổ điển thay vì ESP32-S3 hay C3. Một thiết bị 4MB không có PSRAM vẫn hoạt động tốt cho các tác vụ cơ bản, nhưng không thể đảm bảo chạy được mọi tính năng đòi hỏi PSRAM hoặc nhiều tài nguyên bộ nhớ hơn.
 
 <a name="finished-overview"></a>
 
-## See the finished build {#finished-overview}
+## Xem trước thành phẩm {#finished-overview}
 
 <figure class="source-figure">
 
-[![Classic ESP32 prototype.](../../public/images/zh/doc-13-image-016.webp)](../../public/images/zh/doc-13-image-016.webp)
+[![Mẫu thử nghiệm ESP32 cổ điển.](../../public/images/zh/doc-13-image-016.webp)](../../public/images/zh/doc-13-image-016.webp)
 
-<figcaption>Classic ESP32 prototype.</figcaption>
+<figcaption>Mẫu thử nghiệm ESP32 cổ điển.</figcaption>
 </figure>
 
 <figure class="source-figure">
 
-[![Classic ESP32 assembly example.](../../public/images/zh/doc-13-image-017.webp)](../../public/images/zh/doc-13-image-017.webp)
+[![Ví dụ lắp ráp hoàn chỉnh ESP32 cổ điển.](../../public/images/zh/doc-13-image-017.webp)](../../public/images/zh/doc-13-image-017.webp)
 
-<figcaption>Classic ESP32 assembly example.</figcaption>
+<figcaption>Ví dụ lắp ráp hoàn chỉnh ESP32 cổ điển.</figcaption>
 </figure>
 
 <a name="scope"></a>
 
-## 1. Identify the target {#scope}
+## 1. Xác định bo mạch mục tiêu {#scope}
 
-The corresponding board directory is `bread-compact-esp32`. Check the ESP32 module, actual Flash capacity, microphone, amplifier, and display driver. Select the correct 128×64 or 128×32 variant.
+Thư mục bo mạch tương ứng trong mã nguồn là `bread-compact-esp32`. Hãy kiểm tra kỹ module ESP32, dung lượng Flash thực tế, micro, mạch khuếch đại và chip điều khiển màn hình. Chọn đúng biến thể độ phân giải 128×64 hoặc 128×32.
 
 <a name="wiring"></a>
 
-## 2. Check wiring against the current code {#wiring}
+## 2. Kiểm tra đấu nối theo mã nguồn hiện hành {#wiring}
 
 <figure class="source-figure wiring-figure">
 
-[![Classic ESP32 audio and OLED connections.](../../public/images/en/breadboard-esp32-wiring-v2.6.0.svg)](../../public/images/en/breadboard-esp32-wiring-v2.6.0.svg)
+[![Kết nối âm thanh và màn hình OLED của ESP32 cổ điển.](../../public/images/en/breadboard-esp32-wiring-v2.6.0.svg)](../../public/images/en/breadboard-esp32-wiring-v2.6.0.svg)
 
-<figcaption>Signal connections for firmware v2.6.0; this is not a physical header layout.</figcaption>
+<figcaption>Sơ đồ tín hiệu cho firmware v2.6.0; đây không phải sơ đồ vị trí chân vật lý.</figcaption>
 </figure>
 
-### Check each connection
+### Kiểm tra từng kết nối
 
-| Function | Current default GPIO |
+| Chức năng | Chân GPIO mặc định hiện tại |
 | --- | --- |
-| Microphone WS / SCK / data input | 25 / 26 / 32 |
-| Amplifier data / BCLK / LRCK | 33 / 14 / 27 |
-| OLED SDA / SCL | **4 / 15** |
-| BOOT / external ASR input | 0 / 19 |
+| Micro WS / SCK / dữ liệu vào | 25 / 26 / 32 |
+| Mạch khuếch đại dữ liệu / BCLK / LRCK | 33 / 14 / 27 |
+| Màn hình OLED SDA / SCL | **4 / 15** |
+| Nút BOOT / ngõ vào ASR ngoài | 0 / 19 |
 
-Check the OLED GPIOs against the [versioned config.h](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/main/boards/bread-compact-esp32/config.h). Confirm power, L/R selection, and amplifier load against the specific modules' documentation.
+Đối chiếu các chân GPIO của màn hình OLED với [tệp config.h theo phiên bản](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/main/boards/bread-compact-esp32/config.h). Xác nhận nguồn cấp, chân chọn kênh L/R và trở kháng tải loa theo đúng tài liệu kỹ thuật của từng module.
 
 <figure class="source-figure">
 
-[![OLED pin labels; use the firmware pin table on this page for GPIO connections.](../../public/images/zh/doc-13-image-002.webp)](../../public/images/zh/doc-13-image-002.webp)
+[![Ký hiệu chân trên màn hình OLED; sử dụng bảng chân firmware trên trang này để đấu nối GPIO.](../../public/images/zh/doc-13-image-002.webp)](../../public/images/zh/doc-13-image-002.webp)
 
-<figcaption>OLED pin labels; use the firmware pin table on this page for GPIO connections.</figcaption>
+<figcaption>Ký hiệu chân trên màn hình OLED; sử dụng bảng chân firmware trên trang này để đấu nối GPIO.</figcaption>
 </figure>
 
 <a name="build"></a>
 
-## 3. Install and test in stages {#build}
+## 3. Cài đặt và kiểm thử theo từng giai đoạn {#build}
 
-1. Start with [online building and flashing](../firmware/online-builder.md), selecting the exact board and memory layout.
-2. Follow [Flashing firmware](../firmware/flashing.md), then check startup, display, and prompt audio.
-3. Complete [Wi-Fi provisioning and device binding](../getting-started/wifi-and-binding.md). Test a conversation with the button first.
-4. Enable wake-word detection only when resources and model support permit it. A board without PSRAM cannot directly use a configuration that requires PSRAM.
+1. Bắt đầu với [trình biên dịch và nạp trực tuyến](../firmware/online-builder.md), chọn chính xác model bo mạch và cấu hình bộ nhớ.
+2. Làm theo [hướng dẫn nạp firmware](../firmware/flashing.md), sau đó kiểm tra quá trình khởi động, màn hình và âm thanh thông báo.
+3. Hoàn tất [cấu hình Wi-Fi và liên kết thiết bị](../getting-started/wifi-and-binding.md). Thử nghiệm cuộc trò chuyện bằng nút bấm trước tiên.
+4. Chỉ bật tính năng nhận diện từ khóa đánh thức khi tài nguyên phần cứng và mô hình hỗ trợ cho phép. Bo mạch không có PSRAM không thể chạy trực tiếp cấu hình vốn yêu cầu bắt buộc phải có PSRAM.
 
-For an external voice module, check voltage levels and triggering separately in [External ASR modules](./external-wake-module.md). 4G and custom PCBs also require separate board configurations. Use traceable releases for firmware.
+Nếu sử dụng module nhận diện giọng nói ngoài, hãy kiểm tra riêng mức điện áp và tín hiệu kích hoạt tại mục [module nhận diện giọng nói ngoài (ASR)](./external-wake-module.md). Phiên bản 4G và mạch PCB tự thiết kế cũng yêu cầu cấu hình bo mạch riêng biệt. Luôn dùng các bản phát hành có nguồn gốc rõ ràng.
 
-### Isolate peripherals when flashing cannot connect
+### Cô lập thiết bị ngoại vi khi không thể kết nối để nạp code
 
-If the port exists but synchronization repeatedly fails, disconnect USB and other power, photograph the wiring, then temporarily disconnect peripheral signal lines. Test [download mode](../firmware/flashing.md#download-mode) with only the development board. A peripheral holding BOOT or another strapping pin can prevent download mode.
+Nếu máy tính đã nhận cổng COM nhưng quá trình đồng bộ nạp code liên tục thất bại, hãy rút cáp USB và ngắt mọi nguồn điện, chụp ảnh lại hiện trạng dây cắm, sau đó tạm thời tháo các dây tín hiệu nối với linh kiện ngoại vi. Thử đưa mạch vào [chế độ tải (download mode)](../firmware/flashing.md#download-mode) khi chỉ có duy nhất bo mạch phát triển. Một linh kiện ngoại vi đang giữ mức điện áp trên chân BOOT hoặc các chân cấu hình khởi động (strapping pins) có thể ngăn chip vào chế độ nạp code.
 
-If the bare board connects but fails again after reconnection, restore peripherals one at a time and check pin use, levels, and power. Power off before every wiring change. This does not require immediately erasing Flash, and a third-party expansion board's dual-network switching actions do not apply to this guide's Wi-Fi board.
+Nếu bo mạch trần kết nối nạp code bình thường nhưng lại lỗi sau khi gắn lại dây, hãy lắp lại từng ngoại vi một và kiểm tra vị trí chân, mức logic và nguồn cấp. Luôn ngắt nguồn trước mỗi lần thay đổi dây cắm. Tình huống này không đòi hỏi phải xóa sạch Flash ngay lập tức, và các thao tác chuyển đổi mạng kép của bo mạch mở rộng bên thứ ba không áp dụng cho bo mạch Wi-Fi trong hướng dẫn này.
 
 <a name="verify"></a>
 
-## Verify the result {#verify}
+## Kiểm tra kết quả hoạt động {#verify}
 
-The firmware should report the correct chip, memory, and variant. Check the display, audio, network, and button-initiated conversation. Record supported and unsupported features separately; a working device does not imply feature parity with S3 or P4.
+Firmware phải báo cáo đúng dòng chip, dung lượng bộ nhớ và biến thể bo mạch. Kiểm tra hoạt động của màn hình, âm thanh, kết nối mạng và cuộc trò chuyện bắt đầu bằng nút bấm. Ghi nhận riêng các tính năng được hỗ trợ và không được hỗ trợ; việc thiết bị chạy ổn định không đồng nghĩa với việc có đầy đủ mọi tính năng như dòng S3 hay P4.
 
 <a name="sources"></a>
 
-## Next steps {#sources}
+## Các bước tiếp theo {#sources}
 
-Use the prototype photos to identify the build. For changes to pins or components, continue with [Custom boards](../development/custom-board.md).
+Sử dụng hình ảnh mẫu thử nghiệm để nhận diện kiểu lắp ráp. Nếu muốn thay đổi sơ đồ chân hoặc linh kiện, hãy xem tiếp mục [tùy chỉnh bo mạch](../development/custom-board.md).
