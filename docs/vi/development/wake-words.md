@@ -1,11 +1,12 @@
 ---
 id: wake-words
-title: Chọn và thay đổi từ khóa đánh thức (Wake words)
-description: 'Lựa chọn cơ chế nhận diện từ khóa cài sẵn, tùy chỉnh hoặc dùng mô-đun ngoài phù hợp với dòng chip, bộ nhớ và mô hình.'
+title: Choose and change wake words
+description: 'Select preset, custom, or external wake detection for your chip, memory, and model.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
+  English translation checked against the current source. Technical and hardware verification limits are stated in the
+  guide.
 sourceArticles:
   - DOC-22
 translation:
@@ -13,7 +14,6 @@ translation:
   sourceHash: 746701523768c32240eda2a3073c2a323ce90f3a86d496aed8ba121888f0417b
   reviewedAt: '2026-11-15'
 ---
-
 # Choose and change wake words
 
 Make button-initiated conversation work before configuring wake detection. Changing the agent's name, a device prompt sound, and an offline wake phrase are separate operations.
