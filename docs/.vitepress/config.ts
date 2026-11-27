@@ -168,7 +168,7 @@ export default defineConfig({
     vi: {
       label: 'Tiếng Việt',
       lang: 'vi',
-      title: 'Tài liệu XiaoZhi',
+      title: 'Tài liệu XiaoZhi AI',
       description: 'Từ cuộc trò chuyện đầu tiên đến tự chế tạo thiết bị AI của riêng bạn.',
       themeConfig: {
         nav: [
