@@ -13,12 +13,17 @@ const localImageDimensions: Record<string, { width: number; height: number }> = 
 const publicDirectory = fileURLToPath(new URL('../public/', import.meta.url))
 const discoveryPages = readDiscoveryPages(fileURLToPath(new URL('../', import.meta.url)))
 
-export default defineConfig({
-  title: '小智文档',
-  lang: 'zh-CN',
-  description: '小智 AI 使用与开发文档 · XiaoZhi AI documentation',
+//export default defineConfig({
+//  title: '小智文档',
+//  lang: 'zh-CN',
+//  description: '小智 AI 使用与开发文档 · XiaoZhi AI documentation',
   // The custom domain serves the site at /, rather than /xiaozhi-docs/.
   //base: '/',
+//  base: '/xiaozhi-docs/',
+export default defineConfig({
+  title: 'Tài liệu XiaoZhi AI',
+  lang: 'vi-VN',
+  description: 'Tài liệu hướng dẫn sử dụng và phát triển XiaoZhi AI · XiaoZhi AI documentation',
   base: '/xiaozhi-docs/',
 
   // Keep .html URLs: they work on GitHub Pages without rewrite rules.
