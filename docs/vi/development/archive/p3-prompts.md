@@ -1,12 +1,11 @@
 ---
 id: legacy-p3-prompts
-title: Legacy P3 prompt workflow
-description: Maintain older P3 firmware and find the current resource workflow.
+title: Quy trình âm thanh thông báo P3 đời cũ
+description: Bảo trì các phiên bản firmware P3 cũ và chuyển sang quy trình xử lý tài nguyên hiện hành.
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  Historical material only; not current-version instructions. Downloads must match an explicitly identified firmware
-  version and hardware.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Chỉ mang tính chất tài liệu lưu trữ lịch sử, không phải hướng dẫn cho phiên bản hiện hành; các tệp tải về phải khớp chính xác với phiên bản firmware và phần cứng được xác định rõ.
 sourceArticles:
   - DOC-42
 archive: true
@@ -15,28 +14,28 @@ translation:
   sourceHash: 69fa88714014ee2a33bfc06b892c0b6d233df70a6e1adbd88e055b5824e8666b
   reviewedAt: '2026-11-15'
 ---
-# Legacy P3 prompt workflow
+# Quy trình âm thanh thông báo P3 đời cũ
 
-This page describes historical usage. Older implementations placed P3 files in `main/assets/zh-CN` and modified generated `lang_config.h`. The current default locale workflow uses OGG; do not apply the old paths directly.
+Trang này mô tả cách sử dụng của các phiên bản cũ trước đây. Các bản triển khai đời cũ đặt các tệp P3 trong thư mục `main/assets/zh-CN` và chỉnh sửa trực tiếp tệp được sinh tự động `lang_config.h`. Quy trình quản lý ngôn ngữ (locale) mặc định hiện tại sử dụng định dạng OGG; tuyệt đối không áp dụng trực tiếp các đường dẫn cũ này.
 
 <a name="scope"></a>
 
-## When to consult this page {#scope}
+## Khi nào nên tham khảo trang này {#scope}
 
-Use it only for a known older firmware version that actually uses P3. Check out its tag and inspect directories, generator, and player. Publication date alone does not determine compatibility.
+Chỉ sử dụng hướng dẫn này khi bạn đang làm việc với một phiên bản firmware cũ xác định thực sự sử dụng định dạng P3. Hãy chuyển sang đúng thẻ phát hành (tag) của phiên bản đó để kiểm tra cấu trúc thư mục, trình tạo tài nguyên và trình phát âm thanh. Chỉ riêng ngày đăng tải không quyết định tính tương thích.
 
-The repository still contains [P3 tool instructions](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/scripts/p3_tools/README.md), so archiving this workflow does not mean those tools were removed.
+Kho mã nguồn vẫn lưu giữ [hướng dẫn sử dụng công cụ P3](https://github.com/78/xiaozhi-esp32/blob/4de00aed740595a8713b01f8332b9b2cf30685bc/scripts/p3_tools/README.md), do đó việc đưa quy trình này vào mục lưu trữ không có nghĩa là các công cụ đó đã bị xóa bỏ.
 
 <a name="legacy"></a>
 
-## Limits of the older workflow {#legacy}
+## Giới hạn của quy trình đời cũ {#legacy}
 
-It involved preparing audio, running `convert_audio_to_p3.py`, adding files to the old resource directory, regenerating, and referencing sounds. Sample rate, frame format, and symbol names must match that firmware. One ffmpeg command is not a universal player specification.
+Quy trình cũ bao gồm các bước: chuẩn bị âm thanh, chạy tập lệnh `convert_audio_to_p3.py`, chép tệp vào thư mục tài nguyên cũ, tạo lại mã nguồn và tham chiếu đến âm thanh. Tần số lấy mẫu, định dạng khung dữ liệu (frame format) và tên ký hiệu (symbol names) bắt buộc phải khớp với phiên bản firmware đó. Một câu lệnh `ffmpeg` đơn lẻ không phải là quy chuẩn chung cho mọi trình phát.
 
-A generated header is not the long-term source to maintain. Even if direct edits temporarily work in an old version, identify the real generation inputs and a reproducible build.
+Một tệp tiêu đề được sinh tự động (generated header) không phải là mã nguồn gốc để bảo trì lâu dài. Ngay cả khi việc chỉnh sửa trực tiếp tạm thời hoạt động trên một phiên bản cũ, bạn vẫn cần xác định rõ nguồn dữ liệu đầu vào thực sự và quy trình biên dịch có thể tái tạo.
 
 <a name="next"></a>
 
-## Move to the current workflow {#next}
+## Chuyển sang quy trình hiện hành {#next}
 
-Use [Custom prompt sounds](../custom-prompts.md) for current locales, OGG/Opus, and resource generation. Keep the original recording before converting. Renaming a P3 extension does not convert it to OGG.
+Hãy sử dụng hướng dẫn [Tùy chỉnh âm thanh thông báo](../custom-prompts.md) cho hệ thống ngôn ngữ (locales), định dạng OGG/Opus và quy trình tạo tài nguyên hiện tại. Luôn giữ lại bản thu âm gốc trước khi chuyển đổi định dạng. Việc chỉ đổi tên phần mở rộng (đuôi tệp) P3 không làm chuyển đổi tệp đó sang định dạng OGG.
