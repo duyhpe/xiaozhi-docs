@@ -7,6 +7,15 @@
   --vp-font-family-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   --vp-sidebar-width: 264px;
 }
+/* Phóng to logo trên thanh điều hướng */
+:root {
+  --vp-nav-logo-height: 36px;
+}
+
+.VPNavBarTitle .logo {
+  height: 36px !important;
+  width: auto !important;
+}
 
 .dark {
   --vp-c-brand-1: #5eead4;
