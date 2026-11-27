@@ -189,7 +189,7 @@ export default defineConfig({
         returnToTopLabel: 'Lên đầu trang',
         langMenuLabel: 'Đổi ngôn ngữ',
         skipToContentLabel: 'Chuyển đến nội dung chính',
-        footer: { message: 'Được duy trì bởi cộng đồng XiaoZhi', copyright: `Nội dung gốc: <a href="${licenseNotice}">CC BY 4.0</a> · Tài nguyên bên thứ ba giữ nguyên bản quyền riêng` }
+        footer: { message: 'Được duy trì bởi cộng đồng XiaoZhi AI dev', copyright: `Nội dung gốc: <a href="${licenseNotice}">CC BY 4.0</a> · Tài nguyên bên thứ ba giữ nguyên bản quyền riêng` }
       }
     },
     zh: {
@@ -240,7 +240,16 @@ export default defineConfig({
   },
     themeConfig: {
     logo: { src: '/logo.svg', alt: 'XiaoZhi' },
-    socialLinks: [{ icon: 'github', link: repositoryUrl }],
+    //socialLinks: [{ icon: 'github', link: repositoryUrl }],
+    socialLinks: [
+      {
+        icon: {
+          svg: '<svg viewBox="0 0 48 48" xmlns="http://w3.org"><path fill="#0068FF" d="M24 4C12.95 4 4 12.16 4 22.22c0 5.72 2.9 10.82 7.45 14.16L9.6 43.4c-.22.84.56 1.58 1.38 1.3l8.15-2.75c1.56.34 3.2.52 4.87.52 11.05 0 20-8.16 20-18.25C44 12.16 35.05 4 24 4z"/><text x="24" y="28.5" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-weight="bold" font-size="14.5">Zalo</text></svg>'
+        },
+        link: 'https://zalo.me/g/czkte0rt127ltnjnkd5n',
+        ariaLabel: 'Nhóm Zalo'
+      }
+    ],
     search: {
       provider: 'local',
       options: {
