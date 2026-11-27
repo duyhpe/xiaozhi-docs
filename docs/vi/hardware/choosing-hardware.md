@@ -1,12 +1,11 @@
 ---
 id: choosing-hardware
-title: Choose hardware for XiaoZhi
-description: 'Choose by firmware support, interfaces, voltage, and documentation, not old prices or product titles.'
+title: Chọn phần cứng cho XiaoZhi
+description: 'Lựa chọn dựa trên mức độ hỗ trợ firmware, giao tiếp, điện áp và tài liệu kỹ thuật, không dựa vào giá cũ hay tên gọi quảng cáo.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 sourceArticles:
   - DOC-10
 translation:
@@ -14,52 +13,52 @@ translation:
   sourceHash: 0f692bd58c8825aad2639f21ddb1d8db5b9488d82b43f05f6f80744af2f98a4d
   reviewedAt: '2026-11-15'
 ---
-# Choose hardware for XiaoZhi
+# Chọn phần cứng cho XiaoZhi
 
-Choose a complete setup with clear firmware support and wiring instructions before buying parts. A low price, similar appearance, or matching chip name does not establish compatibility.
+Hãy chọn một cấu hình hoàn chỉnh có hỗ trợ firmware rõ ràng và hướng dẫn đấu nối cụ thể trước khi mua linh kiện. Giá thành rẻ, ngoại hình giống nhau hoặc cùng tên dòng chip không đảm bảo tính tương thích.
 
 <a name="scope"></a>
 
-## Start with your use case {#scope}
+## Bắt đầu từ nhu cầu sử dụng của bạn {#scope}
 
-| Use case | What to check |
+| Nhu cầu sử dụng | Những điểm cần kiểm tra |
 | --- | --- |
-| Your first voice device | The [basic S3 breadboard](./breadboard-esp32-s3.md), with a fixed set of parts and firmware |
-| A smaller, lower-cost device | [C3 + ES8311](./breadboard-esp32-c3.md); do not mix in the S3 audio modules |
-| A display or camera | Hardware with a matching [color display](./displays/st7789.md) or [camera](./breadboard-camera.md) adaptation |
-| A custom product | [Hardware design considerations](./design-guidelines.md) and separately maintained board support |
+| Thiết bị giao tiếp giọng nói đầu tiên | [Mạch breadboard S3 cơ bản](./breadboard-esp32-s3.md), với bộ linh kiện và firmware cố định |
+| Thiết bị nhỏ gọn, chi phí thấp hơn | [C3 + ES8311](./breadboard-esp32-c3.md); không lắp lẫn các module âm thanh của S3 |
+| Màn hình màu hoặc camera | Phần cứng có bản tinh chỉnh tương thích cho [màn hình màu](./displays/st7789.md) hoặc [camera](./breadboard-camera.md) |
+| Sản phẩm tùy chỉnh riêng | [Những lưu ý khi thiết kế phần cứng](./design-guidelines.md) và gói hỗ trợ bo mạch được duy trì riêng |
 
 <a name="kits"></a>
 
-## Choose a setup, then follow its guide {#kits}
+## Chọn cấu hình, sau đó làm theo hướng dẫn tương ứng {#kits}
 
-- **Finished device:** check its exact model and firmware in [supported boards](./supported-boards.md). You do not need an additional set of breadboard parts for an existing finished device.
-- **Basic breadboard:** start with the [complete parts list and photos](./breadboard-esp32-s3.md#materials), covering the controller, microphone, amplifier, speaker, wires, breadboards, and display.
-- **Small C3 or an existing classic ESP32:** use the [C3](./breadboard-esp32-c3.md) or [classic ESP32](./breadboard-esp32.md) guide, with its own modules, wiring, and firmware.
-- **Mobile networking:** read the [4G modules, power, and wiring guide](./breadboard-4g.md). For occasional trips, first consider whether a phone's Wi-Fi hotspot meets your needs.
+- **Thiết bị hoàn chỉnh:** kiểm tra chính xác model và firmware trong danh sách [các bo mạch được hỗ trợ](./supported-boards.md). Bạn không cần mua thêm bộ linh kiện breadboard rời nếu đã có thiết bị hoàn chỉnh.
+- **Mạch breadboard cơ bản:** bắt đầu với [danh sách đầy đủ linh kiện và hình ảnh minh họa](./breadboard-esp32-s3.md#materials), bao gồm vi điều khiển, micro, mạch khuếch đại, loa, dây cắm, bảng mạch breadboard và màn hình.
+- **Mạch C3 nhỏ gọn hoặc ESP32 cổ điển có sẵn:** sử dụng hướng dẫn cho [C3](./breadboard-esp32-c3.md) hoặc [ESP32 cổ điển](./breadboard-esp32.md) với bộ module, sơ đồ đấu nối và firmware riêng biệt.
+- **Kết nối mạng di động:** đọc [hướng dẫn module 4G, nguồn cấp và đấu nối](./breadboard-4g.md). Nếu chỉ thỉnh thoảng mang ra ngoài, hãy cân nhắc xem điểm phát sóng Wi-Fi từ điện thoại đã đáp ứng đủ nhu cầu hay chưa.
 
 <a name="checklist"></a>
 
-## Before buying {#checklist}
+## Trước khi mua linh kiện {#checklist}
 
-- **Controller and memory:** complete module model, Flash/PSRAM capacity and interface, and current firmware support.
-- **Microphone/codec:** I2S, PDM, or analog interface; signal direction, supply, and channel selection.
-- **Amplifier:** input format, allowed voltage, load impedance, enable behavior, and default gain circuit.
-- **Display:** driver, resolution, interface, address, pins, backlight driver, and module voltage.
-- **Power and cables:** USB data support, board power paths, peak load, and reliable connections.
+- **Vi điều khiển và bộ nhớ:** mã đầy đủ của module, dung lượng và chuẩn giao tiếp Flash/PSRAM, cùng mức độ hỗ trợ firmware hiện tại.
+- **Micro/bộ giải mã âm thanh (codec):** chuẩn giao tiếp I2S, PDM hay analog; chiều truyền tín hiệu, điện áp cấp và cách chọn kênh.
+- **Mạch khuếch đại (amplifier):** định dạng tín hiệu đầu vào, dải điện áp cho phép, trở kháng tải, cơ chế chân kích hoạt (enable) và mạch khuếch đại mặc định.
+- **Màn hình:** chip điều khiển (driver), độ phân giải, chuẩn giao tiếp, địa chỉ, sơ đồ chân, mạch điều khiển đèn nền và điện áp hoạt động của module.
+- **Nguồn điện và dây cáp:** cáp USB có hỗ trợ truyền dữ liệu, đường cấp nguồn trên bo mạch, dòng tải đỉnh và độ chắc chắn của các đầu nối.
 
-MAX98357A and B are not universally interchangeable: their digital input formats differ. Speakers, headphones, and powered speakers are also different output loads. See [audio outputs](./audio-output.md).
+MAX98357A và B không thể thay thế cho nhau trong mọi trường hợp vì định dạng đầu vào kỹ thuật số của chúng khác nhau. Loa rời, tai nghe và loa chủ động (có nguồn riêng) cũng là các loại tải đầu ra khác nhau. Xem chi tiết tại [ngõ ra âm thanh](./audio-output.md).
 
 <a name="verify"></a>
 
-## After the parts arrive {#verify}
+## Sau khi nhận được linh kiện {#verify}
 
-Check that markings, packages, headers, and documentation agree, then verify wiring with power disconnected. First test the basic device's startup, display, recording/playback, and conversation. Test each additional module separately.
+Kiểm tra ký hiệu in trên linh kiện (silkscreen), kiểu đóng gói, hàng chân cắm và tài liệu kỹ thuật xem có khớp nhau không, sau đó kiểm tra lại toàn bộ mối nối khi đã ngắt nguồn điện. Trước tiên hãy kiểm tra quá trình khởi động, hiển thị màn hình, ghi âm/phát lại và trò chuyện trên cấu hình cơ bản. Thử nghiệm riêng rẽ từng module mở rộng.
 
-A seller's color-display photo does not establish the specifications of the display you received. A board's 5V header is not automatically a battery-charging input.
+Ảnh chụp màn hình màu do người bán đăng tải không đảm bảo thông số kỹ thuật của chiếc màn hình bạn thực nhận. Chân cắm 5V trên bo mạch không mặc nhiên là ngõ vào sạc pin.
 
 <a name="sources"></a>
 
-## Suppliers and documentation {#sources}
+## Nhà cung cấp và tài liệu tham chiếu {#sources}
 
-Part-identification photos and exact purchasing specifications are maintained in the matching construction guide, rather than listing unrelated modules here as a complete setup. Historical prices, stock levels, and claims about seller quality are not current promises. When changing suppliers, preserve the same electrical specifications instead of only replacing shopping links. See [boards and variants](./supported-boards.md) for support.
+Hình ảnh nhận diện linh kiện và thông số mua hàng chính xác được duy trì trong từng hướng dẫn lắp ráp tương ứng, thay vì liệt kê các module rời rạc tại đây như một bộ hoàn chỉnh. Giá bán cũ, tình trạng tồn kho và nhận xét về người bán chỉ mang tính thời điểm. Khi đổi nhà cung cấp, hãy giữ nguyên các thông số điện kỹ thuật thay vì chỉ thay thế đường link mua hàng. Xem thêm tại [các bo mạch và biến thể](./supported-boards.md) để kiểm tra mức độ hỗ trợ.
