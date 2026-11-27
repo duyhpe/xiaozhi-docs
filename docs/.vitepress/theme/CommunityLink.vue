@@ -25,7 +25,8 @@ function close() {
 
 <template>
   <div class="community-entry" @keydown.esc.prevent="close">
-    <a v-if="!zh" class="community-trigger" :href="community.discord" target="_blank" rel="noopener noreferrer">Discord ↗</a>
+    <a v-if="$page.relativePath.startsWith('vi/')" class="community-trigger" :href="community.zalo" target="_blank" rel="noopener noreferrer">Nhóm Zalo ↗</a>
+    <a v-else-if="!zh" class="community-trigger" :href="community.discord" target="_blank" rel="noopener noreferrer">Discord ↗</a>
     <template v-else>
       <button ref="trigger" class="community-trigger" :aria-expanded="open" aria-controls="community-qq" @click="open = !open">QQ 交流群</button>
       <button v-if="open" class="community-backdrop" aria-label="关闭交流群信息" tabindex="-1" @click="close" />
@@ -38,6 +39,7 @@ function close() {
     </template>
   </div>
 </template>
+
 
 <style scoped>
 .community-entry { position: relative; flex-shrink: 0; margin-left: 12px; font-size: 13px; }
