@@ -18,7 +18,9 @@ export default defineConfig({
   lang: 'zh-CN',
   description: '小智 AI 使用与开发文档 · XiaoZhi AI documentation',
   // The custom domain serves the site at /, rather than /xiaozhi-docs/.
-  base: '/',
+  //base: '/',
+  base: '/xiaozhi-docs/',
+
   // Keep .html URLs: they work on GitHub Pages without rewrite rules.
   cleanUrls: false,
   lastUpdated: true,
@@ -95,9 +97,13 @@ export default defineConfig({
       ['meta', { name: 'twitter:title', content: title }],
       ['meta', { name: 'twitter:description', content: description }]
     ]
+    //if (source === 'index.md') {
+    //  tags.push(['script', {}, rootLanguageRedirectScript('/')])
+    //}
     if (source === 'index.md') {
-      tags.push(['script', {}, rootLanguageRedirectScript('/')])
+      tags.push(['script', {}, rootLanguageRedirectScript('/xiaozhi-docs/')])
     }
+
     if (eligible || source === 'index.md') {
       for (const locale of ['zh', 'en']) {
         const counterpart = source === 'index.md' ? `${locale}/index.md` : source.replace(/^(zh|en)\//, `${locale}/`)
