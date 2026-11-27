@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/public/logo.svg" width="88" alt="XiaoZhi AI">
+  <img src="docs/public/logo_xiaozhi_dev.jpg" width="88" alt="XiaoZhi AI dev">
 </p>
 
 # XiaoZhi AI Tutorials

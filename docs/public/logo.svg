@@ -1,16 +1,76 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="52" y="227" width="70" height="98" rx="34" fill="url(#mark)" />
-  <rect x="390" y="227" width="70" height="98" rx="34" fill="url(#mark)" />
-  <path d="M256 160v-42" stroke="url(#mark)" stroke-width="30" stroke-linecap="round" />
-  <circle cx="256" cy="100" r="37" fill="url(#mark)" />
-  <path d="M168 160h176c58 0 105 47 105 105s-47 105-105 105h-39l-55 50-7-50h-75c-58 0-105-47-105-105s47-105 105-105Z" fill="white" stroke="url(#mark)" stroke-width="34" stroke-linejoin="round" />
-  <rect x="181" y="229" width="36" height="67" rx="18" fill="url(#mark)" />
-  <rect x="295" y="229" width="36" height="67" rx="18" fill="url(#mark)" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
   <defs>
-    <linearGradient id="mark" x1="91" y1="361" x2="407" y2="135" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#19C6E8" />
-      <stop offset="0.48" stop-color="#1498FF" />
-      <stop offset="1" stop-color="#1760FF" />
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d2ff" />
+      <stop offset="100%" stop-color="#0095d9" />
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#14284b" />
+      <stop offset="100%" stop-color="#081226" />
     </linearGradient>
   </defs>
+
+  <!-- X-Shaped Tech Wings -->
+  <g id="tech-x">
+    <!-- Top-Left Wing -->
+    <polygon points="300,65 345,65 385,120 350,145" fill="#0d1b36" />
+    <polygon points="312,73 341,73 375,119 351,136" fill="url(#cyanGrad)" />
+    <polyline points="325,73 345,100 345,112" fill="none" stroke="#0d1b36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="345" cy="115" r="4" fill="#0d1b36" />
+
+    <!-- Top-Right Wing -->
+    <polygon points="500,65 455,65 415,120 450,145" fill="#0d1b36" />
+    <polygon points="488,73 459,73 425,119 449,136" fill="url(#cyanGrad)" />
+    <polyline points="475,73 455,100 455,112" fill="none" stroke="#0d1b36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="455" cy="115" r="4" fill="#0d1b36" />
+
+    <!-- Bottom-Left Wing -->
+    <polygon points="300,265 345,265 385,210 350,185" fill="#0d1b36" />
+    <polygon points="312,257 341,257 375,211 351,194" fill="url(#cyanGrad)" />
+    <polyline points="325,257 345,230 445,218" fill="none" stroke="#0d1b36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="345" cy="215" r="4" fill="#0d1b36" />
+
+    <!-- Bottom-Right Wing -->
+    <polygon points="500,265 455,265 415,210 450,185" fill="#0d1b36" />
+    <polygon points="488,257 459,257 425,211 449,194" fill="url(#cyanGrad)" />
+    <polyline points="475,257 455,230 455,218" fill="none" stroke="#0d1b36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="455" cy="215" r="4" fill="#0d1b36" />
+  </g>
+
+  <!-- Center Robot Head -->
+  <g id="robot-head">
+    <!-- Left Ear / Headphone -->
+    <rect x="334" y="142" width="16" height="46" rx="8" fill="url(#cyanGrad)" stroke="#0d1b36" stroke-width="5" />
+    <!-- Right Ear / Headphone -->
+    <rect x="450" y="142" width="16" height="46" rx="8" fill="url(#cyanGrad)" stroke="#0d1b36" stroke-width="5" />
+
+    <!-- Main Outer Helmet -->
+    <rect x="348" y="115" width="104" height="100" rx="34" fill="#ffffff" stroke="#0d1b36" stroke-width="6" />
+
+    <!-- Top Forehead Accent -->
+    <path d="M 372 117 Q 400 113 428 117 L 422 128 Q 400 125 378 128 Z" fill="url(#cyanGrad)" stroke="#0d1b36" stroke-width="3" stroke-linejoin="round" />
+
+    <!-- Inner Visor / Face Screen -->
+    <rect x="360" y="135" width="80" height="66" rx="22" fill="url(#screenGrad)" stroke="#0d1b36" stroke-width="4" />
+
+    <!-- Left Eye -->
+    <circle cx="381" cy="162" r="9" fill="none" stroke="#00d2ff" stroke-width="3.5" />
+    <circle cx="381" cy="162" r="3.5" fill="#00d2ff" />
+
+    <!-- Right Eye -->
+    <circle cx="419" cy="162" r="9" fill="none" stroke="#00d2ff" stroke-width="3.5" />
+    <circle cx="419" cy="162" r="3.5" fill="#00d2ff" />
+
+    <!-- Cute Smile -->
+    <path d="M 391 178 Q 400 187 409 178" fill="none" stroke="#00d2ff" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Typography: Xiaozhi AI dev -->
+  <g id="logo-text" transform="translate(400, 355)" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="54" letter-spacing="-0.5">
+    <text x="0" y="0">
+      <tspan font-weight="800" fill="#0d1b36">Xiaozhi </tspan>
+      <tspan font-weight="800" fill="#00b4e6">AI </tspan>
+      <tspan font-weight="500" fill="#0d1b36">dev</tspan>
+    </text>
+  </g>
 </svg>
