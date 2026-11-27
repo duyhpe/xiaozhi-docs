@@ -1,12 +1,11 @@
 ---
 id: serial-logs
-title: Capture startup and fault logs
-description: 'Use the correct port and record context before, during, and after a failure.'
+title: Thu thập nhật ký khởi động và nhật ký lỗi
+description: 'Chọn đúng cổng kết nối và ghi lại ngữ cảnh trước, trong và sau khi xảy ra sự cố.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 sourceArticles:
   - DOC-23
 translation:
@@ -14,52 +13,52 @@ translation:
   sourceHash: 88dcd7c252f906b9cfe4ae231557e3a19a4e14db5afce4dfbce1165997ba1a4c
   reviewedAt: '2026-11-15'
 ---
-# Capture startup and fault logs
+# Thu thập nhật ký khởi động và nhật ký lỗi
 
-Logs distinguish startup, networking, activation, and audio failures. Capture first, then change conditions. The last line alone often misses the cause.
+Nhật ký hệ thống (logs) giúp phân biệt rõ các lỗi khởi động, kết nối mạng, kích hoạt thiết bị và âm thanh. Hãy thu thập nhật ký trước rồi mới thay đổi các điều kiện phần cứng/phần mềm. Việc chỉ nhìn vào dòng thông báo cuối cùng thường sẽ bỏ sót nguyên nhân gốc rễ.
 
 <a name="scope"></a>
 
-## Preparation {#scope}
+## Chuẩn bị {#scope}
 
-Prepare a data cable and suitable serial tool. Identify native USB versus a USB-UART bridge. Obtain drivers from the board or chip manufacturer; a historical driver bundled with one tool is not required for every device.
+Chuẩn bị một sợi cáp truyền dữ liệu tốt và một phần mềm đọc cổng nối tiếp (serial tool) phù hợp. Xác định rõ bo mạch dùng cổng USB gốc (native USB) hay mạch cầu nối USB-UART. Tải trình điều khiển (driver) từ nhà sản xuất bo mạch hoặc nhà sản xuất chip; một trình điều khiển đời cũ đi kèm với một công cụ bất kỳ không bắt buộc phải cài cho mọi thiết bị.
 
 <a name="port"></a>
 
-## 1. Find the port {#port}
+## 1. Tìm đúng cổng kết nối {#port}
 
-Compare port lists before and after connecting the device. Windows offers Device Manager; on macOS/Linux, use your tool's serial-port list. Identify the connection by USB/UART labels and manufacturer instructions rather than “left” or “right” port.
+Đối chiếu danh sách cổng trước và sau khi cắm thiết bị vào máy tính. Trên Windows, bạn có thể xem trong Trình quản lý Thiết bị (Device Manager); trên macOS/Linux, hãy xem danh sách cổng nối tiếp trong công cụ của bạn. Nhận diện đúng kết nối dựa theo nhãn ký hiệu USB/UART trên mạch và hướng dẫn của nhà sản xuất, thay vì gọi chung chung là cổng “bên trái” hay “bên phải”.
 
-Ports can change between ROM download mode and application runtime. Capture the normal-startup port. A visible port alone does not establish running firmware.
+Tên cổng có thể thay đổi khi chuyển giữa chế độ tải ROM (download mode) và chế độ chạy ứng dụng thông thường. Hãy thu thập nhật ký ở cổng khởi động thông thường. Việc chỉ thấy một cổng xuất hiện trên máy tính chưa đủ chứng minh firmware đang chạy bình thường.
 
 <figure class="source-figure">
 
-[![Finding a serial port in Windows Device Manager. COM numbers vary by computer.](../../public/images/zh/doc-23-image-001.webp)](../../public/images/zh/doc-23-image-001.webp)
+[![Tìm cổng nối tiếp trong Trình quản lý Thiết bị (Device Manager) của Windows. Số hiệu cổng COM sẽ khác nhau tùy từng máy tính.](../../public/images/zh/doc-23-image-001.webp)](../../public/images/zh/doc-23-image-001.webp)
 
-<figcaption>Finding a serial port in Windows Device Manager. COM numbers vary by computer.</figcaption>
+<figcaption>Tìm cổng nối tiếp trong Trình quản lý Thiết bị (Device Manager) của Windows. Số hiệu cổng COM sẽ khác nhau tùy từng máy tính.</figcaption>
 </figure>
 
 <a name="capture"></a>
 
-## 2. Connect and restart {#capture}
+## 2. Kết nối và khởi động lại thiết bị {#capture}
 
-1. Close flashing pages, IDE monitors, and terminals occupying the port.
-2. Select the port. The basic board generally uses **115200 baud, 8 data bits, no parity, 1 stop bit**; check other boards' configurations.
-3. Open the port, briefly press RESET/EN, and capture from startup.
-4. Reproduce the problem once and retain context before, during, and after it.
-5. Export plain text with hardware, firmware version, and actual steps.
+1. Đóng toàn bộ các trang nạp firmware trên trình duyệt, cửa sổ theo dõi của IDE và các cửa sổ dòng lệnh đang chiếm dụng cổng.
+2. Chọn đúng cổng kết nối. Bo mạch cơ bản thường sử dụng thông số **tốc độ baud 115200, 8 bit dữ liệu (data bits), không kiểm tra chẵn lẻ (no parity), 1 bit dừng (stop bit)**; hãy kiểm tra cấu hình riêng của các bo mạch khác.
+3. Mở kết nối tới cổng, nhấn nhanh nút RESET/EN trên mạch và bắt đầu ghi lại nhật ký ngay từ lúc khởi động.
+4. Tái hiện lại sự cố một lần và lưu giữ toàn bộ ngữ cảnh trước, trong và sau thời điểm xảy ra lỗi.
+5. Xuất nhật ký ra tệp văn bản thuần túy (plain text) kèm theo thông tin phần cứng, phiên bản firmware và các bước thao tác thực tế.
 
-With ESP-IDF installed, use:
+Nếu máy đã cài đặt ESP-IDF, hãy sử dụng lệnh:
 
 ```sh
 idf.py -p COM5 monitor
 ```
 
-Replace `COM5` with your port and exit with Ctrl+]. You do not need to install a whole SDK just for logs. Alternatively, use [pySerial miniterm](https://pyserial.readthedocs.io/en/latest/tools.html#module-serial.tools.miniterm): install `pyserial` in a separate Python environment, then run `python -m serial.tools.miniterm COM5 115200` with your actual port. Exit with Ctrl+].
+Thay thế `COM5` bằng cổng thực tế của bạn và nhấn tổ hợp phím `Ctrl+]` để thoát. Bạn không nhất thiết phải cài đặt cả bộ SDK cồng kềnh chỉ để đọc nhật ký. Thay vào đó, bạn có thể sử dụng [pySerial miniterm](https://pyserial.readthedocs.io/en/latest/tools.html#module-serial.tools.miniterm): cài đặt `pyserial` trong một môi trường Python riêng biệt, sau đó chạy lệnh `python -m serial.tools.miniterm COM5 115200` với cổng thực tế của bạn. Nhấn `Ctrl+]` để thoát.
 
-### No serial tool installed: install and run miniterm
+### Nếu chưa cài công cụ đọc cổng nối tiếp: cài đặt và chạy miniterm
 
-Install Python 3 for your system from [python.org](https://www.python.org/downloads/). Create an empty directory and run one group of commands in its terminal. Windows uses `py -3`; macOS/Linux uses `python3`. Neither group requires activating a script:
+Tải và cài đặt Python 3 phù hợp với hệ điều hành của bạn từ [python.org](https://www.python.org/downloads/). Tạo một thư mục trống và chạy một nhóm câu lệnh tương ứng bên dưới trong cửa sổ terminal của thư mục đó. Windows sử dụng lệnh `py -3`; macOS/Linux sử dụng lệnh `python3`. Cả hai nhóm lệnh đều không yêu cầu chạy tập lệnh kích hoạt môi trường:
 
 ::: code-group
 
@@ -79,35 +78,35 @@ python3 -m venv .venv
 
 :::
 
-Read the port list first, then replace `COM5` or `/dev/ttyACM0` in the final command with your port. macOS ports often resemble `/dev/cu.usbmodem…` or `/dev/cu.usbserial…`; these are examples only. Once connected, briefly press RESET/EN. Press **Ctrl+]** to exit and release the port.
+Hãy đọc kỹ danh sách cổng được liệt kê ra trước, sau đó thay thế `COM5` hoặc `/dev/ttyACM0` trong câu lệnh cuối cùng bằng tên cổng thực tế của bạn. Trên macOS, tên cổng thường có dạng `/dev/cu.usbmodem…` hoặc `/dev/cu.usbserial…`; các tên trong lệnh chỉ mang tính chất ví dụ. Sau khi kết nối thành công, hãy nhấn nhanh nút RESET/EN. Nhấn tổ hợp phím **Ctrl+]** để thoát và giải phóng cổng.
 
-- **No output:** check the logging port and normal running mode, then press RESET/EN; do not enter ROM download mode.
-- **Garbled text:** check baud rate and encoding; disable HEX display in graphical tools.
-- **Port busy:** close flashers, other serial tools, and IDE monitors, then reconnect.
+- **Không thấy dữ liệu xuất ra:** kiểm tra lại đúng cổng xuất log và đảm bảo thiết bị đang ở chế độ chạy bình thường, sau đó nhấn nút RESET/EN; không đưa mạch vào chế độ tải ROM.
+- **Chữ hiển thị bị lỗi font / ký tự lạ:** kiểm tra lại tốc độ baud và bảng mã ký tự (encoding); tắt chế độ hiển thị mã HEX trong các phần mềm có giao diện đồ họa.
+- **Báo lỗi cổng đang bận (Port busy):** đóng các công cụ nạp firmware, phần mềm đọc cổng serial khác và cửa sổ theo dõi của IDE, sau đó kết nối lại.
 
-For MAC lookup, follow [Get device information](./account-and-binding.md#device-information) to distinguish the STA address, hotspot address, UUID, and binding code.
+Để tra cứu địa chỉ MAC, hãy làm theo hướng dẫn [Lấy thông tin thiết bị](./account-and-binding.md#device-information) nhằm phân biệt rõ địa chỉ STA, địa chỉ điểm phát sóng (hotspot), mã UUID và mã liên kết (binding code).
 
 <a name="read"></a>
 
-## 3. What to inspect first {#read}
+## 3. Những thông tin cần kiểm tra đầu tiên {#read}
 
-| Stage | Look for |
+| Giai đoạn | Dấu hiệu cần tìm |
 | --- | --- |
-| Startup | Chip, version, board, Flash/PSRAM, partitions, and first initialization error |
-| Network | Scans, connections, disconnects, repeated provisioning |
-| Activation/OTA | HTTP status and activation state; keep credentials private |
-| Conversation | Connection, recording, playback, tool calls, and where resets occur |
+| Khởi động (Startup) | Dòng chip, phiên bản firmware, tên bo mạch, dung lượng Flash/PSRAM, bảng phân vùng và thông báo lỗi khởi tạo đầu tiên |
+| Mạng (Network) | Quá trình quét Wi-Fi, kết nối, ngắt kết nối, hoặc tình trạng lặp lại yêu cầu cấu hình mạng |
+| Kích hoạt / OTA | Mã trạng thái HTTP và trạng thái kích hoạt; nhớ giữ bí mật các thông tin xác thực |
+| Trò chuyện | Quá trình thiết lập kết nối, thu âm, phát lại, gọi công cụ (tool calls) và vị trí xảy ra khởi động lại |
 
-Keep unfamiliar errors verbatim. Do not discard the first failure while retaining only cascading errors.
+Hãy giữ nguyên văn các thông báo lỗi lạ. Tuyệt đối không xóa bỏ thông báo lỗi đầu tiên mà chỉ giữ lại các lỗi phát sinh dây chuyền phía sau.
 
 <a name="verify"></a>
 
-## Verify the result {#verify}
+## Kiểm tra kết quả thu thập {#verify}
 
-The text includes startup version and reproducible fault context, allowing another person to follow the sequence. Redact Wi-Fi passwords, endpoint tokens, phone numbers, and unnecessary device identifiers. Screenshots do not replace copyable error text.
+Tệp văn bản nhật ký phải bao gồm phiên bản lúc khởi động và đầy đủ ngữ cảnh để người khác có thể tái hiện lại trình tự xảy ra lỗi. Nhớ xóa/che mật khẩu Wi-Fi, mã token của điểm cuối, số điện thoại và các định danh thiết bị không cần thiết. Ảnh chụp màn hình không thể thay thế cho văn bản nhật ký có thể sao chép được.
 
 <a name="materials"></a>
 
-## Tools and next steps {#materials}
+## Công cụ và các bước tiếp theo {#materials}
 
-Download serial tools from their maintainers' official releases. For writing firmware, return to [Flashing](../firmware/flashing.md). Do not type random control commands into the serial window.
+Hãy tải các phần mềm đọc cổng nối tiếp từ trang phát hành chính thức của tác giả. Để nạp lại firmware, hãy quay lại mục [Nạp và nâng cấp firmware](../firmware/flashing.md). Tuyệt đối không gõ bừa các lệnh điều khiển ngẫu nhiên vào cửa sổ giao tiếp cổng nối tiếp.

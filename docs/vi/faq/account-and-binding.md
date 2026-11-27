@@ -1,10 +1,10 @@
 ---
 id: account-and-binding
-title: 'Sign in, recover an account, and unbind devices'
-description: 'Recover your account, unbind your own device, or request help with a device bound to someone else.'
+title: 'Đăng nhập, khôi phục tài khoản và hủy liên kết thiết bị'
+description: 'Khôi phục tài khoản của bạn, tự hủy liên kết thiết bị hoặc gửi yêu cầu hỗ trợ đối với thiết bị đang bị gắn vào tài khoản khác.'
 status: review
 reviewedAt: '2026-11-15'
-reviewNote: 'Account actions and request materials have been checked; support must review manual requests.'
+reviewNote: 'Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các thao tác tài khoản và hồ sơ yêu cầu đã được kiểm tra; bộ phận hỗ trợ sẽ trực tiếp xét duyệt các yêu cầu xử lý thủ công.'
 sourceArticles:
   - DOC-16
 translation:
@@ -12,74 +12,75 @@ translation:
   sourceHash: 3dcead553505bc36bd7d34f9a97ce4e7fc9379a23155157f4e25bd706ad041bf
   reviewedAt: '2026-11-15'
 ---
-# Sign in, recover an account, and unbind devices
+# Đăng nhập, khôi phục tài khoản và hủy liên kết thiết bị
 
-Identify the account you originally used before changing the device. Signing in with another phone number, reflashing, or clearing Wi-Fi does not remove the server-side device binding.
+Hãy xác định đúng tài khoản bạn đã sử dụng ban đầu trước khi thay đổi cấu hình trên thiết bị. Việc đăng nhập bằng một số điện thoại khác, nạp lại firmware hay xóa cài đặt Wi-Fi sẽ không xóa bỏ liên kết thiết bị đã lưu trên máy chủ.
 
 <a name="scope"></a>
 
-## Choose a path {#scope}
+## Chọn hướng xử lý {#scope}
 
-| Problem | Start here |
+| Vấn đề gặp phải | Bắt đầu tại đây |
 | --- | --- |
-| SMS codes never arrive | [SMS sign-in](#sms) |
-| Forgotten username or password | [Recover the original account](#recovery) |
-| Change phone number or link Google | Sign in first, then use account settings |
-| Transfer your device to someone else | [Unbind your device](#unbind) |
-| A purchased device is bound to another account and you cannot reach its previous owner | [Request unbinding](#ownership) |
-| You do not know the device ID or MAC address | [Get device information](#device-information) |
-| Several devices need unbinding | [Batch request spreadsheet](#batch) |
+| Không bao giờ nhận được mã SMS | [Đăng nhập qua SMS](#sms) |
+| Quên tên đăng nhập hoặc mật khẩu | [Khôi phục tài khoản gốc](#recovery) |
+| Đổi số điện thoại hoặc liên kết tài khoản Google | Đăng nhập trước, sau đó vào phần cài đặt tài khoản |
+| Chuyển nhượng thiết bị của bạn cho người khác | [Hủy liên kết thiết bị của bạn](#unbind) |
+| Mua lại thiết bị nhưng đang bị gắn vào tài khoản khác và không thể liên hệ chủ cũ | [Gửi yêu cầu hủy liên kết](#ownership) |
+| Không biết ID thiết bị (device ID) hoặc địa chỉ MAC | [Lấy thông tin thiết bị](#device-information) |
+| Cần hủy liên kết nhiều thiết bị cùng lúc | [Bảng tính yêu cầu hàng loạt](#batch) |
 
 <a name="sms"></a>
 
-## 1. SMS and Google sign-in {#sms}
+## 1. Đăng nhập bằng SMS và Google {#sms}
 
-In the [official Console](https://xiaozhi.me/console/), check the country/region code and follow current CAPTCHA/SMS steps. Check the number, signal, blocked messages, and send interval rather than repeatedly pressing send.
+Trên trang [Console chính thức](https://xiaozhi.me/console/), hãy kiểm tra mã vùng quốc gia/khu vực và làm theo các bước xác thực CAPTCHA/SMS hiện hành. Kiểm tra lại số điện thoại, sóng di động, mục tin nhắn bị chặn và thời gian giãn cách giữa các lần gửi thay vì nhấn nút gửi liên tục.
 
-The current implementation directs **unregistered numbers outside +86** to Google sign-in. Existing international-number accounts may have different conditions. Follow explicit page notices; waiting ten minutes is not a universal solution.
+Hệ thống hiện tại sẽ điều hướng **các số điện thoại chưa đăng ký nằm ngoài đầu số +86** sang phương thức đăng nhập bằng Google. Các tài khoản dùng số điện thoại quốc tế đã tạo từ trước có thể áp dụng điều kiện khác. Hãy làm theo các thông báo hiển thị trực tiếp trên trang; việc chờ đợi 10 phút không phải là giải pháp chung cho mọi lỗi.
 
-Google sign-in, phone sign-in, and GitHub verification are different features. GitHub provides [linking and benefit verification](../console/github-verification.md) after sign-in. A GitHub username does not recover a XiaoZhi account.
+Đăng nhập bằng Google, đăng nhập bằng số điện thoại và xác minh GitHub là ba tính năng hoàn toàn khác nhau. GitHub chỉ cung cấp tính năng [liên kết và xác minh quyền lợi](../console/github-verification.md) sau khi bạn đã đăng nhập. Tên người dùng GitHub không thể dùng để khôi phục tài khoản XiaoZhi.
 
 <a name="recovery"></a>
 
-## 2. Recover the original account {#recovery}
+## 2. Khôi phục tài khoản gốc {#recovery}
 
-1. Identify the original phone number, Google account, or username. An empty new account does not mean old data disappeared.
-2. If SMS/Google still signs in to the original account, sign in first, then change the password or linked methods in account settings.
-3. If self-service recovery fails, email **[xiaozhi.ai@tenclass.com](mailto:xiaozhi.ai@tenclass.com)** with the information below. Describe the failing step and how to reach you; do not send passwords or SMS codes.
+1. Xác định lại số điện thoại, tài khoản Google hoặc tên người dùng đã đăng ký ban đầu. Việc thấy một tài khoản mới trống trơn không đồng nghĩa với việc dữ liệu cũ đã biến mất.
+2. Nếu phương thức SMS hoặc Google vẫn đăng nhập được vào tài khoản gốc, hãy đăng nhập trước rồi đổi mật khẩu hoặc cập nhật phương thức liên kết trong phần cài đặt tài khoản.
+3. Nếu quy trình tự khôi phục thất bại, hãy gửi email tới **[xiaozhi.ai@tenclass.com](mailto:xiaozhi.ai@tenclass.com)** kèm các thông tin bên dưới. Mô tả rõ bước bị lỗi và cách thức liên hệ lại với bạn; tuyệt đối không gửi mật khẩu hay mã xác nhận SMS qua email.
 
-| Situation | Email subject template | Information to provide |
+| Tình huống | Mẫu tiêu đề email | Thông tin cần cung cấp |
 | --- | --- | --- |
-| You know the username but forgot the password and cannot use the linked sign-in method | `【找回密码，用户名 XXX，设备ID XXX】` | Original username and device ID |
-| You forgot both username and password and cannot use the linked sign-in method | `【找回用户名，设备ID XXX，激活日期 XXX】` | Device ID and activation date; state an approximate date if uncertain |
+| Bạn nhớ tên đăng nhập nhưng quên mật khẩu và không thể dùng phương thức đăng nhập đã liên kết | `【找回密码，用户名 XXX，设备ID XXX】` | Tên đăng nhập gốc và ID thiết bị |
+| Bạn quên cả tên đăng nhập lẫn mật khẩu và không thể dùng phương thức đăng nhập đã liên kết | `【找回用户名，设备ID XXX，激活日期 XXX】` | ID thiết bị và ngày kích hoạt; ghi rõ ngày ước chừng nếu không nhớ chính xác |
 
-These subjects mean “Recover password, username XXX, device ID XXX” and “Recover username, device ID XXX, activation date XXX.” Replace the placeholders with your own information. See [device information](#device-information) below. State when an item is unavailable rather than guessing; support may request further ownership checks. Sending a request does not mean the account has been recovered.
+Hai mẫu tiêu đề tiếng Trung trên có nghĩa là “Khôi phục mật khẩu, tên đăng nhập XXX, ID thiết bị XXX” và “Khôi phục tên đăng nhập, ID thiết bị XXX, ngày kích hoạt XXX”. Hãy thay thế các cụm `XXX` bằng thông tin thực tế của bạn. Xem hướng dẫn lấy [thông tin thiết bị](#device-information) ở bên dưới. Nếu thiếu thông tin nào, hãy nêu rõ thay vì đoán mò; bộ phận hỗ trợ có thể yêu cầu thêm các bước xác minh quyền sở hữu khác. Việc gửi yêu cầu không đồng nghĩa với việc tài khoản đã được khôi phục ngay lập tức.
 
 <a name="unbind"></a>
 
-## 3. Unbind a device you own {#unbind}
 
-1. Sign in to the [Console](https://xiaozhi.me/console/) and locate the agent that owns the device.
-2. Open the agent's **Devices** list. Check the device name, board, and MAC address. If the MAC is masked, click it to copy the full address and compare it with your own record.
-3. Find that device's **Unbind** action. On a phone, scroll down the device card if needed; do not delete the entire agent.
-4. Read the confirmation: **unbinding also deletes this device's conversation history**. Check the selected device and keep any records you need before confirming.
-5. Ask the recipient to restart the device, obtain a new six-digit verification code, and [bind it to their own account](../getting-started/wifi-and-binding.md#bind).
+## 3. Hủy liên kết thiết bị thuộc quyền sở hữu của bạn {#unbind}
 
-Unbinding a device differs from deleting an agent. You do not need to delete an entire agent to transfer one device. Wi-Fi needs reconfiguration only if the existing network is no longer usable.
+1. Đăng nhập vào [Console](https://xiaozhi.me/console/) và tìm trợ lý (agent) đang quản lý thiết bị đó.
+2. Mở danh sách **Thiết bị (Devices)** của trợ lý. Kiểm tra tên thiết bị, model bo mạch và địa chỉ MAC. Nếu địa chỉ MAC bị che bớt ký tự, hãy nhấp vào đó để sao chép địa chỉ đầy đủ và đối chiếu với thông tin bạn lưu giữ.
+3. Tìm nút thao tác **Hủy liên kết (Unbind)** của thiết bị đó. Trên điện thoại, hãy cuộn xuống dưới thẻ thông tin thiết bị nếu cần; tuyệt đối không xóa nhầm toàn bộ trợ lý.
+4. Đọc kỹ thông báo xác nhận: **việc hủy liên kết cũng sẽ xóa toàn bộ lịch sử trò chuyện của thiết bị này**. Kiểm tra kỹ thiết bị đang chọn và sao lưu mọi dữ liệu cần thiết trước khi nhấn xác nhận.
+5. Nhờ người nhận thiết bị khởi động lại mạch, lấy mã xác minh 6 chữ số mới và [liên kết thiết bị vào tài khoản riêng của họ](../getting-started/wifi-and-binding.md#bind).
+
+Thao tác hủy liên kết thiết bị khác với việc xóa một trợ lý. Bạn không cần phải xóa cả trợ lý chỉ để chuyển nhượng một thiết bị. Mạng Wi-Fi chỉ cần cấu hình lại nếu mạng cũ không còn sử dụng được nữa.
 
 <a name="ownership"></a>
 
-## 4. A device bound to another account {#ownership}
+## 4. Thiết bị đang bị gắn vào một tài khoản khác {#ownership}
 
-A purchased kit, module, or used device may have been bound before sale, return, or recycling. **First ask the seller or previous owner to unbind it using the steps above.** If they cannot be reached, request manual assistance:
+Một bộ kit mới mua, mô-đun hoặc thiết bị đã qua sử dụng có thể đã được liên kết sẵn trước khi bán, đổi trả hoặc tái chế. **Trước tiên, hãy liên hệ người bán hoặc chủ sở hữu cũ để nhờ họ hủy liên kết theo các bước ở trên.** Nếu không thể liên lạc được với họ, hãy gửi yêu cầu hỗ trợ thủ công:
 
-1. [Get the device information](#device-information): MAC address, device ID if available, board model, and firmware version.
-2. Email **[xiaozhi.ai@tenclass.com](mailto:xiaozhi.ai@tenclass.com)**.
-3. For one device, use the subject `【解绑设备，设备ID XXX，MAC地址 XXX】` (“Unbind device, device ID XXX, MAC address XXX”). Replace the placeholders. If the device ID is unavailable, write “unavailable” and explain why in the body; do not substitute the six-digit binding code.
-4. Explain that the purchased device is bound to someone else's account and you cannot contact its previous owner. Include device details, the error message, and how you obtained it. Reply in the same email thread if support requests more information.
-5. After support confirms completion, restart the device and [bind it with a new six-digit code](../getting-started/wifi-and-binding.md#bind). If it still fails, reply to that thread with the new error.
+1. [Lấy thông tin thiết bị](#device-information): địa chỉ MAC, ID thiết bị (nếu có), model bo mạch và phiên bản firmware.
+2. Gửi email tới **[xiaozhi.ai@tenclass.com](mailto:xiaozhi.ai@tenclass.com)**.
+3. Đối với một thiết bị đơn lẻ, hãy dùng tiêu đề email `【解绑设备，设备ID XXX，MAC地址 XXX】` (“Hủy liên kết thiết bị, ID thiết bị XXX, địa chỉ MAC XXX”). Thay thế các cụm `XXX` bằng thông tin thực tế. Nếu không lấy được ID thiết bị, hãy ghi là “unavailable” (không khả dụng) và giải thích lý do trong nội dung thư; tuyệt đối không điền nhầm mã liên kết 6 chữ số vào vị trí này.
+4. Giải thích rõ rằng thiết bị bạn mua đang bị gắn vào tài khoản của người khác và bạn không thể liên hệ với chủ cũ. Đính kèm đầy đủ thông tin thiết bị, thông báo lỗi gặp phải và nguồn gốc mua/nhận thiết bị. Nếu bộ phận hỗ trợ yêu cầu bổ sung thông tin, hãy phản hồi ngay trong cùng chuỗi email đó.
+5. Sau khi bộ phận hỗ trợ xác nhận đã xử lý xong, hãy khởi động lại thiết bị và [liên kết bằng mã 6 chữ số mới](../getting-started/wifi-and-binding.md#bind). Nếu vẫn báo lỗi, hãy trả lời lại chuỗi email đó kèm thông báo lỗi mới.
 
-Copy and complete this message:
+Sao chép và điền đầy đủ mẫu nội dung sau:
 
 ```text
 Request: Remove the device's binding to its previous account
@@ -91,57 +92,57 @@ How the device was purchased/obtained:
 Current error message:
 ```
 
-Requests require manual review; sending an email does not guarantee immediate unbinding. Reflashing, clearing Wi-Fi, or a factory reset does not replace server-side unbinding. Send identifiers and supporting documents only to support, not public issues or group chats.
+Các yêu cầu này đều cần được xét duyệt thủ công; việc gửi email không đảm bảo thiết bị sẽ được hủy liên kết ngay lập tức. Việc nạp lại firmware, xóa cấu hình Wi-Fi hay khôi phục cài đặt gốc (factory reset) đều không thể thay thế cho thao tác hủy liên kết trên máy chủ. Chỉ gửi các mã định danh và giấy tờ chứng minh cho bộ phận hỗ trợ, tuyệt đối không đăng lên các trang báo lỗi công khai hoặc nhóm chat cộng đồng.
 
 <a name="batch"></a>
 
-### Request unbinding for several devices {#batch}
+### Yêu cầu hủy liên kết hàng loạt cho nhiều thiết bị {#batch}
 
-1. [Download the batch unbinding request spreadsheet (XLSX)](https://github.com/78/xiaozhi-docs/releases/download/tutorial-assets-2026-11-14/doc-16-file-001.xlsx).
-2. Keep the original column headers: **设备ID** means **Device ID**; **MAC地址** means **MAC address**. Enter one device per row and verify both values refer to the same device. Explain unavailable items instead of inventing IDs.
-3. Attach the completed spreadsheet to an email to the same support address with subject `【解绑设备】` (“Unbind devices”). Describe where the devices came from and why unbinding is needed.
-4. Provide any additional information requested, then verify each device can be bound again after processing.
+1. [Tải xuống bảng tính yêu cầu hủy liên kết hàng loạt (XLSX)](https://github.com/78/xiaozhi-docs/releases/download/tutorial-assets-2026-11-14/doc-16-file-001.xlsx).
+2. Giữ nguyên tiêu đề các cột gốc trong tệp: **设备ID** nghĩa là **ID thiết bị (Device ID)**; **MAC地址** nghĩa là **Địa chỉ MAC (MAC address)**. Điền thông tin mỗi thiết bị trên một hàng và kiểm tra kỹ hai giá trị này thuộc về cùng một thiết bị. Hãy giải thích rõ các mục không khả dụng thay vì tự bịa ra mã ID.
+3. Đính kèm tệp bảng tính đã điền hoàn chỉnh vào email gửi tới cùng địa chỉ hỗ trợ ở trên với tiêu đề `【解绑设备】` (“Hủy liên kết thiết bị”). Mô tả rõ nguồn gốc của lô thiết bị và lý do cần hủy liên kết.
+4. Cung cấp thêm bất kỳ thông tin bổ sung nào nếu được yêu cầu, sau đó kiểm tra lại từng thiết bị để đảm bảo có thể liên kết bình thường sau khi hoàn tất xử lý.
 
 <SourceMaterials article="DOC-16" />
 
 <a name="device-information"></a>
 
-## 5. Get the device ID and MAC address {#device-information}
+## 5. Lấy ID thiết bị và địa chỉ MAC {#device-information}
 
-**The device ID, MAC address, startup UUID, and six-digit binding code are different fields.** The six-digit code adds a device; a MAC address looks like `02:00:00:00:00:01`. Do not assume the UUID in startup logs is the numeric device ID used by the backend.
+**ID thiết bị (device ID), địa chỉ MAC, mã UUID lúc khởi động và mã liên kết 6 chữ số là bốn trường dữ liệu hoàn toàn khác nhau.** Mã 6 chữ số dùng để thêm thiết bị mới; địa chỉ MAC có định dạng dạng `02:00:00:00:00:01`. Không mặc định rằng chuỗi UUID xuất hiện trong nhật ký khởi động chính là mã ID thiết bị dạng số dùng ở máy chủ.
 
-### Device ID
+### ID thiết bị (Device ID)
 
-If the device still supports normal conversation, try asking “What is my device ID?” and record the identifier it provides. If it cannot talk, gives no identifier, or only provides a UUID, describe that situation and give support the MAC and relevant logs. Do not erase or reflash the device just to obtain an ID.
+Nếu thiết bị vẫn giao tiếp bình thường, hãy thử hỏi bằng giọng nói “What is my device ID?” (ID thiết bị của tôi là gì?) và ghi lại mã định danh mà trợ lý đọc ra. Nếu thiết bị không thể trò chuyện, không trả lời mã định danh hoặc chỉ đọc ra chuỗi UUID, hãy mô tả rõ tình trạng đó và gửi kèm địa chỉ MAC cùng nhật ký khởi động cho bộ phận hỗ trợ. Tuyệt đối không xóa trắng hay nạp lại firmware chỉ để cố lấy mã ID.
 
-### MAC address
+### Địa chỉ MAC
 
-- **You can sign in to the original account:** open the agent's device list and click the MAC field to copy the full address.
-- **You cannot sign in to the original account:** read the device's startup logs on your own computer:
+- **Nếu bạn vẫn đăng nhập được vào tài khoản gốc:** mở danh sách thiết bị của trợ lý trên Console và nhấp vào trường địa chỉ MAC để sao chép đầy đủ.
+- **Nếu bạn không thể đăng nhập vào tài khoản gốc:** hãy đọc nhật ký khởi động của thiết bị trên máy tính cá nhân của bạn:
 
-1. Connect a USB data cable to the device's logging port. Close web flashers, IDE monitors, and other serial tools using that port.
-2. Follow the [serial log guide](./serial-logs.md#capture) to open the actual port. Basic ESP32 setups normally use **115200 baud, 8 data bits, no parity, 1 stop bit**. Disable HEX display.
-3. With the port open, briefly press **RESET/EN** so the firmware boots normally. Do not hold BOOT to enter download mode here.
-4. Search the text for `wifi:mode` or `sta (`. On a Wi-Fi device, copy the address **inside `sta (...)`**, not the following `softAP (...)` provisioning hotspot address.
-5. If that line is absent, keep the relevant startup device information and `Board: UUID=...` line, and state the board and firmware version. 4G/Ethernet setups may have no Wi-Fi log; obtain their address according to the board guide or support instructions instead of applying this Wi-Fi example.
+1. Cắm cáp USB truyền dữ liệu vào cổng xuất log của thiết bị. Đóng toàn bộ trang web nạp firmware, trình theo dõi của IDE và các công cụ đọc cổng nối tiếp khác đang chiếm dụng cổng đó.
+2. Làm theo [hướng dẫn thu thập nhật ký cổng nối tiếp](./serial-logs.md#capture) để mở đúng cổng thực tế. Các mạch ESP32 cơ bản thường dùng thông số **tốc độ baud 115200, 8 bit dữ liệu, không kiểm tra chẵn lẻ, 1 bit dừng**. Tắt chế độ hiển thị mã HEX.
+3. Khi cổng đã mở, nhấn nhanh nút **RESET/EN** để firmware khởi động bình thường. Không nhấn giữ nút BOOT để vào chế độ tải ROM ở bước này.
+4. Tìm kiếm trong văn bản log cụm từ `wifi:mode` hoặc `sta (`. Trên thiết bị dùng Wi-Fi, hãy sao chép địa chỉ nằm **bên trong ngoặc `sta (...)`**, không lấy địa chỉ `softAP (...)` của điểm phát sóng cấu hình ngay phía sau.
+5. Nếu không thấy dòng thông tin trên, hãy giữ lại toàn bộ thông tin thiết bị lúc khởi động cùng dòng `Board: UUID=...`, đồng thời ghi rõ model bo mạch và phiên bản firmware. Các thiết bị dùng mạng 4G hoặc Ethernet có thể không xuất log Wi-Fi; hãy tra cứu địa chỉ theo tài liệu hướng dẫn riêng của bo mạch đó hoặc theo chỉ dẫn của bộ phận hỗ trợ thay vì áp dụng ví dụ Wi-Fi này.
 
 <figure class="source-figure">
 
-[![Read the Wi-Fi STA MAC from a serial log; the softAP address belongs to the provisioning hotspot](../../public/images/en/device-identifiers.svg)](../../public/images/en/device-identifiers.svg)
+[![Đọc địa chỉ MAC Wi-Fi STA từ nhật ký cổng nối tiếp; địa chỉ softAP thuộc về điểm phát sóng cấu hình](../../public/images/en/device-identifiers.svg)](../../public/images/en/device-identifiers.svg)
 
-<figcaption>Example log: copy the MAC inside sta. These are example addresses, not your device's addresses; timestamps and hotspot names vary. Click to enlarge.</figcaption>
+<figcaption>Ví dụ nhật ký: sao chép địa chỉ MAC nằm trong mục sta. Đây chỉ là các địa chỉ ví dụ, không phải địa chỉ thiết bị của bạn; dấu thời gian và tên điểm phát sóng sẽ khác nhau. Nhấp vào ảnh để phóng to.</figcaption>
 </figure>
 
-For an empty log, check the port, data cable, power, and normal boot mode. For garbled text, check baud rate, encoding, and HEX display. Do not send unknown commands. See [Capture startup and failure logs](./serial-logs.md) for full instructions.
+Nếu cửa sổ nhật ký trống trơn, hãy kiểm tra lại cổng kết nối, cáp truyền dữ liệu, nguồn cấp và chế độ khởi động bình thường. Nếu chữ bị lỗi font, hãy kiểm tra tốc độ baud, bảng mã ký tự và tắt hiển thị HEX. Không gửi các lệnh lạ vào cổng nối tiếp. Xem đầy đủ hướng dẫn tại mục [Thu thập nhật ký khởi động và nhật ký lỗi](./serial-logs.md).
 
 <a name="verify"></a>
 
-## Verify the result {#verify}
+## Kiểm tra kết quả hoạt động {#verify}
 
-Account recovery restores access to the expected agents. After unbinding, the device is absent from the original account and its recipient can bind with a new six-digit code and start a conversation. Merely sending an email or spreadsheet is not completion.
+Khôi phục tài khoản thành công sẽ giúp bạn truy cập lại đúng các trợ lý (agents) mong muốn. Sau khi hủy liên kết hoàn tất, thiết bị sẽ biến mất khỏi tài khoản cũ và người nhận có thể liên kết bằng mã 6 chữ số mới để bắt đầu trò chuyện. Việc mới chỉ gửi email hay bảng tính chưa phải là hoàn tất.
 
 <a name="next"></a>
 
-## Next steps {#next}
+## Các bước tiếp theo {#next}
 
-Return to [Provisioning and binding](../getting-started/wifi-and-binding.md). For invalid device codes or a connected but inactive device, check [Troubleshooting](./index.md#account).
+Quay lại mục [Kết nối và liên kết thiết bị](../getting-started/wifi-and-binding.md). Nếu gặp lỗi mã thiết bị không hợp lệ hoặc thiết bị đã kết nối mạng nhưng không phản hồi, hãy kiểm tra mục [Khắc phục sự cố](./index.md#account).

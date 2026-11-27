@@ -1,133 +1,133 @@
 ---
 id: faq
-title: Troubleshooting by symptom
-description: 'Isolate serial, boot, network, account, audio, display, and build problems with useful logs.'
+title: Khắc phục sự cố theo hiện tượng
+description: 'Khoanh vùng các lỗi cổng nối tiếp (serial), khởi động, mạng, tài khoản, âm thanh, màn hình và biên dịch bằng nhật ký chi tiết.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  Troubleshooting paths were compared with v2.6.0 and the current Console implementation. Resolution of individual
-  faults still requires device tests and community feedback.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các quy trình xử lý sự cố đã được đối chiếu với phiên bản v2.6.0 và giao diện Console hiện hành; việc khắc phục từng lỗi cụ thể vẫn đòi hỏi kiểm thử trực tiếp trên thiết bị và phản hồi từ cộng đồng.
 translation:
   status: review
   sourceHash: 7e50176d1429c3a645f922f65cfe0c008c680825c33a4569f12d7810a669c585
   reviewedAt: '2026-11-15'
 ---
-# Troubleshooting by symptom
+# Khắc phục sự cố theo hiện tượng
 
-Change one condition at a time. Identify where the failure occurs before changing configuration. Repeatedly flashing different board builds can turn one problem into several.
+Chỉ thay đổi từng điều kiện một trong mỗi lần thử nghiệm. Hãy xác định chính xác giai đoạn xảy ra lỗi trước khi sửa đổi cấu hình. Việc nạp lặp đi lặp lại nhiều bản dựng firmware của các bo mạch khác nhau có thể biến một lỗi đơn lẻ thành nhiều lỗi chồng chéo.
 
 <a name="scope"></a>
 
-## Find the failing stage {#scope}
+## Xác định giai đoạn gặp lỗi {#scope}
 
-| Where you are stuck | Start here |
+| Giai đoạn đang bị kẹt | Bắt đầu kiểm tra tại đây |
 | --- | --- |
-| Computer cannot find the device or flashing fails | [Serial and flashing](#serial) |
-| Flashing completes but the device does not boot or keeps restarting | [Startup and power](#boot) |
-| No hotspot or network connection | [Provisioning and networking](#network) |
-| Device code exists but binding fails | [Accounts and ownership](#account) |
-| No sound, microphone input, or wake response | [Audio and wake words](#audio) |
-| Blank, corrupted, or incomplete display | [Display](#display) |
-| Local compilation fails | [Build environment](#build) |
-| MCP tool missing or invocation fails | [MCP](#mcp) |
+| Máy tính không nhận diện thiết bị hoặc quá trình nạp firmware thất bại | [Cổng nối tiếp và nạp firmware](#serial) |
+| Nạp firmware hoàn tất nhưng thiết bị không khởi động hoặc khởi động lại liên tục | [Khởi động và nguồn điện](#boot) |
+| Không thấy điểm phát sóng (hotspot) hoặc không kết nối được mạng | [Cấu hình mạng và kết nối](#network) |
+| Đã có mã thiết bị nhưng liên kết tài khoản thất bại | [Tài khoản và quyền sở hữu](#account) |
+| Không có âm thanh, không thu được micro hoặc không phản hồi từ khóa đánh thức | [Âm thanh và từ khóa đánh thức](#audio) |
+| Màn hình trắng/đen, hiển thị sai lệch hoặc mất nét | [Màn hình hiển thị](#display) |
+| Biên dịch mã nguồn trên máy tính thất bại | [Môi trường biên dịch](#build) |
+| Không tìm thấy công cụ MCP hoặc gọi công cụ thất bại | [Công cụ MCP](#mcp) |
 
 <a name="serial"></a>
 
-## Serial and flashing {#serial}
+## Cổng nối tiếp và nạp firmware {#serial}
 
-**No serial port:** use a known data-capable cable and connect directly to the computer. Compare device lists before/after connection. Check USB-UART versus native USB and drivers against the board documentation. Then try [manual download mode](../firmware/flashing.md#download-mode).
+**Không hiện cổng nối tiếp (serial port):** sử dụng một sợi cáp USB có hỗ trợ truyền dữ liệu đã kiểm chứng và cắm trực tiếp vào cổng trên máy tính. Đối chiếu danh sách thiết bị trước và sau khi cắm cáp. Kiểm tra xem mạch dùng cổng USB-UART hay cổng USB gốc (native USB) cùng trình điều khiển (driver) tương ứng theo tài liệu của bo mạch. Sau đó thử [đưa mạch vào chế độ tải (download mode) thủ công](../firmware/flashing.md#download-mode).
 
-**Port exists but connection fails:** close IDE monitors, serial tools, and other flashing pages, then reenter download mode. Two tools must not occupy the same port.
+**Có hiển thị cổng nhưng kết nối thất bại:** đóng toàn bộ cửa sổ theo dõi (monitor) của IDE, các phần mềm đọc cổng serial và các tab trình duyệt nạp firmware khác, sau đó đưa mạch vào lại chế độ tải. Tuyệt đối không để hai công cụ cùng chiếm dụng một cổng COM.
 
-**Browser connection button missing or unsupported:** use desktop Chrome/Edge and HTTPS. Loading an ordinary page does not establish Web Serial support. Alternatively use [offline flashing](../firmware/flashing.md#offline).
+**Thiếu nút kết nối trên trình duyệt hoặc trình duyệt không hỗ trợ:** sử dụng trình duyệt Chrome hoặc Edge trên máy tính qua giao thức HTTPS. Việc trang web tải được không đồng nghĩa với việc trình duyệt hỗ trợ Web Serial. Ngoài ra, bạn có thể chuyển sang dùng phương pháp [nạp firmware ngoại tuyến](../firmware/flashing.md#offline).
 
 <a name="boot"></a>
 
-## Startup and power {#boot}
+## Khởi động và nguồn điện {#boot}
 
-1. Disconnect power and check supply wiring, shorts between adjacent headers, and speaker outputs. Do not reverse polarity as a diagnostic test.
-2. Use a reliable USB supply and short cable. Remove new battery/4G extensions and return to the basic setup first.
-3. Capture startup logs with version, chip, Flash/PSRAM initialization, and the first error.
-4. If resets occur only during playback or networking, check power, volume, and load first, especially for brownout logs.
-5. For PSRAM, partition, or display-driver initialization failures, verify hardware against [Choosing firmware](../firmware/downloads.md#identify).
+1. Ngắt toàn bộ nguồn điện và kiểm tra lại dây cấp nguồn, tình trạng chập mạch giữa các chân cắm liền kề và ngõ ra loa. Tuyệt đối không thử đảo ngược cực tính nguồn để kiểm tra lỗi.
+2. Sử dụng nguồn cấp USB ổn định và cáp ngắn chất lượng tốt. Tháo tạm các mô-đun pin hoặc 4G mở rộng mới gắn thêm và quay về cấu hình phần cứng cơ bản ban đầu trước tiên.
+3. Thu thập nhật ký khởi động (startup logs) bao gồm thông tin phiên bản, dòng chip, quá trình khởi tạo Flash/PSRAM và thông báo lỗi đầu tiên xuất hiện.
+4. Nếu thiết bị chỉ tự khởi động lại khi đang phát âm thanh lớn hoặc khi truyền dữ liệu mạng, hãy kiểm tra nguồn cấp, mức âm lượng và tải loa trước tiên, đặc biệt là khi nhật ký báo lỗi sụt áp (brownout).
+5. Đối với các lỗi khởi tạo PSRAM, bảng phân vùng hoặc trình điều khiển màn hình, hãy đối chiếu lại phần cứng theo mục [Tải xuống và chọn firmware](../firmware/downloads.md#identify).
 
-Use `idf.py -p <PORT> monitor` in a local development environment or a serial tool. The basic board generally uses 115200 baud; check other boards' instructions. Release the flashing port before monitoring, and redact Wi-Fi passwords, tokens, and personal identifiers before sharing logs.
+Sử dụng lệnh `idf.py -p <PORT> monitor` trong môi trường phát triển cục bộ hoặc một phần mềm theo dõi cổng nối tiếp. Bo mạch cơ bản thường sử dụng tốc độ baud `115200`; hãy kiểm tra hướng dẫn riêng của các bo mạch khác. Nhớ ngắt kết nối cổng nạp trước khi mở trình theo dõi monitor, và xóa/che các thông tin nhạy cảm như mật khẩu Wi-Fi, mã token và định danh cá nhân trước khi chia sẻ nhật ký.
 
 <a name="network"></a>
 
-## Provisioning and networking {#network}
+## Cấu hình mạng và kết nối {#network}
 
-**No Xiaozhi hotspot:** first check whether the build uses BluFi or another network method, then confirm provisioning mode. A missing hotspot alone does not establish antenna failure. Do not wrap wires around or touch the antenna to “improve” reception.
+**Không thấy điểm phát sóng (hotspot) của XiaoZhi:** trước tiên hãy kiểm tra xem bản dựng có sử dụng BluFi hay phương thức kết nối mạng nào khác không, sau đó xác nhận thiết bị đã vào chế độ cấu hình mạng chưa. Việc thiếu điểm phát sóng đơn thuần chưa đủ khẳng định hỏng ăng-ten. Tuyệt đối không quấn dây quanh ăng-ten hay chạm tay vào ăng-ten để “cải thiện” sóng.
 
-**Connected to the device hotspot but its page will not open:** confirm the phone is still on that hotspot, enter `http://192.168.4.1` directly, and check automatic network switching and VPN/proxy settings. See [Hotspot provisioning](../getting-started/wifi-and-binding.md#hotspot).
+**Đã kết nối vào điểm phát sóng của thiết bị nhưng không mở được trang cấu hình:** xác nhận điện thoại vẫn đang giữ kết nối với điểm phát sóng đó, nhập trực tiếp địa chỉ `http://192.168.4.1` vào thanh địa chỉ trình duyệt, đồng thời tắt tính năng tự động chuyển đổi mạng và VPN/proxy trên điện thoại. Xem chi tiết tại mục [Cấu hình qua điểm phát sóng](../getting-started/wifi-and-binding.md#hotspot).
 
-**Wi-Fi connected but conversation fails:** Wi-Fi association does not establish access to OTA/conversation services. Check router internet, DNS, and captive portals. Compare with a directly connected 2.4GHz phone hotspot.
+**Đã kết nối Wi-Fi nhưng trò chuyện thất bại:** việc kết nối thành công vào bộ định tuyến Wi-Fi chưa đảm bảo thiết bị truy cập được máy chủ OTA và dịch vụ trò chuyện. Hãy kiểm tra kết nối internet của router, cấu hình DNS và các cổng đăng nhập phụ (captive portals). Thử so sánh bằng cách kết nối trực tiếp với điểm phát sóng 2.4 GHz từ điện thoại.
 
-**Changing networks:** use the board's reprovisioning procedure. Do not assume every version stores only one network or use a full-chip erase as the default fix.
+**Thay đổi mạng Wi-Fi khác:** thực hiện đúng quy trình cấu hình lại mạng của bo mạch đó. Không mặc định rằng mọi phiên bản firmware chỉ lưu một mạng duy nhất, và cũng không dùng thao tác xóa trắng toàn bộ chip (full-chip erase) làm giải pháp khắc phục mặc định.
 
 <a name="account"></a>
 
-## Accounts and ownership {#account}
 
-| Problem | First action |
+## Tài khoản và quyền sở hữu {#account}
+
+| Vấn đề | Hành động đầu tiên cần làm |
 | --- | --- |
-| SMS not received | Check country code, existing account, and page notices; new international accounts should follow the Google sign-in prompt |
-| Incorrect code | Distinguish SMS codes from six-digit device codes; use the current code on the device |
-| Device already bound | Ask the previous owner to [unbind it](./account-and-binding.md#unbind); if unreachable, [email an unbinding request](./account-and-binding.md#ownership) with device information |
-| Cannot add to an existing agent | Read current device type/count limits and confirm the entry point and account |
+| Không nhận được tin nhắn SMS | Kiểm tra mã vùng quốc gia, tài khoản hiện có và các thông báo trên trang; tài khoản quốc tế mới nên làm theo hướng dẫn đăng nhập bằng Google |
+| Mã xác nhận không chính xác | Phân biệt rõ mã SMS với mã thiết bị gồm 6 chữ số; sử dụng mã hiện tại đang hiển thị trên thiết bị |
+| Thiết bị đã được liên kết với tài khoản khác | Nhờ chủ sở hữu trước [hủy liên kết thiết bị](./account-and-binding.md#unbind); nếu không thể liên hệ, hãy [gửi email yêu cầu hủy liên kết](./account-and-binding.md#ownership) kèm thông tin thiết bị |
+| Không thể thêm thiết bị vào trợ lý hiện có | Đọc kỹ giới hạn về loại thiết bị và số lượng tối đa hiện hành, đồng thời xác nhận đúng giao diện thao tác và tài khoản |
 
-Do not publish device codes, full MAC addresses, account phone numbers, or identity documents in public issues. If the previous owner is unreachable, follow the [email request steps](./account-and-binding.md#ownership); use the [batch spreadsheet](./account-and-binding.md#batch) for multiple devices. Reflashing does not remove server ownership.
+Tuyệt đối không đăng công khai mã thiết bị, địa chỉ MAC đầy đủ, số điện thoại tài khoản hoặc giấy tờ tùy thân lên các trang báo lỗi công khai. Nếu không thể liên hệ chủ sở hữu trước, hãy làm theo [các bước gửi email yêu cầu](./account-and-binding.md#ownership); sử dụng [bảng tính xử lý hàng loạt](./account-and-binding.md#batch) nếu cần xử lý nhiều thiết bị cùng lúc. Việc nạp lại firmware không xóa bỏ quyền sở hữu đã gắn trên máy chủ.
 
 <a name="audio"></a>
 
-## Audio and wake words {#audio}
+## Âm thanh và từ khóa đánh thức {#audio}
 
-- **Prompts play but the device cannot hear you:** start with a button-initiated conversation. Check microphone power, data direction, L/R, and acoustic opening. See [Microphone wiring](../hardware/breadboard-esp32-s3.md#microphone).
-- **Speech is recognized but there is no playback:** check volume, amplifier enable, DIN/BCLK/LRC, and load. Do not connect speaker outputs to common-ground headphones; see [Audio output](../hardware/audio-output.md).
-- **Button conversation works but wake detection fails:** check whether wake detection is disabled and whether the model matches chip/memory. C3 and S3 use different models; not all C3 devices lack wake support.
-- **Want to change the wake phrase:** first check compatible options in the [online builder](../firmware/online-builder.md#configure). Custom phrases also depend on chip, PSRAM, and configuration; arbitrary text entry is not available for every board.
-- **Echo remains with AEC enabled:** check reference audio and the supported hardware path. A compile option does not replace circuit and acoustic design; see [firmware audio configuration](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/main/Kconfig.projbuild).
+- **Âm thanh thông báo phát bình thường nhưng thiết bị không nghe thấy bạn nói:** hãy thử bắt đầu cuộc trò chuyện bằng nút bấm vật lý trước. Kiểm tra nguồn cấp của micro, chiều truyền dữ liệu, chân chọn kênh L/R và lỗ thoát âm trên vỏ máy. Xem mục [Đấu nối micro](../hardware/breadboard-esp32-s3.md#microphone).
+- **Thiết bị nhận diện được giọng nói nhưng không phát ra tiếng:** kiểm tra mức âm lượng, chân kích hoạt mạch khuếch đại (amplifier enable), các chân DIN/BCLK/LRC và tải loa. Tuyệt đối không nối ngõ ra loa công suất vào tai nghe dùng chung dây mát (common-ground); xem mục [Ngõ ra âm thanh](../hardware/audio-output.md).
+- **Trò chuyện bằng nút bấm hoạt động tốt nhưng đánh thức bằng giọng nói thất bại:** kiểm tra xem tính năng đánh thức có đang bị tắt không và mô hình đã chọn có khớp với dòng chip/dung lượng bộ nhớ không. Chip C3 và S3 sử dụng các mô hình khác nhau; không phải mọi thiết bị C3 đều thiếu hỗ trợ từ khóa đánh thức.
+- **Muốn thay đổi cụm từ đánh thức:** trước tiên hãy kiểm tra các tùy chọn tương thích trong [trình biên dịch trực tuyến](../firmware/online-builder.md#configure). Cụm từ tùy chỉnh cũng phụ thuộc vào dòng chip, bộ nhớ PSRAM và cấu hình biên dịch; không phải bo mạch nào cũng hỗ trợ nhập văn bản tự do.
+- **Vẫn còn tiếng vọng dù đã bật AEC:** kiểm tra đường tín hiệu âm thanh tham chiếu và phần cứng có nằm trong danh sách hỗ trợ không. Một tùy chọn khi biên dịch không thể thay thế cho thiết kế mạch điện và cấu trúc âm học; xem mục [cấu hình âm thanh của firmware](https://github.com/78/xiaozhi-esp32/blob/v2.6.0/main/Kconfig.projbuild).
 
-BluFi provisions Wi-Fi; it does not imply Bluetooth-headphone support.
+Tính năng BluFi chỉ dùng để cấu hình kết nối Wi-Fi; nó không đồng nghĩa với việc thiết bị hỗ trợ tai nghe Bluetooth.
 
-### Change the persona, voice, or recognized speaker
+### Thay đổi nhân vật, giọng nói hoặc người nói được nhận diện
 
-- Change the assistant name, voice, or language model using the [Console steps](../console/index.md#role-and-voice), save, then start a new conversation.
-- Help the agent recognize family members or other speakers using the [speaker recognition steps](../console/index.md#speaker-recognition): select a recording and enter a name and description.
-- Change the offline wake word using [Wake words](../development/wake-words.md). Changing the persona name does not change the wake word.
+- Thay đổi tên gọi trợ lý, giọng nói hoặc mô hình ngôn ngữ theo [các bước trên Console](../console/index.md#role-and-voice), nhấn lưu, sau đó bắt đầu một cuộc trò chuyện mới.
+- Giúp trợ lý nhận diện các thành viên trong gia đình hoặc người nói khác theo [các bước nhận diện giọng nói](../console/index.md#speaker-recognition): chọn bản ghi âm và nhập tên cùng mô tả.
+- Thay đổi từ khóa đánh thức ngoại tuyến theo hướng dẫn [Từ khóa đánh thức](../development/wake-words.md). Việc đổi tên nhân vật trợ lý không làm thay đổi từ khóa đánh thức.
 
 <a name="display"></a>
 
-## Display {#display}
+## Màn hình hiển thị {#display}
 
-For a blank display, check model/driver → power → I2C/SPI pins → address/resolution → firmware variant. SSD1306 128×32, 128×64, SH1106, and SPI LCDs require different configurations.
+Khi màn hình không lên hình, hãy kiểm tra tuần tự: model/chip điều khiển → nguồn cấp → các chân giao tiếp I2C/SPI → địa chỉ/độ phân giải → biến thể firmware. Các màn hình SSD1306 128×32, 128×64, SH1106 và màn hình SPI LCD đòi hỏi cấu hình hoàn toàn khác nhau.
 
-If sound works but display does not, save logs before assuming MCU damage. Onboard RGB pins can differ by hardware revision, so one color is not a universal error code.
+Nếu âm thanh hoạt động bình thường nhưng màn hình không sáng, hãy lưu lại nhật ký khởi động trước khi kết luận hỏng vi điều khiển MCU. Chân đèn LED RGB tích hợp trên mạch có thể khác nhau tùy từng phiên bản phần cứng, do đó một màu đèn không phải là mã báo lỗi dùng chung cho mọi bo mạch.
 
 <a name="build"></a>
 
-## Build environment {#build}
+## Môi trường biên dịch {#build}
 
-For XiaoZhi v2.6.0, ESP-IDF 6.0.1 is the minimum and `release/v6.1` is recommended. Do not mix IDF 5.x environments, old `sdkconfig`, and new source. After switching SDKs, clean and reconfigure using [Local builds](../development/build-firmware.md).
+Đối với XiaoZhi v2.6.0, phiên bản ESP-IDF 6.0.1 là yêu cầu tối thiểu và nhánh `release/v6.1` được khuyến nghị sử dụng. Tuyệt đối không trộn lẫn môi trường IDF 5.x, tệp `sdkconfig` cũ và mã nguồn mới. Sau khi chuyển đổi phiên bản SDK, hãy dọn dẹp bản dựng và cấu hình lại theo hướng dẫn [Biên dịch cục bộ](../development/build-firmware.md).
 
-For Windows Ninja `CreateProcess` errors caused by command-line length, use the build guide's response-file procedure. Disabling security software is not a general fix.
+Đối với lỗi `CreateProcess` của Ninja trên Windows do độ dài dòng lệnh vượt giới hạn, hãy áp dụng quy trình bật tệp phản hồi (response-file) trong hướng dẫn biên dịch. Việc tắt phần mềm diệt virus không phải là giải pháp khắc phục chuẩn.
 
 <a name="mcp"></a>
 
-## MCP tools {#mcp}
+## Công cụ MCP {#mcp}
 
-Check local tool startup → bridge endpoint connection → Console discovery → actual conversation invocation. Wrong agent endpoints, process exits, and logs mixed into stdout can break integration. See [MCP troubleshooting](../mcp/quickstart.md#troubleshooting).
+Kiểm tra tuần tự từ: khởi chạy công cụ cục bộ → kết nối tới điểm cuối cầu nối → hiển thị công cụ trên Console → lượt gọi thực tế trong cuộc trò chuyện. Nhập sai địa chỉ điểm cuối của trợ lý, tiến trình bị thoát ngầm hoặc ghi nhật ký lẫn vào luồng `stdout` đều có thể làm gián đoạn tích hợp. Xem mục [Khắc phục sự cố MCP](../mcp/quickstart.md#troubleshooting).
 
-See [Serial logs](./serial-logs.md) for full capture steps and [Sign-in and unbinding](./account-and-binding.md) for ownership problems.
+Xem mục [Nhật ký cổng nối tiếp (Serial logs)](./serial-logs.md) để nắm rõ các bước thu thập log đầy đủ và mục [Đăng nhập và hủy liên kết](./account-and-binding.md) nếu gặp sự cố về quyền sở hữu thiết bị.
 
 <a name="verify"></a>
 
-## Record these details before reporting {#verify}
+## Ghi lại các thông tin sau trước khi báo cáo sự cố {#verify}
 
-Include the page URL, actual steps, expected/actual results, chip and board variant, firmware version, power arrangement, and redacted error logs. For wiring, include clear silkscreen photos taken with power disconnected.
+Cung cấp đường dẫn URL của trang tài liệu, các bước thực hiện thực tế, kết quả mong đợi/thực tế, dòng chip và biến thể bo mạch, phiên bản firmware, cách cấp nguồn và nhật ký báo lỗi đã che thông tin nhạy cảm. Đối với lỗi đấu nối dây, hãy chụp ảnh rõ nét các ký hiệu in trên mạch (silkscreen) sau khi đã ngắt nguồn điện.
 
 <a name="next"></a>
 
-## Next steps {#next}
+## Các bước tiếp theo {#next}
 
-Return to [Getting started](../getting-started/index.md) and repeat the relevant stage. If still unresolved, use the page's feedback link and explain which step cannot be reproduced.
+Quay lại mục [Bắt đầu sử dụng](../getting-started/index.md) và thực hiện lại công đoạn tương ứng. Nếu sự cố vẫn chưa được giải quyết, hãy sử dụng liên kết phản hồi ở cuối trang và mô tả rõ bước nào không thể tái hiện được.
