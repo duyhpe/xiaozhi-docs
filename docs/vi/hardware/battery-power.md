@@ -1,56 +1,120 @@
 ---
 id: battery-power
-title: Nguồn cấp bằng pin và sạc
-description: Thử nghiệm với pin sạc dự phòng USB trước khi quyết định có cần thiết kế mạch quản lý pin riêng hay không.
+title: Battery power and charging
+description: 'Use a USB power bank first, then decide whether your device needs a custom battery circuit.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
-sourceArticles:
-  - DOC-05
-  - DOC-11
+  USB power requirements were compared with board documentation. Runtime, low-load keep-alive, and custom battery
+  circuits still require tests on the actual hardware.
 translation:
   status: review
-  sourceHash: 7e8a9c4b2d1f0e3a5c6b8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a
+  sourceHash: a77c7f081097951363efd623ef427bf81b6305eda37bbe1faa1deaede919c2a3
   reviewedAt: '2026-11-15'
 ---
-# Nguồn cấp bằng pin và sạc
+# Battery power and charging
 
-Nếu bạn muốn sử dụng thiết bị di động mà không cắm dây nguồn cố định, hãy bắt đầu thử nghiệm với **pin sạc dự phòng USB** thông thường trước khi thiết kế mạch sạc hoặc mạch tăng áp từ pin Lithium-ion (Li-ion / LiPo) 3.7V.
+A commercial USB power bank is the easiest way to run a breadboard XiaoZhi away from a computer. If the development board has no battery management, do not connect a lithium battery directly to its power pins.
 
-<a name="power-bank"></a>
+<a name="scope"></a>
 
-## 1. Thử nghiệm bằng pin sạc dự phòng USB {#power-bank}
+## Preparation {#scope}
 
-- **Ưu điểm:** pin sạc dự phòng đã tích hợp sẵn mạch bảo vệ quá dòng/quá áp, mạch sạc và bộ chuyển đổi ổn áp lên 5V, giúp cấp nguồn trực tiếp qua cổng USB của bo mạch phát triển mà không cần hàn thêm linh kiện.
-- **Lưu ý về chế độ tự ngắt (Auto-shutoff):** nhiều loại pin sạc dự phòng sẽ tự động ngắt đầu ra 5V sau vài chục giây nếu dòng tiêu thụ của thiết bị ở trạng thái chờ quá thấp. Hãy kiểm tra hoạt động thực tế của thiết bị trong cả trạng thái chờ (idle) lẫn lúc phát loa ở mức âm lượng cao.
+This guide uses a USB-powered ESP32-S3 board. Prepare a device with [wiring](./breadboard-esp32-s3.md) and [Wi-Fi provisioning](../getting-started/wifi-and-binding.md) complete, a reliable USB cable, and a power bank that supplies the board's required 5V USB output.
 
-<a name="li-ion"></a>
+First confirm normal conversation using a computer or suitable USB supply. Then change the power source, so firmware problems can be distinguished from power problems.
 
-## 2. Sử dụng pin Lithium-ion / LiPo 3.7V {#li-ion}
+<a name="usb-power"></a>
 
-Bảo vệ pin, mạch sạc, mạch tăng áp (boost) lên 5V và cơ chế chuyển nguồn tự động khi vừa cắm sạc vừa dùng (power-path) là những chức năng phần cứng tách biệt:
+## 1. Use a USB power bank {#usb-power}
 
-- **Không cắm pin 3.7V trực tiếp vào chân 5V hoặc 3V3:** điện áp pin Lithium thay đổi từ khoảng 4.2V (khi đầy) xuống dưới 3.2V (khi cạn). Cắm trực tiếp vào chân 3V3 có thể làm hỏng chip ESP32, còn cắm vào chân 5V sẽ không đủ điện áp để mạch khuếch đại và màn hình hoạt động ổn định.
-- **Bắt buộc có mạch bảo vệ (BMS / Protection board):** chỉ sử dụng cell pin có tích hợp sẵn mạch bảo vệ chống ngắn mạch, sạc quá áp và xả cạn sâu.
-- **Kiểm tra dòng tải đỉnh:** khi Wi-Fi hoặc modem 4G truyền dữ liệu đồng thời với lúc loa phát âm thanh lớn, dòng tải đỉnh có thể tăng vọt gây sụt áp tức thời và làm bo mạch tự khởi động lại. Hãy kiểm tra khả năng cấp dòng của IC sạc/tăng áp và dùng dây dẫn nguồn đủ ngắn, tiết diện phù hợp.
-- **Vừa sạc vừa dùng:** nếu bo mạch phát triển không có sẵn mạch quản lý đường nguồn (power-path), việc vừa cắm cáp sạc USB vừa cấp nguồn cho tải lớn có thể làm IC sạc hiểu nhầm trạng thái đầy pin hoặc gây quá nhiệt.
+1. Record the working wiring and state, turn off the device, and disconnect the computer.
+2. Keep the breadboard wiring unchanged. Connect the existing USB power cable to the power bank.
+3. Turn on the power bank. Observe startup and wait for the device to join its saved Wi-Fi network.
+4. Start a conversation at low volume, then test your usual volume. Check sustained network, playback, and idle operation.
+5. Turn off the power bank when finished. Charge it according to its manufacturer's instructions.
 
-<a name="adc-monitoring"></a>
+Some power banks shut down automatically under low load. If XiaoZhi loses power while idle, check for a low-current mode and any time limit. One successful startup does not establish reliable long-term operation.
 
-## 3. Đo điện áp pin và hiển thị phần trăm {#adc-monitoring}
+::: info Operating scope
+Pass-through charging is not a default power-bank capability. To charge while running the device, confirm explicit manufacturer support and test whether switching power sources restarts the device.
+:::
 
-- Chỉ bật tính năng hiển thị mức pin trên giao diện nếu bo mạch của bạn thực sự có mạch cầu phân áp nối vào chân ADC của vi điều khiển và đã được khai báo trong cấu hình bo mạch tương ứng (xem mục [tùy chỉnh bo mạch](../development/custom-board.md)).
-- Không nối trực tiếp cực dương pin 4.2V vào chân GPIO/ADC của ESP32 khi chưa qua cầu phân áp vì mức điện áp tối đa cho phép của chân GPIO là 3.3V.
+<figure class="source-figure">
+
+[![A commercial USB power bank powering the basic S3 build.](../../public/images/en/usb-power-bank.svg)](../../public/images/en/usb-power-bank.svg)
+
+<figcaption>A commercial USB power bank powering the basic S3 build. Click to view full size.</figcaption>
+</figure>
+
+<a name="battery-connector"></a>
+
+## 2. If the device has a battery connector {#battery-connector}
+
+Use it only when the board documentation specifies battery type, permitted voltage, connector polarity, and charging port.
+
+| Check | What to confirm |
+| --- | --- |
+| Battery type | Cell count, chemistry, and permitted charge voltage match the charger IC |
+| Connector | Actual positive and negative pins; identical connector housings can have opposite polarity |
+| Protection | Where overcharge, overdischarge, overcurrent, and short-circuit protection are provided |
+| Charging port | Which USB port charges, and which ports provide only power or data |
+| Power switching | How USB and battery supplies switch, and whether simultaneous connection is allowed |
+
+If no battery connector is documented, do not treat `3V3`, `5V`, or `GND` header pins as a charging interface.
+
+<a name="custom-power"></a>
+
+## 3. Bare cells and boost modules {#custom-power}
+
+A custom design needs a complete path: battery protection → charging and power-path management → regulation/boost conversion → load. Labels such as `B+ / B−` identify battery connections; they do not prove that every required function is present.
+
+Before implementation, identify exact modules and schematics, and verify:
+
+- Polarity and output voltage meet requirements before connecting the board.
+- Voltage and temperature remain within component limits during conversation, Wi-Fi transmission, and the highest planned volume.
+- Connecting/disconnecting USB, low battery, and charging do not cause prohibited backfeeding or supply conflicts.
+- Connectors and mechanical mounting prevent live terminals from touching or shorting.
+
+The selected circuit needs engineering review. Do not guess polarity from wire colors, infer reverse polarity from a failure to light up, or cut battery leads for powered trial and error.
+
+For ESP32-S3-DevKitC-1, the manufacturer lists USB, the 5V header, and the 3V3 header as mutually exclusive power options. This does not mean the board can charge a lithium battery. See the [development-board power instructions](https://documentation.espressif.com/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html).
+
+<figure class="source-figure">
+
+[![Example battery with leads and connector. Check chemistry, voltage, and connector polarity against the specific battery documentation.](../../public/images/zh/doc-34-image-002.webp)](../../public/images/zh/doc-34-image-002.webp)
+
+<figcaption>Example battery with leads and connector. Check chemistry, voltage, and connector polarity against the specific battery documentation.</figcaption>
+</figure>
+
+<figure class="source-figure">
+
+[![Example B+, B−, and 5V solder pads on a power module. Check the module documentation for USB input/output roles, charging, and protection capabilities.](../../public/images/zh/doc-34-image-003.webp)](../../public/images/zh/doc-34-image-003.webp)
+
+<figcaption>Example B+, B−, and 5V solder pads on a power module. Check the module documentation for USB input/output roles, charging, and protection capabilities.</figcaption>
+</figure>
 
 <a name="verify"></a>
 
-## Kiểm tra kết quả hoạt động {#verify}
+## Verify the result {#verify}
 
-Thiết bị khởi động ổn định từ nguồn pin, không tự khởi động lại khi phát loa ở mức âm lượng dự kiến và không bị nóng bất thường ở khu vực IC nguồn hoặc pin trong quá trình sạc và xả liên tục.
+::: tip Completion check
+The device supports repeated conversations at the intended volume and still wakes after idling. Charging and use follow the power product's instructions. Measure runtime under the actual load; battery capacity alone does not justify a runtime promise.
+:::
+
+<a name="troubleshooting"></a>
+
+## Troubleshooting {#troubleshooting}
+
+| Symptom | Check in this order |
+| --- | --- |
+| Does not start | Disconnect the load; check the power-bank switch, cable, and output. Do not try reversing the leads |
+| Restarts at high volume | Reduce volume, use a reliable cable/supply, and check amplifier load and contacts |
+| Shuts off after a few idle minutes | Check the power bank's low-load shutdown |
+| Restarts when a charger is connected | Check power switching and pass-through support; repeated restarts are not a circuit test |
 
 <a name="next"></a>
 
-## Các bước tiếp theo {#next}
+## Next steps {#next}
 
-Xem hướng dẫn về [ngõ ra âm thanh](./audio-output.md) để kiểm tra tải của loa và tai nghe, hoặc đọc [những lưu ý khi thiết kế phần cứng](./design-guidelines.md) nếu bạn đang chuẩn bị thiết kế mạch PCB tích hợp pin.
+Read [Audio output](./audio-output.md). If it also restarts repeatedly on USB power, continue with [Startup and power troubleshooting](../faq/index.md#boot).

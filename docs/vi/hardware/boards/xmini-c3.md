@@ -1,12 +1,11 @@
 ---
 id: xmini-c3
-title: 'Xmini-C3, V3, and 4G variants'
-description: 'Identify the board revision before choosing firmware, power, and operating steps.'
+title: 'Các biến thể Xmini-C3, V3 và 4G'
+description: 'Xác định đúng phiên bản bo mạch trước khi chọn firmware, nguồn cấp và các bước vận hành.'
 status: review
 reviewedAt: '2026-11-15'
 reviewNote: >-
-  English translation checked against the current source. Technical and hardware verification limits are stated in the
-  guide.
+  Bản dịch Tiếng Việt được đối chiếu theo tài liệu gốc. Các giới hạn xác minh kỹ thuật và phần cứng được nêu rõ trong từng hướng dẫn.
 sourceArticles:
   - DOC-29
 translation:
@@ -14,72 +13,72 @@ translation:
   sourceHash: cbfd673a9f69a78954b2a0493ba33121aaead15af5810e0fb6480144a65d1de5
   reviewedAt: '2026-11-15'
 ---
-# Xmini-C3, V3, and 4G variants
+# Các biến thể Xmini-C3, V3 và 4G
 
-Xmini is a hardware family. Its Wi-Fi, V3, and 4G variants are different boards. Their firmware determines the circuit support, audio pins, and network initialization.
+Xmini là một dòng phần cứng. Các biến thể Wi-Fi, V3 và 4G của dòng này là những bo mạch khác nhau. Firmware của từng loại quyết định khả năng hỗ trợ mạch điện, sơ đồ chân âm thanh và quy trình khởi tạo mạng.
 
 <figure class="source-figure">
 
-[![Xmini-C3 board.](../../../public/images/zh/doc-29-image-001.webp)](../../../public/images/zh/doc-29-image-001.webp)
+[![Bo mạch Xmini-C3.](../../../public/images/zh/doc-29-image-001.webp)](../../../public/images/zh/doc-29-image-001.webp)
 
-<figcaption>Xmini-C3 board.</figcaption>
+<figcaption>Bo mạch Xmini-C3.</figcaption>
 </figure>
 
 <a name="scope"></a>
 
-## 1. Identify your board {#scope}
+## 1. Xác định phiên bản bo mạch của bạn {#scope}
 
-| Family | v2.6.0 source directory | Check |
+| Dòng bo mạch | Thư mục mã nguồn v2.6.0 | Điểm cần kiểm tra |
 | --- | --- | --- |
-| C3 Wi-Fi | `xmini/c3` | ES8311, OLED, and original pins |
-| C3 V3 | `xmini/c3-v3` | I2S/I2C/PA pins differ from the original |
-| C3 4G | `xmini/c3-4g` | Cellular module, SIM, power, and network setup |
+| C3 Wi-Fi | `xmini/c3` | Chip ES8311, màn hình OLED và sơ đồ chân đời đầu |
+| C3 V3 | `xmini/c3-v3` | Các chân I2S/I2C/PA khác với phiên bản đời đầu |
+| C3 4G | `xmini/c3-4g` | Module mạng di động, thẻ SIM, nguồn cấp và cấu hình mạng |
 
-For example, the original Codec's I2C uses GPIO3/4, while V3 uses GPIO0/1. Do not infer a new board's wiring from an older photo. Refer to the [versioned board directory](https://github.com/78/xiaozhi-esp32/tree/4de00aed740595a8713b01f8332b9b2cf30685bc/main/boards/xmini).
+Ví dụ, giao tiếp I2C của chip Codec đời đầu sử dụng chân GPIO3/4, trong khi phiên bản V3 lại sử dụng chân GPIO0/1. Không suy đoán cách đấu dây của bo mạch đời mới từ hình ảnh của phiên bản cũ. Hãy tham khảo [thư mục bo mạch theo phiên bản](https://github.com/78/xiaozhi-esp32/tree/4de00aed740595a8713b01f8332b9b2cf30685bc/main/boards/xmini).
 
 <figure class="source-figure">
 
-[![BOOT, switch, and USB positions on the original board; do not use this photo to infer V3 pins.](../../../public/images/zh/doc-29-image-019.webp)](../../../public/images/zh/doc-29-image-019.webp)
+[![Vị trí nút BOOT, công tắc nguồn và cổng USB trên bo mạch đời đầu; không dùng ảnh này để suy đoán chân của bản V3.](../../../public/images/zh/doc-29-image-019.webp)](../../../public/images/zh/doc-29-image-019.webp)
 
-<figcaption>BOOT, switch, and USB positions on the original board; do not use this photo to infer V3 pins.</figcaption>
+<figcaption>Vị trí nút BOOT, công tắc nguồn và cổng USB trên bo mạch đời đầu; không dùng ảnh này để suy đoán chân của bản V3.</figcaption>
 </figure>
 
 <a name="flash"></a>
 
-## 2. Install firmware {#flash}
+## 2. Cài đặt firmware {#flash}
 
-Find the exact board and variant in the [online builder](../../firmware/online-builder.md) or [official releases](../../firmware/downloads.md). A release package may include a manufacturer prefix; check its directory and full name together. If an older v1 device needs legacy firmware, use [v1.9.4](../../firmware/releases/v1.9.4.md) only when it matches the hardware.
+Tìm chính xác bo mạch và biến thể trong [trình biên dịch trực tuyến](../../firmware/online-builder.md) hoặc mục [tải xuống chính thức](../../firmware/downloads.md). Một gói phát hành có thể bao gồm tiền tố tên nhà sản xuất; hãy đối chiếu đồng thời cả tên thư mục và tên đầy đủ của tệp. Nếu thiết bị v1 cũ cần dùng firmware đời trước, chỉ sử dụng [bản v1.9.4](../../firmware/releases/v1.9.4.md) khi khớp với phần cứng.
 
-Follow [Flashing firmware](../../firmware/flashing.md) to enter that board's download mode. C3 BOOT and USB behavior differs from the basic S3. Use the board documentation and matching source rather than copying the S3 GPIO0 wiring.
+Làm theo [hướng dẫn nạp firmware](../../firmware/flashing.md) để đưa bo mạch vào chế độ tải (download mode). Cơ chế nút BOOT và cổng USB của C3 khác với bản S3 cơ bản. Hãy sử dụng tài liệu của bo mạch và mã nguồn tương ứng thay vì sao chép cách nối chân GPIO0 của S3.
 
-### A blank board does not expose a port
+### Trường hợp bo mạch trống chưa hiện cổng COM
 
-For the Xmini-C3 shown here with BOOT and a power switch, turn it off, connect the USB data cable, hold **BOOT**, then turn it on. Release BOOT after the computer detects a port and select that new port in the flasher. Unplugging USB may not power down a battery-powered board; use the power switch. After flashing, release BOOT and power-cycle to start the application. Follow the board guide for other revisions.
+Đối với bo mạch Xmini-C3 minh họa ở đây (có nút BOOT và công tắc nguồn): hãy gạt tắt công tắc nguồn, cắm cáp dữ liệu USB, nhấn giữ nút **BOOT**, sau đó gạt bật nguồn. Thả nút BOOT ra sau khi máy tính nhận diện cổng COM mới và chọn cổng đó trong công cụ nạp. Việc chỉ rút cáp USB có thể không ngắt nguồn hoàn toàn nếu bo mạch đang gắn pin; hãy dùng công tắc nguồn. Sau khi nạp xong, thả nút BOOT và tắt rồi bật lại nguồn để khởi chạy ứng dụng. Làm theo hướng dẫn riêng của bo mạch đối với các phiên bản khác.
 
 <a name="use"></a>
 
-## 3. Connect, bind, and talk {#use}
+## 3. Kết nối mạng, liên kết thiết bị và trò chuyện {#use}
 
-For Wi-Fi boards, use hotspot or BluFi provisioning according to the build, then continue with [device binding](../../getting-started/wifi-and-binding.md). For 4G, check the module, SIM, and network state before obtaining the six-digit device code.
+Đối với các bo mạch Wi-Fi, hãy cấu hình mạng qua điểm phát sóng (hotspot) hoặc BluFi tùy theo bản dựng, sau đó tiếp tục bước [liên kết thiết bị](../../getting-started/wifi-and-binding.md). Đối với bản 4G, hãy kiểm tra module, thẻ SIM và trạng thái kết nối mạng trước khi lấy mã thiết bị gồm 6 chữ số.
 
-Test microphone capture and playback using the button before testing wake words. Current C3 builds can use compatible lightweight WakeNet models; the blanket claim that C3 never supports offline wake words is outdated. See [Wake words](../../development/wake-words.md) and the actual model for available phrases.
+Kiểm tra khả năng thu âm của micro và phát âm thanh ra loa bằng nút bấm trước khi thử nghiệm từ khóa đánh thức. Các bản dựng C3 hiện nay có thể sử dụng các mô hình WakeNet dung lượng nhẹ tương thích; nhận định cũ cho rằng C3 không bao giờ hỗ trợ từ khóa đánh thức ngoại tuyến đã lỗi thời. Xem mục [từ khóa đánh thức](../../development/wake-words.md) và thông tin mô hình thực tế để biết các cụm từ được hỗ trợ.
 
-Check battery-voltage measurement, charging ports, sleep, and buttons for the specific hardware revision. A battery icon does not establish battery sensing on every variant.
+Kiểm tra tính năng đo điện áp pin, cổng sạc, chế độ ngủ (sleep) và chức năng các nút bấm theo đúng phiên bản phần cứng cụ thể. Việc màn hình hiển thị biểu tượng pin không đồng nghĩa với việc mọi biến thể đều có mạch đo dung lượng pin.
 
-### Reprovisioning and account ownership
+### Cấu hình lại mạng và quyền sở hữu tài khoản
 
-On v2.6.0 Xmini-C3 Wi-Fi firmware, briefly press **BOOT** during startup after a restart to enter Wi-Fi configuration. During normal idle operation it controls conversation; when press-to-talk is enabled, hold to record and release to finish. Holding BOOT while powering on enters download mode, not Wi-Fi configuration.
+Trên firmware Wi-Fi Xmini-C3 bản v2.6.0, nhấn nhanh nút **BOOT** ngay trong lúc thiết bị đang khởi động lại để vào chế độ cấu hình Wi-Fi. Khi thiết bị đang ở trạng thái chờ bình thường, nút này dùng để điều khiển cuộc trò chuyện; khi bật chế độ nhấn để nói (press-to-talk), hãy nhấn giữ để ghi âm và thả ra để kết thúc. Việc nhấn giữ nút BOOT trong lúc bật nguồn sẽ đưa mạch vào chế độ nạp firmware chứ không phải chế độ cấu hình Wi-Fi.
 
-If another account owns the device, first ask its owner to [unbind it](../../faq/account-and-binding.md#unbind). If unreachable, follow the [email request](../../faq/account-and-binding.md#ownership) with the MAC and other device information.
+Nếu thiết bị đang thuộc về một tài khoản khác, trước tiên hãy nhờ chủ sở hữu đó [hủy liên kết thiết bị](../../faq/account-and-binding.md#unbind). Nếu không thể liên hệ, hãy làm theo hướng dẫn [gửi email yêu cầu hủy liên kết](../../faq/account-and-binding.md#ownership) kèm theo địa chỉ MAC và các thông tin thiết bị liên quan.
 
 <a name="verify"></a>
 
-## Verify the result {#verify}
+## Kiểm tra kết quả hoạt động {#verify}
 
-Confirm the version and variant match the hardware, then test display, audio, network, and conversation. Test battery and wake features only where the hardware and build support them. Record results for the specific revision rather than extending one board's result to the whole family.
+Xác nhận phiên bản và biến thể firmware khớp với phần cứng, sau đó kiểm tra màn hình, âm thanh, kết nối mạng và cuộc trò chuyện. Chỉ thử nghiệm tính năng đo pin và đánh thức bằng giọng nói trên các phiên bản có phần cứng và bản dựng hỗ trợ. Ghi nhận kết quả cho từng phiên bản bo mạch cụ thể thay vì áp dụng chung kết quả của một bo mạch cho cả dòng sản phẩm.
 
 <a name="sources"></a>
 
-## Next steps {#sources}
+## Các bước tiếp theo {#sources}
 
-Use the photos to identify buttons and ports on the relevant revision. Pins and behavior are defined by the board documentation and matching firmware. The open hardware is maintained in [Xia Ge's Xmini project](https://oshwhub.com/tenclass01/xmini_c3). For a C3 breadboard, see [C3 with ES8311](../breadboard-esp32-c3.md).
+Sử dụng hình ảnh minh họa để nhận diện vị trí nút bấm và cổng kết nối trên phiên bản tương ứng. Sơ đồ chân và cơ chế hoạt động được quy định bởi tài liệu bo mạch và firmware khớp với nó. Phần cứng mã nguồn mở được duy trì tại [dự án Xmini của Xia Ge](https://oshwhub.com/tenclass01/xmini_c3). Nếu bạn tự lắp mạch breadboard C3, hãy xem hướng dẫn [Mạch C3 với ES8311](../breadboard-esp32-c3.md).
